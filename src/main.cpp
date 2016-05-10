@@ -83,7 +83,7 @@ enum
 
 int main()
 {
-  video::IVideoDriver* driver = device->getVideoDriver();
-  scene::ISceneManager* smgr = device->getSceneManager();
+  video::IVideoDriver* driver = Device->getVideoDriver();
+  scene::ISceneManager* smgr = Device->getSceneManager();
 
 }
