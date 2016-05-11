@@ -97,7 +97,6 @@ int main()
       smgr->drawAll();
       device->getGUIEnvironment()->drawAll();
       driver->endScene();
-
     }
   device->drop();
   return 0;
