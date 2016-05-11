@@ -12,7 +12,10 @@ Irrlicht::Irrlicht()
 	  createDevice(driverType, core::dimension2d<u32>(1920, 1080));
   if (device == 0)
 	throw (exception("Can't Load OpenGL"));
+  device->setWindowCaption(L"Hello World! - Irrlicht Engine Demo");
 
+  video::IVideoDriver* driver = device->getVideoDriver();
+  scene::ISceneManager* smgr = device->getSceneManager();
 
 }
 

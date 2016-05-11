@@ -12,9 +12,12 @@
 #pragma comment(lib, "Irrlicht.a")
 #endif
 
-class Irrlicht
+class 			Irrlicht
 {
  private:
+  IrrlichtDevice 	*_device;
+  video::IVideoDriver	*driver;
+  scene::ISceneManager	*smgr;
 
  public:
   Irrlicht();
