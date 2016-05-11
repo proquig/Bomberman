@@ -11,4 +11,4 @@ set(SOURCE_FILES
 
 add_executable(cpp_indie_studio ${SOURCE_FILES})
 
-target_link_libraries(cpp_indie_studio Irrlich)
+target_link_libraries(cpp_indie_studio Irrlicht)
