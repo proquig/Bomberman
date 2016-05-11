@@ -3,12 +3,19 @@
 //
 
 #include "Irrlicht.hpp"
+#include "Exception.hpp"
 
 Irrlicht::Irrlicht()
 {
   video::E_DRIVER_TYPE driverType = video::EDT_OPENGL;
   IrrlichtDevice *device =
-	  createDevice(driverType, core::dimension2d<u32>(640, 480));
+	  createDevice(driverType, core::dimension2d<u32>(1920, 1080));
   if (device == 0)
+	throw (exception("Can't Load OpenGL"));
 
+
+}
+
+Irrlicht::~Irrlicht()
+{
 }

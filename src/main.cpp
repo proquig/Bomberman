@@ -12,78 +12,37 @@ using namespace gui;
 #pragma comment(lib, "Irrlicht.a")
 #endif
 
-IrrlichtDevice *Device = 0;
-core::stringc StartUpModelFile;
-core::stringw MessageText;
-core::stringw Caption;
-scene::ISceneNode* Model = 0;
-scene::ISceneNode* SkyBox = 0;
-bool Octree=false;
-bool UseLight=false;
-
-scene::ICameraSceneNode* Camera[2] = {0, 0};
-
-enum
-{
-  GUI_ID_DIALOG_ROOT_WINDOW  = 0x10000,
-
-  GUI_ID_X_SCALE,
-  GUI_ID_Y_SCALE,
-  GUI_ID_Z_SCALE,
-
-  GUI_ID_OPEN_MODEL,
-  GUI_ID_SET_MODEL_ARCHIVE,
-  GUI_ID_LOAD_AS_OCTREE,
-
-  GUI_ID_SKY_BOX_VISIBLE,
-  GUI_ID_TOGGLE_DEBUG_INFO,
-
-  GUI_ID_DEBUG_OFF,
-  GUI_ID_DEBUG_BOUNDING_BOX,
-  GUI_ID_DEBUG_NORMALS,
-  GUI_ID_DEBUG_SKELETON,
-  GUI_ID_DEBUG_WIRE_OVERLAY,
-  GUI_ID_DEBUG_HALF_TRANSPARENT,
-  GUI_ID_DEBUG_BUFFERS_BOUNDING_BOXES,
-  GUI_ID_DEBUG_ALL,
-
-  GUI_ID_MODEL_MATERIAL_SOLID,
-  GUI_ID_MODEL_MATERIAL_TRANSPARENT,
-  GUI_ID_MODEL_MATERIAL_REFLECTION,
-
-  GUI_ID_CAMERA_MAYA,
-  GUI_ID_CAMERA_FIRST_PERSON,
-
-  GUI_ID_POSITION_TEXT,
-
-  GUI_ID_ABOUT,
-  GUI_ID_QUIT,
-
-  GUI_ID_TEXTUREFILTER,
-  GUI_ID_SKIN_TRANSPARENCY,
-  GUI_ID_SKIN_ANIMATION_FPS,
-
-  GUI_ID_BUTTON_SET_SCALE,
-  GUI_ID_BUTTON_SCALE_MUL10,
-  GUI_ID_BUTTON_SCALE_DIV10,
-  GUI_ID_BUTTON_OPEN_MODEL,
-  GUI_ID_BUTTON_SHOW_ABOUT,
-  GUI_ID_BUTTON_SHOW_TOOLBOX,
-  GUI_ID_BUTTON_SELECT_ARCHIVE,
-
-  GUI_ID_ANIMATION_INFO,
-
-  // Et quelques nombres magiques.
-	  MAX_FRAMERATE = 80,
-  DEFAULT_FRAMERATE = 30
-};
-
-
-
 
 int main()
 {
+  video::E_DRIVER_TYPE driverType = video::EDT_OPENGL;
+  IrrlichtDevice *device =
+	  createDevice(driverType, core::dimension2d<u32>(1920, 1080));
+  if (device == 0)
+  	return (-1);
   video::IVideoDriver* driver = device->getVideoDriver();
   scene::ISceneManager* smgr = device->getSceneManager();
 
+  video::ITexture* images = driver->getTexture("../media/Gauntlet_Menu.png");
+  driver->makeColorKeyTexture(images, core::position2d<s32>(0,0));
+
+  while(device->run())
+    {
+      if (device->isWindowActive())
+	{
+	  u32 time = device->getTimer()->getTime();
+
+	  driver->beginScene(true, true, video::SColor(255,120,102,136));
+	  driver->enableMaterial2D();
+	  driver->draw2DImage(images, core::rect<s32>(10,10,108,48),
+			      core::rect<s32>(354,87,442,118));
+	  driver->enableMaterial2D(false);
+	  core::position2d<s32> m = device->getCursorControl()->getPosition();
+	  driver->endScene();
+	}
+    }
+
+  device->drop();
+
+  return 0;
 }
