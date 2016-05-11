@@ -3,6 +3,9 @@
 //
 
 #include <irrlicht.h>
+#include <vector>
+#include <list>
+#include <zconf.h>
 #include "driverChoice.h"
 
 using namespace irr;
@@ -12,78 +15,82 @@ using namespace gui;
 #pragma comment(lib, "Irrlicht.a")
 #endif
 
-IrrlichtDevice *Device = 0;
-core::stringc StartUpModelFile;
-core::stringw MessageText;
-core::stringw Caption;
-scene::ISceneNode* Model = 0;
-scene::ISceneNode* SkyBox = 0;
-bool Octree=false;
-bool UseLight=false;
 
-scene::ICameraSceneNode* Camera[2] = {0, 0};
-
-enum
+class MyEventReceiver : public IEventReceiver
 {
-  GUI_ID_DIALOG_ROOT_WINDOW  = 0x10000,
+ public:
+  // This is the one method that we have to implement
+  virtual bool OnEvent(const SEvent& event)
+  {
+    if (event.EventType == irr::EET_KEY_INPUT_EVENT)
+      KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
+    return false;
+  }
 
-  GUI_ID_X_SCALE,
-  GUI_ID_Y_SCALE,
-  GUI_ID_Z_SCALE,
+  virtual bool IsKeyDown(EKEY_CODE keyCode) const
+  {
+    return KeyIsDown[keyCode];
+  }
 
-  GUI_ID_OPEN_MODEL,
-  GUI_ID_SET_MODEL_ARCHIVE,
-  GUI_ID_LOAD_AS_OCTREE,
-
-  GUI_ID_SKY_BOX_VISIBLE,
-  GUI_ID_TOGGLE_DEBUG_INFO,
-
-  GUI_ID_DEBUG_OFF,
-  GUI_ID_DEBUG_BOUNDING_BOX,
-  GUI_ID_DEBUG_NORMALS,
-  GUI_ID_DEBUG_SKELETON,
-  GUI_ID_DEBUG_WIRE_OVERLAY,
-  GUI_ID_DEBUG_HALF_TRANSPARENT,
-  GUI_ID_DEBUG_BUFFERS_BOUNDING_BOXES,
-  GUI_ID_DEBUG_ALL,
-
-  GUI_ID_MODEL_MATERIAL_SOLID,
-  GUI_ID_MODEL_MATERIAL_TRANSPARENT,
-  GUI_ID_MODEL_MATERIAL_REFLECTION,
-
-  GUI_ID_CAMERA_MAYA,
-  GUI_ID_CAMERA_FIRST_PERSON,
-
-  GUI_ID_POSITION_TEXT,
-
-  GUI_ID_ABOUT,
-  GUI_ID_QUIT,
-
-  GUI_ID_TEXTUREFILTER,
-  GUI_ID_SKIN_TRANSPARENCY,
-  GUI_ID_SKIN_ANIMATION_FPS,
-
-  GUI_ID_BUTTON_SET_SCALE,
-  GUI_ID_BUTTON_SCALE_MUL10,
-  GUI_ID_BUTTON_SCALE_DIV10,
-  GUI_ID_BUTTON_OPEN_MODEL,
-  GUI_ID_BUTTON_SHOW_ABOUT,
-  GUI_ID_BUTTON_SHOW_TOOLBOX,
-  GUI_ID_BUTTON_SELECT_ARCHIVE,
-
-  GUI_ID_ANIMATION_INFO,
-
-  // Et quelques nombres magiques.
-	  MAX_FRAMERATE = 80,
-  DEFAULT_FRAMERATE = 30
+  MyEventReceiver()
+  {
+    for (u32 i=0; i<KEY_KEY_CODES_COUNT; ++i)
+      KeyIsDown[i] = false;
+  }
+ private:
+  bool KeyIsDown[KEY_KEY_CODES_COUNT];
 };
-
-
-
 
 int main()
 {
-  video::IVideoDriver* driver = Device->getVideoDriver();
-  scene::ISceneManager* smgr = Device->getSceneManager();
+  video::E_DRIVER_TYPE driverType = irr::video::EDT_OPENGL;
+  MyEventReceiver receiver;
+  IrrlichtDevice *device =
+	  createDevice(driverType, core::dimension2d<u32>(1920, 1080), 16,
+		       false, false, false, &receiver);
+  if (device == 0)
+  	return (-1);
+  video::IVideoDriver* driver = device->getVideoDriver();
+  scene::ISceneManager* smgr = device->getSceneManager();
 
+  std::list<video::ITexture *> texture;
+  std::list<video::ITexture *>::iterator it;
+
+  texture.push_back(driver->getTexture("../media/Gauntlet_Menu1.png"));
+  texture.push_back(driver->getTexture("../media/Gauntlet_Menu2.png"));
+  texture.push_back(driver->getTexture("../media/Gauntlet_Menu3.png"));
+
+  it = texture.begin();
+  driver->makeColorKeyTexture(*it, core::position2d<s32>(0,0));
+  while(device->run())
+    {
+      usleep(100000);
+      u32 now = device->getTimer()->getTime();
+
+      if(receiver.IsKeyDown(irr::KEY_KEY_Z))
+	{
+	  if (it == texture.begin())
+	    {
+	      it = texture.end();
+	      it--;
+	    }
+	  else
+	    it--;
+	}
+      else if(receiver.IsKeyDown(irr::KEY_KEY_S))
+	{
+	  it++;
+	  if (it == texture.end()--)
+	    it = texture.begin();
+	}
+      if(receiver.IsKeyDown(irr::KEY_ESCAPE))
+	exit(0);
+      driver->beginScene(true, true, video::SColor(255,120,102,136));
+      driver->draw2DImage(*it, core::rect<s32>(0,0,1920,1080),
+			  core::rect<s32>(0,0,1920,1080));
+      core::position2d<s32> m = device->getCursorControl()->getPosition();
+      driver->endScene();
+    }
+  device->drop();
+  return 0;
 }
