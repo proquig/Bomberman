@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++11   CMakeFiles/cpp_indie_studio.dir/src/main.cpp.o  -o cpp_indie_studio -lIrrlicht 

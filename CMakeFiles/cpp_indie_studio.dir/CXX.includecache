@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/joris_a/rendu/cpp/cpp_indie_studio/src/main.cpp
+irrlicht.h
+-
+driverChoice.h
+/home/joris_a/rendu/cpp/cpp_indie_studio/src/driverChoice.h
+
