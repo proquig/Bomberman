@@ -62,15 +62,10 @@ int main()
 
   it = texture.begin();
   driver->makeColorKeyTexture(*it, core::position2d<s32>(0,0));
-  u32 then = device->getTimer()->getTime();
-  const f32 MOVEMENT_SPEED = 5.f;
-
   while(device->run())
     {
       usleep(100000);
       u32 now = device->getTimer()->getTime();
-      const f32 frame = (f32)(now - then) / 1000.f;
-      then = now;
 
       if(receiver.IsKeyDown(irr::KEY_KEY_Z))
 	{
@@ -94,8 +89,6 @@ int main()
       driver->draw2DImage(*it, core::rect<s32>(0,0,1920,1080),
 			  core::rect<s32>(0,0,1920,1080));
       core::position2d<s32> m = device->getCursorControl()->getPosition();
-      smgr->drawAll();
-      device->getGUIEnvironment()->drawAll();
       driver->endScene();
     }
   device->drop();
