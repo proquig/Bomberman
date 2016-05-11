@@ -76,7 +76,6 @@ int main()
 	{
 	  if (it == texture.begin())
 	    {
-	      std::cout << "Je passe la" << std::endl;
 	      it = texture.end();
 	      it--;
 	    }
@@ -85,7 +84,6 @@ int main()
 	}
       else if(receiver.IsKeyDown(irr::KEY_KEY_S))
 	{
-	  std::cout << "Je passe ici" << std::endl;
 	  it++;
 	  if (it == texture.end()--)
 	    it = texture.begin();
