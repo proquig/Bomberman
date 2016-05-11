@@ -5,6 +5,7 @@
 #include <irrlicht.h>
 #include <vector>
 #include <list>
+#include <zconf.h>
 #include "driverChoice.h"
 
 using namespace irr;
@@ -61,35 +62,45 @@ int main()
 
   it = texture.begin();
   driver->makeColorKeyTexture(*it, core::position2d<s32>(0,0));
+  u32 then = device->getTimer()->getTime();
+  const f32 MOVEMENT_SPEED = 5.f;
+
   while(device->run())
     {
-	  u32 time = device->getTimer()->getTime();
+      usleep(100000);
+      u32 now = device->getTimer()->getTime();
+      const f32 frame = (f32)(now - then) / 1000.f;
+      then = now;
 
-	  driver->beginScene(true, true, video::SColor(255,120,102,136));
-	  driver->draw2DImage(*it, core::rect<s32>(0,0,1920,1080),
-			      core::rect<s32>(0,0,1920,1080));
-	  core::position2d<s32> m = device->getCursorControl()->getPosition();
-	  driver->endScene();
-	  if(receiver.IsKeyDown(irr::KEY_KEY_Z))
+      if(receiver.IsKeyDown(irr::KEY_KEY_Z))
+	{
+	  if (it == texture.begin())
 	    {
-	      if (it == texture.begin())
-		it = texture.end();
-	      else
-		it--;
+	      std::cout << "Je passe la" << std::endl;
+	      it = texture.end();
+	      it--;
 	    }
-	  else if(receiver.IsKeyDown(irr::KEY_KEY_S))
-	    {
-	      std::cout << "Je passe ici" << std::endl;
-	      if (it == texture.end()--)
-		it = texture.begin();
-	      else
-		it++;
-	    }
+	  else
+	    it--;
+	}
+      else if(receiver.IsKeyDown(irr::KEY_KEY_S))
+	{
+	  std::cout << "Je passe ici" << std::endl;
+	  it++;
+	  if (it == texture.end()--)
+	    it = texture.begin();
+	}
       if(receiver.IsKeyDown(irr::KEY_ESCAPE))
 	exit(0);
+      driver->beginScene(true, true, video::SColor(255,120,102,136));
+      driver->draw2DImage(*it, core::rect<s32>(0,0,1920,1080),
+			  core::rect<s32>(0,0,1920,1080));
+      core::position2d<s32> m = device->getCursorControl()->getPosition();
+      smgr->drawAll();
+      device->getGUIEnvironment()->drawAll();
+      driver->endScene();
+
     }
-
   device->drop();
-
   return 0;
 }
