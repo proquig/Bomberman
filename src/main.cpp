@@ -56,9 +56,9 @@ int main()
   std::list<video::ITexture *> texture;
   std::list<video::ITexture *>::iterator it;
 
-  texture.push_back(driver->getTexture("../media/Gauntlet_Menu1.png"));
-  texture.push_back(driver->getTexture("../media/Gauntlet_Menu2.png"));
-  texture.push_back(driver->getTexture("../media/Gauntlet_Menu3.png"));
+  texture.push_back(driver->getTexture("./media/Gauntlet_Menu1.png"));
+  texture.push_back(driver->getTexture("./media/Gauntlet_Menu2.png"));
+  texture.push_back(driver->getTexture("./media/Gauntlet_Menu3.png"));
 
   it = texture.begin();
   driver->makeColorKeyTexture(*it, core::position2d<s32>(0,0));

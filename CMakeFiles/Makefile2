@@ -60,39 +60,39 @@ CMAKE_SOURCE_DIR = /home/joris_a/rendu/cpp/cpp_indie_studio
 CMAKE_BINARY_DIR = /home/joris_a/rendu/cpp/cpp_indie_studio
 
 #=============================================================================
-# Target rules for target CMakeFiles/cpp_indie_studio.dir
+# Target rules for target CMakeFiles/MyGauntlet.dir
 
 # All Build rule for target.
-CMakeFiles/cpp_indie_studio.dir/all:
-	$(MAKE) -f CMakeFiles/cpp_indie_studio.dir/build.make CMakeFiles/cpp_indie_studio.dir/depend
-	$(MAKE) -f CMakeFiles/cpp_indie_studio.dir/build.make CMakeFiles/cpp_indie_studio.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/joris_a/rendu/cpp/cpp_indie_studio/CMakeFiles --progress-num=1,2 "Built target cpp_indie_studio"
-.PHONY : CMakeFiles/cpp_indie_studio.dir/all
+CMakeFiles/MyGauntlet.dir/all:
+	$(MAKE) -f CMakeFiles/MyGauntlet.dir/build.make CMakeFiles/MyGauntlet.dir/depend
+	$(MAKE) -f CMakeFiles/MyGauntlet.dir/build.make CMakeFiles/MyGauntlet.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/joris_a/rendu/cpp/cpp_indie_studio/CMakeFiles --progress-num=1,2,3,4,5 "Built target MyGauntlet"
+.PHONY : CMakeFiles/MyGauntlet.dir/all
 
 # Include target in all.
-all: CMakeFiles/cpp_indie_studio.dir/all
+all: CMakeFiles/MyGauntlet.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/cpp_indie_studio.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/joris_a/rendu/cpp/cpp_indie_studio/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/cpp_indie_studio.dir/all
+CMakeFiles/MyGauntlet.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/joris_a/rendu/cpp/cpp_indie_studio/CMakeFiles 5
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/MyGauntlet.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/joris_a/rendu/cpp/cpp_indie_studio/CMakeFiles 0
-.PHONY : CMakeFiles/cpp_indie_studio.dir/rule
+.PHONY : CMakeFiles/MyGauntlet.dir/rule
 
 # Convenience name for target.
-cpp_indie_studio: CMakeFiles/cpp_indie_studio.dir/rule
+MyGauntlet: CMakeFiles/MyGauntlet.dir/rule
 
-.PHONY : cpp_indie_studio
-
-# clean rule for target.
-CMakeFiles/cpp_indie_studio.dir/clean:
-	$(MAKE) -f CMakeFiles/cpp_indie_studio.dir/build.make CMakeFiles/cpp_indie_studio.dir/clean
-.PHONY : CMakeFiles/cpp_indie_studio.dir/clean
+.PHONY : MyGauntlet
 
 # clean rule for target.
-clean: CMakeFiles/cpp_indie_studio.dir/clean
+CMakeFiles/MyGauntlet.dir/clean:
+	$(MAKE) -f CMakeFiles/MyGauntlet.dir/build.make CMakeFiles/MyGauntlet.dir/clean
+.PHONY : CMakeFiles/MyGauntlet.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/MyGauntlet.dir/clean
 
 .PHONY : clean
 

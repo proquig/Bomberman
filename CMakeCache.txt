@@ -114,7 +114,7 @@ CMAKE_OBJCOPY:FILEPATH=/usr/bin/objcopy
 CMAKE_OBJDUMP:FILEPATH=/usr/bin/objdump
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=cpp_indie_studio
+CMAKE_PROJECT_NAME:STATIC=MyGauntlet
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -167,6 +167,12 @@ CMAKE_USE_RELATIVE_PATHS:BOOL=OFF
 // during the make.  This is useful for debugging only. With Visual
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
+
+//Value Computed by CMake
+MyGauntlet_BINARY_DIR:STATIC=/home/joris_a/rendu/cpp/cpp_indie_studio
+
+//Value Computed by CMake
+MyGauntlet_SOURCE_DIR:STATIC=/home/joris_a/rendu/cpp/cpp_indie_studio
 
 //Value Computed by CMake
 cpp_indie_studio_BINARY_DIR:STATIC=/home/joris_a/rendu/cpp/cpp_indie_studio

@@ -41,5 +41,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/cpp_indie_studio.dir/DependInfo.cmake"
+  "CMakeFiles/MyGauntlet.dir/DependInfo.cmake"
   )

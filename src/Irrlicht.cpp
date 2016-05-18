@@ -8,7 +8,7 @@
 Irrlicht::Irrlicht()
 {
   video::E_DRIVER_TYPE driverType = video::EDT_OPENGL;
-  IrrlichtDevice *device =
+  irr::IrrlichtDevice *device =
 	  createDevice(driverType, core::dimension2d<u32>(1920, 1080));
   if (device == 0)
 	throw (exception("Can't Load OpenGL"));

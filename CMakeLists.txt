@@ -1,14 +1,18 @@
-cmake_minimum_required(VERSION 3.5)
-project(cpp_indie_studio)
+cmake_minimum_required(VERSION 2.6)
+PROJECT(MyGauntlet)
+
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-include_directories(/usr/include/irrlicht)
-include_directories(/home/cloquet/Bureau/irrlicht-1.8.3/include)
+include_directories(
+  "/usr/local/include/"
+  ${PROJECT_SOURCE_DIR}/includes)
 
-set(SOURCE_FILES
-    src/main.cpp)
+FILE(GLOB SRCS	src/*.cpp)
 
-add_executable(cpp_indie_studio ${SOURCE_FILES})
+FILE (GLOB HDRS includes/*.h)
 
-target_link_libraries(cpp_indie_studio Irrlicht)
+
+add_executable(MyGauntlet ${SRCS} ${HDRS})
+
+target_link_libraries(MyGauntlet "/usr/local/lib/libIrrlicht.so")

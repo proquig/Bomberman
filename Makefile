@@ -111,17 +111,98 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named cpp_indie_studio
+# Target rules for targets named MyGauntlet
 
 # Build rule for target.
-cpp_indie_studio: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 cpp_indie_studio
-.PHONY : cpp_indie_studio
+MyGauntlet: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 MyGauntlet
+.PHONY : MyGauntlet
 
 # fast build rule for target.
-cpp_indie_studio/fast:
-	$(MAKE) -f CMakeFiles/cpp_indie_studio.dir/build.make CMakeFiles/cpp_indie_studio.dir/build
-.PHONY : cpp_indie_studio/fast
+MyGauntlet/fast:
+	$(MAKE) -f CMakeFiles/MyGauntlet.dir/build.make CMakeFiles/MyGauntlet.dir/build
+.PHONY : MyGauntlet/fast
+
+src/EventReceiver.o: src/EventReceiver.cpp.o
+
+.PHONY : src/EventReceiver.o
+
+# target to build an object file
+src/EventReceiver.cpp.o:
+	$(MAKE) -f CMakeFiles/MyGauntlet.dir/build.make CMakeFiles/MyGauntlet.dir/src/EventReceiver.cpp.o
+.PHONY : src/EventReceiver.cpp.o
+
+src/EventReceiver.i: src/EventReceiver.cpp.i
+
+.PHONY : src/EventReceiver.i
+
+# target to preprocess a source file
+src/EventReceiver.cpp.i:
+	$(MAKE) -f CMakeFiles/MyGauntlet.dir/build.make CMakeFiles/MyGauntlet.dir/src/EventReceiver.cpp.i
+.PHONY : src/EventReceiver.cpp.i
+
+src/EventReceiver.s: src/EventReceiver.cpp.s
+
+.PHONY : src/EventReceiver.s
+
+# target to generate assembly for a file
+src/EventReceiver.cpp.s:
+	$(MAKE) -f CMakeFiles/MyGauntlet.dir/build.make CMakeFiles/MyGauntlet.dir/src/EventReceiver.cpp.s
+.PHONY : src/EventReceiver.cpp.s
+
+src/Exception.o: src/Exception.cpp.o
+
+.PHONY : src/Exception.o
+
+# target to build an object file
+src/Exception.cpp.o:
+	$(MAKE) -f CMakeFiles/MyGauntlet.dir/build.make CMakeFiles/MyGauntlet.dir/src/Exception.cpp.o
+.PHONY : src/Exception.cpp.o
+
+src/Exception.i: src/Exception.cpp.i
+
+.PHONY : src/Exception.i
+
+# target to preprocess a source file
+src/Exception.cpp.i:
+	$(MAKE) -f CMakeFiles/MyGauntlet.dir/build.make CMakeFiles/MyGauntlet.dir/src/Exception.cpp.i
+.PHONY : src/Exception.cpp.i
+
+src/Exception.s: src/Exception.cpp.s
+
+.PHONY : src/Exception.s
+
+# target to generate assembly for a file
+src/Exception.cpp.s:
+	$(MAKE) -f CMakeFiles/MyGauntlet.dir/build.make CMakeFiles/MyGauntlet.dir/src/Exception.cpp.s
+.PHONY : src/Exception.cpp.s
+
+src/Irrlicht.o: src/Irrlicht.cpp.o
+
+.PHONY : src/Irrlicht.o
+
+# target to build an object file
+src/Irrlicht.cpp.o:
+	$(MAKE) -f CMakeFiles/MyGauntlet.dir/build.make CMakeFiles/MyGauntlet.dir/src/Irrlicht.cpp.o
+.PHONY : src/Irrlicht.cpp.o
+
+src/Irrlicht.i: src/Irrlicht.cpp.i
+
+.PHONY : src/Irrlicht.i
+
+# target to preprocess a source file
+src/Irrlicht.cpp.i:
+	$(MAKE) -f CMakeFiles/MyGauntlet.dir/build.make CMakeFiles/MyGauntlet.dir/src/Irrlicht.cpp.i
+.PHONY : src/Irrlicht.cpp.i
+
+src/Irrlicht.s: src/Irrlicht.cpp.s
+
+.PHONY : src/Irrlicht.s
+
+# target to generate assembly for a file
+src/Irrlicht.cpp.s:
+	$(MAKE) -f CMakeFiles/MyGauntlet.dir/build.make CMakeFiles/MyGauntlet.dir/src/Irrlicht.cpp.s
+.PHONY : src/Irrlicht.cpp.s
 
 src/main.o: src/main.cpp.o
 
@@ -129,7 +210,7 @@ src/main.o: src/main.cpp.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) -f CMakeFiles/cpp_indie_studio.dir/build.make CMakeFiles/cpp_indie_studio.dir/src/main.cpp.o
+	$(MAKE) -f CMakeFiles/MyGauntlet.dir/build.make CMakeFiles/MyGauntlet.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -138,7 +219,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) -f CMakeFiles/cpp_indie_studio.dir/build.make CMakeFiles/cpp_indie_studio.dir/src/main.cpp.i
+	$(MAKE) -f CMakeFiles/MyGauntlet.dir/build.make CMakeFiles/MyGauntlet.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -147,7 +228,7 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) -f CMakeFiles/cpp_indie_studio.dir/build.make CMakeFiles/cpp_indie_studio.dir/src/main.cpp.s
+	$(MAKE) -f CMakeFiles/MyGauntlet.dir/build.make CMakeFiles/MyGauntlet.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 # Help Target
@@ -158,7 +239,16 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... cpp_indie_studio"
+	@echo "... MyGauntlet"
+	@echo "... src/EventReceiver.o"
+	@echo "... src/EventReceiver.i"
+	@echo "... src/EventReceiver.s"
+	@echo "... src/Exception.o"
+	@echo "... src/Exception.i"
+	@echo "... src/Exception.s"
+	@echo "... src/Irrlicht.o"
+	@echo "... src/Irrlicht.i"
+	@echo "... src/Irrlicht.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
