@@ -1,18 +1,25 @@
 cmake_minimum_required(VERSION 2.6)
-PROJECT(MyGauntlet)
-
+PROJECT(cpp_indie_studio)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-include_directories(
-  "/usr/local/include/"
-  ${PROJECT_SOURCE_DIR}/includes)
+include_directories(${IRRLICHT_INCLUDE_DIR})
+include_directories(includes)
 
-FILE(GLOB SRCS	src/*.cpp)
+file(
+        GLOB_RECURSE
+        SOURCES
+        src/*.cpp
+)
+file(
+        GLOB_RECURSE
+        HEADERS
+        includes/*.hpp
+)
 
-FILE (GLOB HDRS includes/*.h)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+find_package(Irrlicht)
 
+add_executable(MyGauntlet ${SOURCES} ${HEADERS})
 
-add_executable(MyGauntlet ${SRCS} ${HDRS})
-
-target_link_libraries(MyGauntlet "/usr/local/lib/libIrrlicht.so")
+target_link_libraries(MyGauntlet ${IRRLICHT_LIBRARY})
