@@ -5,20 +5,35 @@
 #include "Irrlicht.hpp"
 #include "Exception.hpp"
 
-Irrlicht::Irrlicht()
+Bomberman::Irrlicht::Irrlicht()
 {
-  video::E_DRIVER_TYPE driverType = video::EDT_OPENGL;
-  irr::IrrlichtDevice *device =
-	  createDevice(driverType, core::dimension2d<u32>(1920, 1080));
-  if (device == 0)
-	throw (exception("Can't Load OpenGL"));
-  device->setWindowCaption(L"Hello World! - Irrlicht Engine Demo");
+  irr::video::E_DRIVER_TYPE driverType = irr::video::EDT_OPENGL;
+  this->_device = irr::createDevice(driverType, irr::core::dimension2d<irr::u32>(1920, 1080));
 
-  video::IVideoDriver* driver = device->getVideoDriver();
-  scene::ISceneManager* smgr = device->getSceneManager();
+  if (this->_device == NULL)
+    throw (exception("Can't Load OpenGL"));
 
+  this->_device->setWindowCaption(L"Hello World! - Irrlicht Engine Demo");
+
+  this->_driver = _device->getVideoDriver();
+  this->_smgr = _device->getSceneManager();
 }
 
-Irrlicht::~Irrlicht()
+Bomberman::Irrlicht::~Irrlicht()
 {
+}
+
+irr::IrrlichtDevice *Bomberman::Irrlicht::get_device() const
+{
+  return _device;
+}
+
+irr::video::IVideoDriver *Bomberman::Irrlicht::get_driver() const
+{
+  return _driver;
+}
+
+irr::scene::ISceneManager *Bomberman::Irrlicht::get_smgr() const
+{
+  return _smgr;
 }

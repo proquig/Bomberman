@@ -12,19 +12,28 @@
 #pragma comment(lib, "Irrlicht.a")
 #endif
 
-using namespace irr;
 
-class 			Irrlicht
+namespace Bomberman
 {
- private:
-  IrrlichtDevice 	*_device;
-  video::IVideoDriver	*driver;
-  scene::ISceneManager	*smgr;
+  class Irrlicht
+  {
+   private:
+    irr::IrrlichtDevice *_device;
+    irr::video::IVideoDriver *_driver;
+    irr::scene::ISceneManager *_smgr;
 
- public:
-  Irrlicht();
-  virtual ~Irrlicht();
-};
+   public:
+    Irrlicht();
+
+    irr::IrrlichtDevice *get_device() const;
+
+    irr::video::IVideoDriver *get_driver() const;
+
+    irr::scene::ISceneManager *get_smgr() const;
+
+    virtual ~Irrlicht();
+  };
+}
 
 
 #endif //CPP_INDIE_STUDIO_IRRLICHT_HPP
