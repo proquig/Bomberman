@@ -4,10 +4,6 @@
 
 #include "Main.hpp"
 
-#ifdef _MSC_VER
-#pragma comment(lib, "Irrlicht.a")
-#endif
-
 int main()
 {
   new Bomberman::Main();

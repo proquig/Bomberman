@@ -4,7 +4,6 @@ PROJECT(cpp_indie_studio)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 include_directories(${IRRLICHT_INCLUDE_DIR})
-include_directories(includes)
 
 file(
         GLOB_RECURSE
@@ -22,4 +21,5 @@ find_package(Irrlicht)
 
 add_executable(MyGauntlet ${SOURCES} ${HEADERS})
 
+target_include_directories(MyGauntlet PRIVATE includes)
 target_link_libraries(MyGauntlet ${IRRLICHT_LIBRARY})
