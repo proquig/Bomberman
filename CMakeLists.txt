@@ -19,7 +19,7 @@ file(
         includes/*.hpp
 )
 
-add_executable(MyGauntlet ${SOURCES} ${HEADERS})
+add_executable(Bomberman ${SOURCES} ${HEADERS})
 
-target_include_directories(MyGauntlet PRIVATE includes)
-target_link_libraries(MyGauntlet ${IRRLICHT_LIBRARY})
+target_include_directories(Bomberman PRIVATE includes)
+target_link_libraries(Bomberman ${IRRLICHT_LIBRARY})
