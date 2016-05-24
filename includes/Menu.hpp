@@ -13,8 +13,16 @@ namespace Bomberman
 {
   class Menu
   {
+   public:
+    enum Action {
+      NEW_SINGLE_GAME,
+      LOAD_SINGLE_GAME,
+      MULTIPLAYER_GAME,
+      QUIT
+    };
+
    private:
-    typedef std::list<std::pair<irr::video::ITexture *, unsigned int>> t_texture_list;
+    typedef std::list<std::pair<irr::video::ITexture *, Action>> t_texture_list;
 
     Bomberman::Irrlicht &irr;
     t_texture_list texture;
@@ -23,7 +31,7 @@ namespace Bomberman
    public:
     Menu();
 
-    unsigned int run();
+    Action run();
 
     ~Menu();
   };
