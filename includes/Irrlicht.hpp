@@ -26,16 +26,16 @@ namespace Bomberman
 
    private:
     irr::IrrlichtDevice *_device;
-    irr::video::IVideoDriver *_driver;
-    irr::scene::ISceneManager *_smgr;
 
    public:
 
-    irr::IrrlichtDevice *get_device() const;
+    irr::IrrlichtDevice *getDevice() const;
 
-    irr::video::IVideoDriver *get_driver() const;
+    irr::video::IVideoDriver *getDriver() const;
 
-    irr::scene::ISceneManager *get_smgr() const;
+    irr::gui::IGUIEnvironment *getGui() const;
+
+    irr::scene::ISceneManager *getSmgr() const;
 
    private:
     Irrlicht();

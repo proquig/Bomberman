@@ -2,7 +2,6 @@
 // Created by cloquet on 10/05/16.
 //
 
-#include <zconf.h>
 #include "Irrlicht.hpp"
 #include "Exception.hpp"
 
@@ -22,9 +21,6 @@ Bomberman::Irrlicht::Irrlicht()
     throw (exception("Can't Load OpenGL"));
 
   this->_device->setWindowCaption(L"Hello World! - Irrlicht Engine Demo");
-
-  this->_driver = _device->getVideoDriver();
-  this->_smgr = _device->getSceneManager();
 }
 
 Bomberman::Irrlicht &Bomberman::Irrlicht::operator=(const Bomberman::Irrlicht &)
@@ -37,17 +33,22 @@ Bomberman::Irrlicht::~Irrlicht()
   this->_device->drop();
 }
 
-irr::IrrlichtDevice *Bomberman::Irrlicht::get_device() const
+irr::IrrlichtDevice *Bomberman::Irrlicht::getDevice() const
 {
   return _device;
 }
 
-irr::video::IVideoDriver *Bomberman::Irrlicht::get_driver() const
+irr::video::IVideoDriver *Bomberman::Irrlicht::getDriver() const
 {
-  return _driver;
+  return _device->getVideoDriver();
 }
 
-irr::scene::ISceneManager *Bomberman::Irrlicht::get_smgr() const
+irr::gui::IGUIEnvironment *Bomberman::Irrlicht::getGui() const
 {
-  return _smgr;
+  return _device->getGUIEnvironment();
+}
+
+irr::scene::ISceneManager *Bomberman::Irrlicht::getSmgr() const
+{
+  return _device->getSceneManager();
 }
