@@ -13,6 +13,8 @@ namespace Bomberman
    public:
     Main();
 
+    virtual ~Main();
+
   };
 }
 
