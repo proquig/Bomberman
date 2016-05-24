@@ -23,7 +23,7 @@ namespace Bomberman
    public:
     Menu();
 
-    void run();
+    unsigned int run();
 
     ~Menu();
   };

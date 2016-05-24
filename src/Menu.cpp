@@ -19,7 +19,7 @@ Bomberman::Menu::~Menu()
 
 }
 
-void Bomberman::Menu::run()
+unsigned int Bomberman::Menu::run()
 {
   while (irr.getDevice()->run())
     {
@@ -40,6 +40,8 @@ void Bomberman::Menu::run()
 	  if (it == texture.end()--)
 	    it = texture.begin();
 	}
+      if (irr.event.IsKeyDown(irr::KEY_RETURN))
+	return it->second;
       irr.getDriver()->beginScene(true, true, video::SColor(255, 120, 102, 136));
       irr.getDriver()->draw2DImage(it->first, core::rect<s32>(0, 0, 1920, 1080),
 				   core::rect<s32>(0, 0, 1920, 1080));
