@@ -7,6 +7,7 @@
 
 #include <irrlicht.h>
 #include "driverChoice.h"
+#include "EventReceiver.hpp"
 
 #ifdef _MSC_VER
 #pragma comment(lib, "Irrlicht.a")
@@ -28,6 +29,7 @@ namespace Bomberman
     irr::IrrlichtDevice *_device;
 
    public:
+    EventReceiver		event;
 
     irr::IrrlichtDevice *getDevice() const;
 
