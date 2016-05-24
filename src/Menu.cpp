@@ -6,26 +6,25 @@
 #include "Menu.hpp"
 
 
-Menu::Menu()
-	:irr()
+Bomberman::Menu::Menu() : irr(Bomberman::Irrlicht::instance())
 {
-  this->texture.push_back(std::make_pair(irr->getDriver()->getTexture("../media/Menu/Gauntlet_Menu1.png"), 0));
-  this->texture.push_back(std::make_pair(irr->getDriver()->getTexture("../media/Menu/Gauntlet_Menu2.png"), 1));
-  this->texture.push_back(std::make_pair(irr->getDriver()->getTexture("../media/Menu/Gauntlet_Menu3.png"), 2));
+  this->texture.push_back(std::make_pair(irr.getDriver()->getTexture("../media/Menu/Gauntlet_Menu1.png"), 0));
+  this->texture.push_back(std::make_pair(irr.getDriver()->getTexture("../media/Menu/Gauntlet_Menu2.png"), 1));
+  this->texture.push_back(std::make_pair(irr.getDriver()->getTexture("../media/Menu/Gauntlet_Menu3.png"), 2));
   this->it = texture.begin();
 }
 
-Menu::~Menu()
+Bomberman::Menu::~Menu()
 {
 
 }
 
-void		Menu::run()
+void Bomberman::Menu::run()
 {
-  while (irr->getDevice()->run())
+  while (irr.getDevice()->run())
     {
       usleep(100000);
-      if (irr->event.IsKeyDown(irr::KEY_KEY_Z))
+      if (irr.event.IsKeyDown(irr::KEY_KEY_Z))
 	{
 	  if (it == texture.begin())
 	    {
@@ -35,17 +34,17 @@ void		Menu::run()
 	  else
 	    it--;
 	}
-      else if (irr->event.IsKeyDown(irr::KEY_KEY_S))
+      else if (irr.event.IsKeyDown(irr::KEY_KEY_S))
 	{
 	  it++;
 	  if (it == texture.end()--)
 	    it = texture.begin();
 	}
-      irr->getDriver()->beginScene(true, true, video::SColor(255, 120, 102, 136));
-      irr->getDriver()->draw2DImage(it->first, core::rect<s32>(0, 0, 1920, 1080),
-			  core::rect<s32>(0, 0, 1920, 1080));
-      core::position2d <s32> m = irr->getDevice()->getCursorControl()->getPosition();
-      irr->getDriver()->endScene();
+      irr.getDriver()->beginScene(true, true, video::SColor(255, 120, 102, 136));
+      irr.getDriver()->draw2DImage(it->first, core::rect<s32>(0, 0, 1920, 1080),
+				   core::rect<s32>(0, 0, 1920, 1080));
+      core::position2d<s32> m = irr.getDevice()->getCursorControl()->getPosition();
+      irr.getDriver()->endScene();
     }
-  irr->getDevice()->drop();
+  irr.getDevice()->drop();
 }
