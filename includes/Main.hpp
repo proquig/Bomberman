@@ -11,7 +11,7 @@ namespace Bomberman
 {
   class Main
   {
-    Irrlicht _irrlicht;
+    Irrlicht &_irrlicht;
 
    public:
     Main();

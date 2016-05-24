@@ -17,19 +17,32 @@ namespace Bomberman
 {
   class Irrlicht
   {
+    // Singleton
+   private:
+    static Irrlicht _instance;
+
+   public:
+    static Irrlicht &instance();
+
    private:
     irr::IrrlichtDevice *_device;
     irr::video::IVideoDriver *_driver;
     irr::scene::ISceneManager *_smgr;
 
    public:
-    Irrlicht();
 
     irr::IrrlichtDevice *get_device() const;
 
     irr::video::IVideoDriver *get_driver() const;
 
     irr::scene::ISceneManager *get_smgr() const;
+
+   private:
+    Irrlicht();
+
+    Irrlicht(const Irrlicht &) {}
+
+    Irrlicht& operator=(const Irrlicht&);
 
     virtual ~Irrlicht();
   };

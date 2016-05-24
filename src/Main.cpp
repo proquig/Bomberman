@@ -8,7 +8,7 @@
 #pragma comment(lib, "Irrlicht.a")
 #endif
 
-Bomberman::Main::Main()
+Bomberman::Main::Main() : _irrlicht(Irrlicht::instance())
 {
 
 }

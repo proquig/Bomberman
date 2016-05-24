@@ -2,8 +2,16 @@
 // Created by cloquet on 10/05/16.
 //
 
+#include <zconf.h>
 #include "Irrlicht.hpp"
 #include "Exception.hpp"
+
+Bomberman::Irrlicht Bomberman::Irrlicht::_instance = Bomberman::Irrlicht();
+
+Bomberman::Irrlicht &Bomberman::Irrlicht::instance()
+{
+  return _instance;
+}
 
 Bomberman::Irrlicht::Irrlicht()
 {
@@ -17,6 +25,11 @@ Bomberman::Irrlicht::Irrlicht()
 
   this->_driver = _device->getVideoDriver();
   this->_smgr = _device->getSceneManager();
+}
+
+Bomberman::Irrlicht &Bomberman::Irrlicht::operator=(const Bomberman::Irrlicht &)
+{
+  return *this;
 }
 
 Bomberman::Irrlicht::~Irrlicht()
