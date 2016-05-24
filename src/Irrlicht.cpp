@@ -34,6 +34,7 @@ Bomberman::Irrlicht &Bomberman::Irrlicht::operator=(const Bomberman::Irrlicht &)
 
 Bomberman::Irrlicht::~Irrlicht()
 {
+  this->_device->drop();
 }
 
 irr::IrrlichtDevice *Bomberman::Irrlicht::get_device() const
