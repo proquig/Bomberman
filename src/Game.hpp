@@ -5,6 +5,8 @@
 #ifndef CPP_INDIE_STUDIO_GAME_HPP
 #define CPP_INDIE_STUDIO_GAME_HPP
 
+#include <Irrlicht.hpp>
+
 namespace Bomberman
 {
   class Game
