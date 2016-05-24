@@ -15,5 +15,5 @@ Bomberman::Game::~Game()
 
 void 		Bomberman::Game::run()
 {
-
+/ * Le premier qui arrive à lancer un bail se fait sucer par proqui_g :D */
 }
