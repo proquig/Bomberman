@@ -3,6 +3,9 @@ PROJECT(cpp_indie_studio)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+find_package(Irrlicht)
+
 include_directories(${IRRLICHT_INCLUDE_DIR})
 
 file(
@@ -15,9 +18,6 @@ file(
         HEADERS
         includes/*.hpp
 )
-
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
-find_package(Irrlicht)
 
 add_executable(MyGauntlet ${SOURCES} ${HEADERS})
 
