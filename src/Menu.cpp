@@ -8,9 +8,10 @@
 
 Bomberman::Menu::Menu() : irr(Bomberman::Irrlicht::instance())
 {
-  this->texture.push_back(std::make_pair(irr.getDriver()->getTexture("../media/Menu/Gauntlet_Menu1.png"), NEW_SINGLE_GAME));
-  this->texture.push_back(std::make_pair(irr.getDriver()->getTexture("../media/Menu/Gauntlet_Menu2.png"), LOAD_SINGLE_GAME));
-  this->texture.push_back(std::make_pair(irr.getDriver()->getTexture("../media/Menu/Gauntlet_Menu3.png"), MULTIPLAYER_GAME));
+  this->texture.push_back(std::make_pair(irr.getDriver()->getTexture("../media/Menu/Gauntlet_Menu.png"), NEW_SINGLE_GAME));
+  this->texture.push_back(std::make_pair(irr.getDriver()->getTexture("../media/Menu/Gauntlet_Menu1.png"), LOAD_SINGLE_GAME));
+  this->texture.push_back(std::make_pair(irr.getDriver()->getTexture("../media/Menu/Gauntlet_Menu2.png"), MULTIPLAYER_GAME));
+  this->texture.push_back(std::make_pair(irr.getDriver()->getTexture("../media/Menu/Gauntlet_Menu3.png"), QUIT));
   this->it = texture.begin();
 }
 
