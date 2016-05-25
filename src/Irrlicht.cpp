@@ -20,6 +20,7 @@ Bomberman::Irrlicht::Irrlicht()
 
   if (this->_device == NULL)
     throw (exception("Can't Load OpenGL"));
+_device->getVideoDriver()->setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, false);
 
   this->_device->setWindowCaption(L"jnique des meres");
 }

@@ -19,7 +19,7 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
 
   scene::IAnimatedMesh  * man = irr.getSmgr()->getMesh("./media/Bomberman/BomberMan.3ds");
   irr.getSmgr()->getParameters()->setAttribute(scene::CSM_TEXTURE_PATH, "./media/Bomberman");
-  irr.getSmgr()->addAnimatedMeshSceneNode(man, _m_scene, -1, core::vector3df(0,0,0), core::vector3df(-120, 0, 0), core::vector3df(0.05f, 0.05f, 0.05f));
+  irr.getSmgr()->addAnimatedMeshSceneNode(man, _m_scene, -1, core::vector3df(10,0,-20), core::vector3df(-90, 0, 0), core::vector3df(0.025f, 0.025f, 0.025f));
   /*scene::IMesh *cube = irr.getSmgr()->getGeometryCreator()->createCubeMesh(core::vector3df(5.f,5.f,5.f));
   _scene = irr.getSmgr()->addMeshSceneNode(plan, _scene);
   irr.getSmgr()->addMeshSceneNode(cube, _scene);*/
