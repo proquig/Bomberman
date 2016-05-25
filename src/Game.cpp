@@ -22,11 +22,12 @@ Bomberman::Game::~Game()
 
 void 		Bomberman::Game::run()
 {
-  irr.getSmgr()->addCameraSceneNode(0, core::vector3df(50, 0, 0), core::vector3df(0,0,0));
+//  irr.getSmgr()->addCameraSceneNode(0, core::vector3df(50, 0, 0), core::vector3df(0,0,0));
 
+  irr.getSmgr()->addCameraSceneNodeFPS();
   while (irr.getDevice()->run())
     {
-      irr.getDriver()->beginScene(true, true, video::SColor(255, 0, 0, 0));
+      irr.getDriver()->beginScene(true, true, video::SColor(255, 0x47, 0x93, 0x98));
       irr.getSmgr()->drawAll();
       irr.getGui()->drawAll();
       irr.getDriver()->endScene();
