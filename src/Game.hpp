@@ -16,7 +16,8 @@ namespace Bomberman
 
     irr::video::SMaterial _material;
 
-    scene::IMeshSceneNode *_scene;
+    scene::IMeshSceneNode *_m_scene;
+    scene::ISceneNode *_scene;
 
 
    public:
