@@ -21,7 +21,7 @@ Bomberman::Irrlicht::Irrlicht()
   if (this->_device == NULL)
     throw (exception("Can't Load OpenGL"));
 
-  this->_device->setWindowCaption(L"Hello World! - Irrlicht Engine Demo");
+  this->_device->setWindowCaption(L"jnique des meres");
 }
 
 Bomberman::Irrlicht &Bomberman::Irrlicht::operator=(const Bomberman::Irrlicht &)

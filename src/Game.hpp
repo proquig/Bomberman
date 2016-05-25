@@ -14,6 +14,11 @@ namespace Bomberman
    private:
     Bomberman::Irrlicht &irr;
 
+    irr::video::SMaterial _material;
+
+    scene::IMeshSceneNode *_scene;
+
+
    public:
     Game();
     void run();
