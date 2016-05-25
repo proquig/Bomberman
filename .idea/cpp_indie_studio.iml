@@ -13,10 +13,10 @@
       <sourceFolder url="file://$MODULE_DIR$/src/Song.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Exception.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/includes/Exception.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/includes/Irrlicht.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/includes/EventReceiver.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/includes/Main.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/EventReceiver.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/includes/Menu.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/Irrlicht.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake/Modules/FindIrrlicht.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake/Modules/FindIrrKlang.cmake" isTestSource="false" />
@@ -25,15 +25,15 @@
     <orderEntry type="module-library">
       <library name="Header Search Paths">
         <CLASSES>
-          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
-          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
           <root url="file:///usr/include" />
+          <root url="file:///usr/lib/gcc/x86_64-pc-linux-gnu/6.1.1/include" />
+          <root url="file:///usr/lib/gcc/x86_64-pc-linux-gnu/6.1.1/include-fixed" />
           <root url="file:///usr/local/include" />
         </CLASSES>
         <SOURCES>
-          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
-          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
           <root url="file:///usr/include" />
+          <root url="file:///usr/lib/gcc/x86_64-pc-linux-gnu/6.1.1/include" />
+          <root url="file:///usr/lib/gcc/x86_64-pc-linux-gnu/6.1.1/include-fixed" />
           <root url="file:///usr/local/include" />
         </SOURCES>
       </library>
