@@ -5,4 +5,4 @@ cd build
 cmake ..
 make
 mv Bomberman ..
-mv ../lib/* ..
+cp ../lib/* ..
