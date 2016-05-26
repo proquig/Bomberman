@@ -22,6 +22,12 @@ file(
 )
 
 add_executable(Bomberman ${SOURCES} ${HEADERS})
+add_custom_command(
+        TARGET Bomberman POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${CMAKE_HOME_DIRECTORY}/media
+            $<TARGET_FILE_DIR:Bomberman>/media
+)
 
 target_include_directories(Bomberman PRIVATE includes)
 target_link_libraries(Bomberman ${IRRLICHT_LIBRARY})
