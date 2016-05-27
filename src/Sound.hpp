@@ -21,16 +21,16 @@ inline void sleepSomeTime() { Sleep(100); }
 
 namespace Bomberman
 {
-  class Song
+  class Sound
   {
    private:
     Bomberman::Irrlicht &irr;
     irrklang::ISoundEngine *_engine;
 
    public:
-    Song();
+    Sound();
 
-    ~Song();
+    ~Sound();
   };
 }
 

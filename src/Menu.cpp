@@ -4,7 +4,7 @@
 
 #include <zconf.h>
 #include "Menu.hpp"
-#include "Song.hpp"
+#include "Sound.hpp"
 
 Bomberman::Menu::Menu() : irr(Bomberman::Irrlicht::instance())
 {
@@ -22,7 +22,7 @@ Bomberman::Menu::~Menu()
 
 Bomberman::Menu::Action Bomberman::Menu::run()
 {
-  Bomberman::Song s;
+  Bomberman::Sound s;
 
   while (irr.getDevice()->run())
     {
