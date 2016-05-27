@@ -1,0 +1,11 @@
+#include "Irrlicht.h"
+
+
+class		Bomb {
+public:
+  Bomb();
+  ~Bomb();
+
+private:
+  std::string _mesh_path;
+}
