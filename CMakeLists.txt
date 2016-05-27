@@ -10,6 +10,8 @@ find_package(IrrKlang)
 include_directories(${IRRLICHT_INCLUDE_DIR})
 include_directories(${IRRKLANG_INCLUDE_DIR})
 
+link_directories(${CMAKE_HOME_DIRECTORY}/lib)
+
 file(
         GLOB_RECURSE
         SOURCES
@@ -22,6 +24,7 @@ file(
 )
 
 add_executable(Bomberman ${SOURCES} ${HEADERS})
+
 add_custom_command(
         TARGET Bomberman POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
@@ -29,6 +32,15 @@ add_custom_command(
             $<TARGET_FILE_DIR:Bomberman>/assets
 )
 
+add_custom_command(
+        TARGET Bomberman POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_HOME_DIRECTORY}/lib
+        $<TARGET_FILE_DIR:Bomberman>/lib
+)
+
 target_include_directories(Bomberman PRIVATE includes)
 target_link_libraries(Bomberman ${IRRLICHT_LIBRARY})
-target_link_libraries(Bomberman ${IRRKLANG_LIBRARY})
+target_link_libraries(Bomberman ikpFlac)
+target_link_libraries(Bomberman ikpMP3)
+target_link_libraries(Bomberman IrrKlang)

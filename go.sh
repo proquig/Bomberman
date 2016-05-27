@@ -6,6 +6,5 @@ cd build
 cmake ..
 make
 mv Bomberman ..
-cp ../lib/* ..
 cd -
 ./Bomberman
