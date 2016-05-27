@@ -23,6 +23,8 @@ Bomberman::Menu::~Menu()
 Bomberman::Menu::Action Bomberman::Menu::run()
 {
   Bomberman::MusicManager &s = Bomberman::MusicManager::instance();
+  s.setMusic("assets/sound/menusong.flac");
+  s.startMusic();
 
   while (irr.getDevice()->run())
     {
