@@ -4,7 +4,7 @@
 
 #include <zconf.h>
 #include "Menu.hpp"
-#include "Sound.hpp"
+#include "sound/MusicManager.hpp"
 
 Bomberman::Menu::Menu() : irr(Bomberman::Irrlicht::instance())
 {
@@ -22,7 +22,7 @@ Bomberman::Menu::~Menu()
 
 Bomberman::Menu::Action Bomberman::Menu::run()
 {
-  Bomberman::Sound s;
+  Bomberman::MusicManager &s = Bomberman::MusicManager::instance();
 
   while (irr.getDevice()->run())
     {

@@ -39,7 +39,7 @@ add_custom_command(
         $<TARGET_FILE_DIR:Bomberman>/lib
 )
 
-target_include_directories(Bomberman PRIVATE includes)
+target_include_directories(Bomberman PRIVATE includes PRIVATE includes/sound)
 target_link_libraries(Bomberman ${IRRLICHT_LIBRARY})
 target_link_libraries(Bomberman ikpFlac)
 target_link_libraries(Bomberman ikpMP3)
