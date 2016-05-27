@@ -3,6 +3,7 @@
 //
 
 #include <zconf.h>
+#include "Exception.hpp"
 #include "Menu.hpp"
 #include "sound/MusicManager.hpp"
 
@@ -23,8 +24,16 @@ Bomberman::Menu::~Menu()
 Bomberman::Menu::Action Bomberman::Menu::run()
 {
   Bomberman::MusicManager &s = Bomberman::MusicManager::instance();
-  s.setMusic("assets/sound/menusong.flac");
-  s.startMusic();
+  s.setMusic("./assets/sound/menusong.flac");
+
+  try
+    {
+      s.startMusic();
+    }
+  catch (exception e)
+    {
+      std::cerr << e.what() << std::endl;
+    }
 
   while (irr.getDevice()->run())
     {

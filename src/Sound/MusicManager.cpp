@@ -2,6 +2,7 @@
 // Created by cloquet on 25/05/16.
 //
 
+#include "Exception.hpp"
 #include "sound/MusicManager.hpp"
 
 Bomberman::MusicManager Bomberman::MusicManager::_instance = Bomberman::MusicManager();
@@ -55,5 +56,8 @@ void Bomberman::MusicManager::pauseMusic()
 
 void Bomberman::MusicManager::startMusic()
 {
-  this->_music->setIsPaused(false);
+  if (this->_music)
+    this->_music->setIsPaused(false);
+  else
+    throw exception("Music cannot be loaded");
 }
