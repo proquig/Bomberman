@@ -16,7 +16,7 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
   _m_scene = irr.getSmgr()->addMeshSceneNode(plan);
   _m_scene->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
   irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.5f);
-  _m_scene->setMaterialTexture(0, irr.getDriver()->getTexture("./media/Te/Wall_Normal.JPG"));
+  _m_scene->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/Wall_Normal.JPG"));
 
   for (int wallnbr = 0; wallnbr <= 70; wallnbr += 5)
     {
@@ -24,14 +24,14 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
     _wall = irr.getSmgr()->addMeshSceneNode(cube, _m_scene);
     _wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
     irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.5f);
-    _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./media/Te/Wall.png"));
+    _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/Wall.png"));
     _wall->setPosition(irr::core::vector3df(70 / 2 - wallnbr, 0, 60 / 2));
 
     scene::IMesh *cube2 = irr.getSmgr()->getGeometryCreator()->createCubeMesh(core::vector3df(5.f, 5.f, 5.f));
     _wall = irr.getSmgr()->addMeshSceneNode(cube2, _m_scene);
     _wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
     irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.5f);
-    _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./media/Te/Wall.png"));
+    _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/Wall.png"));
     _wall->setPosition(irr::core::vector3df(70 / 2 - wallnbr, 0, -60 / 2));
     }
 
@@ -41,21 +41,21 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
     _wall = irr.getSmgr()->addMeshSceneNode(cube, _m_scene);
     _wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
     irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.5f);
-    _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./media/Te/Wall.png"));
+    _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/Wall.png"));
     _wall->setPosition(irr::core::vector3df(70 / 2, 0, 60 / 2 - wallnbr));
 
     scene::IMesh *cube2 = irr.getSmgr()->getGeometryCreator()->createCubeMesh(core::vector3df(5.f, 5.f, 5.f));
     _wall = irr.getSmgr()->addMeshSceneNode(cube2, _m_scene);
     _wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
     irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.5f);
-    _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./media/Te/Wall.png"));
+    _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/Wall.png"));
     _wall->setPosition(irr::core::vector3df(-70 / 2, 0, 60 / 2 -wallnbr));
     }
 
 
   /* claase perso */
   //scene::IAnimatedMesh  * man = irr.getSmgr()->getMesh("./media/Bomberman/BomberMan.3ds");
-  scene::IAnimatedMesh  * man = irr.getSmgr()->getMesh("./media/Test/ninja.b3d");
+  scene::IAnimatedMesh  * man = irr.getSmgr()->getMesh("./assets/Test/ninja.b3d");
 //  irr.getSmgr()->getParameters()->setAttribute(scene::CSM_TEXTURE_PATH, "./media/Bomberman");
   _perso = irr.getSmgr()->addAnimatedMeshSceneNode(man, _scene, -1, core::vector3df(x ,0 ,y), core::vector3df(0, 0, 0), core::vector3df(1.025f, 1.025f, 1.025f));
   _perso->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
