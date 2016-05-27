@@ -7,10 +7,15 @@
 Bomberman::Song::Song() : irr(Bomberman::Irrlicht::instance())
 {
   this->_engine = irrklang::createIrrKlangDevice();
-  if (!this->_engine)
+
+  if (this->_engine == nullptr)
     return;
-  irrklang::ISound *music = this->_engine->play3D("./assets/song/menusong.flac", irrklang::vec3df(0, 0, 0), \
-  true, false, true);
+
+  irrklang::ISound *music = this->_engine->play3D("./assets/song/menusong.flac", irrklang::vec3df(0, 0, 0),
+						  true, false, true);
+
+  if (music == nullptr)
+    return;
 
   music->setMinDistance(5.0f);
 }
