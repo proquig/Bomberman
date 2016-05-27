@@ -52,6 +52,8 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
     _wall->setPosition(irr::core::vector3df(-70 / 2, 0, 60 / 2 -wallnbr));
     }
 
+
+  /* claase perso */
   scene::IAnimatedMesh  * man = irr.getSmgr()->getMesh("./media/Bomberman/BomberMan.3ds");
 //  irr.getSmgr()->getParameters()->setAttribute(scene::CSM_TEXTURE_PATH, "./media/Bomberman");
   _perso = irr.getSmgr()->addAnimatedMeshSceneNode(man, _scene, -1, core::vector3df(x ,0 ,y), core::vector3df(-90, 0, 0), core::vector3df(0.025f, 0.025f, 0.025f));
