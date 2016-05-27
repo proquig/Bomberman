@@ -3,7 +3,6 @@
 //
 
 #include "Game.hpp"
-#include "Character.hpp"
 
 Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
 {
@@ -17,7 +16,7 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
   _m_scene = irr.getSmgr()->addMeshSceneNode(plan);
   _m_scene->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
   irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.5f);
-  _m_scene->setMaterialTexture(0, irr.getDriver()->getTexture("./media/Te/Wall_Normal.JPG"));
+  _m_scene->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/Wall_Normal.JPG"));
 
   for (int wallnbr = 0; wallnbr <= 70; wallnbr += 5)
     {
@@ -25,14 +24,14 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
     _wall = irr.getSmgr()->addMeshSceneNode(cube, _m_scene);
     _wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
     irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.5f);
-    _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./media/Te/Wall.png"));
+    _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/Wall.png"));
     _wall->setPosition(irr::core::vector3df(70 / 2 - wallnbr, 0, 60 / 2));
 
     scene::IMesh *cube2 = irr.getSmgr()->getGeometryCreator()->createCubeMesh(core::vector3df(5.f, 5.f, 5.f));
     _wall = irr.getSmgr()->addMeshSceneNode(cube2, _m_scene);
     _wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
     irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.5f);
-    _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./media/Te/Wall.png"));
+    _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/Wall.png"));
     _wall->setPosition(irr::core::vector3df(70 / 2 - wallnbr, 0, -60 / 2));
     }
 
@@ -42,14 +41,14 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
     _wall = irr.getSmgr()->addMeshSceneNode(cube, _m_scene);
     _wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
     irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.5f);
-    _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./media/Te/Wall.png"));
+    _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/Wall.png"));
     _wall->setPosition(irr::core::vector3df(70 / 2, 0, 60 / 2 - wallnbr));
 
     scene::IMesh *cube2 = irr.getSmgr()->getGeometryCreator()->createCubeMesh(core::vector3df(5.f, 5.f, 5.f));
     _wall = irr.getSmgr()->addMeshSceneNode(cube2, _m_scene);
     _wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
     irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.5f);
-    _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./media/Te/Wall.png"));
+    _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/Wall.png"));
     _wall->setPosition(irr::core::vector3df(-70 / 2, 0, 60 / 2 -wallnbr));
     }
 
@@ -61,8 +60,7 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
   _perso->setMD2Animation(scene::EMAT_STAND);
   _perso->getMaterial(0).NormalizeNormals = true;
   _perso->getMaterial(0).Lighting = true;
-  _perso->setAnimationSpeed(8.f);*/
-
+  _perso->setAnimationSpeed(8.f);
 
 }
 
@@ -81,6 +79,37 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
         selector->drop();
 
  */
+int Bomberman::Game::right()
+{
+  x += 0.5;
+  _perso->setPosition(irr::core::vector3df(x ,0,y));
+  _perso->setRotation(irr::core::vector3df(0, 90, 0));
+  return (0);
+}
+
+int Bomberman::Game::left()
+{
+  x -= 0.5;
+  _perso->setPosition(irr::core::vector3df(x, 0, y));
+  _perso->setRotation(irr::core::vector3df(0, -90, 0));
+  return (0);
+}
+
+int Bomberman::Game::up()
+{
+  y += 0.5;
+  _perso->setPosition(irr::core::vector3df(x , 0, y));
+  _perso->setRotation(irr::core::vector3df(0, 0, 0));
+  return (0);
+}
+
+int Bomberman::Game::down()
+{
+  y -= 0.5;
+  _perso->setPosition(irr::core::vector3df(x, 0, y));
+  _perso->setRotation(irr::core::vector3df(0, 180, 0));
+  return (0);
+}
 
 Bomberman::Game::~Game()
 {
@@ -93,6 +122,7 @@ void 		Bomberman::Game::run()
   Character lol;
   while (irr.getDevice()->run())
     {
+
     if (irr.event.IsKeyDown(irr::KEY_KEY_Z))
       lol.set_pos(UP);
     if (irr.event.IsKeyDown(irr::KEY_KEY_S))

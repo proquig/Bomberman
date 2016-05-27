@@ -12,10 +12,12 @@
       <sourceFolder url="file://$MODULE_DIR$/src/Game.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Song.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Exception.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Bomb.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/includes/Exception.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/Bomb.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/includes/Main.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/includes/EventReceiver.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/includes/Menu.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/EventReceiver.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/includes/Irrlicht.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake/Modules/FindIrrlicht.cmake" isTestSource="false" />
