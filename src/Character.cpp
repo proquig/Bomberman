@@ -14,7 +14,7 @@ Character::Character() : _irr(Bomberman::Irrlicht::instance())
 {
   this->_x = 0;
   this->_y = 0;
-  this->_scene = this->_irr.getSmgr()->getMesh("./media/Test/ninja.b3d");
+  this->_scene = this->_irr.getSmgr()->getMesh("./assets/Test/ninja.b3d");
   this->_character = this->_irr.getSmgr()->addAnimatedMeshSceneNode(this->_scene, 0, -1, core::vector3df(0 ,0 ,0), core::vector3df(0, 0, 0), core::vector3df(1.025f, 1.025f, 1.025f));
   this->_character->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
   this->_character->setMD2Animation(scene::EMAT_STAND);
@@ -22,7 +22,7 @@ Character::Character() : _irr(Bomberman::Irrlicht::instance())
   this->_character->getMaterial(0).Lighting = true;
   this->_character->setAnimationSpeed(8.f);
   //TODO: géré les bon bails :D
-  this->_character->setFrameLoop(0, 60);
+//  this->_character->setFrameLoop(0, 60);
 }
 
 Character::Character(float x, float y) : Character::Character()

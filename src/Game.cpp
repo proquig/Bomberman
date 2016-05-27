@@ -3,6 +3,7 @@
 //
 
 #include "Game.hpp"
+#include "Character.hpp"
 
 Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
 {
@@ -61,54 +62,7 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
   _perso->getMaterial(0).NormalizeNormals = true;
   _perso->getMaterial(0).Lighting = true;
   _perso->setAnimationSpeed(8.f);
-
-}
-
-/*
- *  node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("../../media/ninja.b3d"),
-                                                0, IDFlag_IsPickable | IDFlag_IsHighlightable);
-        node->setScale(core::vector3df(10));
-        node->setPosition(core::vector3df(-75,-66,-80));
-        node->setRotation(core::vector3df(0,90,0));
-        node->setAnimationSpeed(8.f);
-        node->getMaterial(0).NormalizeNormals = true;
-        node->getMaterial(0).Lighting = true;
-        // Just do the same as we did above.
-        selector = smgr->createTriangleSelector(node);
-        node->setTriangleSelector(selector);
-        selector->drop();
-
- */
-int Bomberman::Game::right()
-{
-  x += 0.5;
-  _perso->setPosition(irr::core::vector3df(x ,0,y));
-  _perso->setRotation(irr::core::vector3df(0, 90, 0));
-  return (0);
-}
-
-int Bomberman::Game::left()
-{
-  x -= 0.5;
-  _perso->setPosition(irr::core::vector3df(x, 0, y));
-  _perso->setRotation(irr::core::vector3df(0, -90, 0));
-  return (0);
-}
-
-int Bomberman::Game::up()
-{
-  y += 0.5;
-  _perso->setPosition(irr::core::vector3df(x , 0, y));
-  _perso->setRotation(irr::core::vector3df(0, 0, 0));
-  return (0);
-}
-
-int Bomberman::Game::down()
-{
-  y -= 0.5;
-  _perso->setPosition(irr::core::vector3df(x, 0, y));
-  _perso->setRotation(irr::core::vector3df(0, 180, 0));
-  return (0);
+*/
 }
 
 Bomberman::Game::~Game()
