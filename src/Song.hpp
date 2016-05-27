@@ -25,6 +25,7 @@ namespace Bomberman
   {
    private:
     Bomberman::Irrlicht &irr;
+    irrklang::ISoundEngine *_engine;
 
    public:
     Song();
