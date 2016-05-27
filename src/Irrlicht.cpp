@@ -15,12 +15,12 @@ Bomberman::Irrlicht &Bomberman::Irrlicht::instance()
 Bomberman::Irrlicht::Irrlicht()
 {
   irr::video::E_DRIVER_TYPE driverType = irr::video::EDT_OPENGL;
-  this->_device = irr::createDevice(driverType, irr::core::dimension2d<irr::u32>(1920, 1080),\
-   0, false, false, false, &this->event);
+  this->_device = irr::createDevice(driverType, irr::core::dimension2d<irr::u32>(1920, 1080),
+				    0, false, false, false, &this->event);
 
   if (this->_device == NULL)
     throw (exception("Can't Load OpenGL"));
-_device->getVideoDriver()->setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, false);
+  this->_device->getVideoDriver()->setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, false);
   this->_device->setWindowCaption(L"Bomberman");
 }
 

@@ -12,9 +12,7 @@ Bomberman::Main::Main() : _irrlicht(Irrlicht::instance())
   if (menu.run() == Bomberman::Menu::NEW_SINGLE_GAME)
     {
       Game G;
-
       G.run();
-
     }
 }
 
