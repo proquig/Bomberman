@@ -12,7 +12,7 @@ public:
     POSED,
     EXPLODED
   };
-  
+  Bomb();
   Bomb(int pX, int pY);
   ~Bomb();
   std::string getMesh() const;
@@ -22,6 +22,6 @@ public:
 private:
   std::string _mesh;
   enum state _state;
-  int		_pX;
-  int		_pY;
+  int		_px;
+  int		_py;
 };
