@@ -48,8 +48,6 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
   irr.getSmgr()->getParameters()->setAttribute(scene::CSM_TEXTURE_PATH, "./media/Bomberman");
   _scene = irr.getSmgr()->addAnimatedMeshSceneNode(man, _m_scene, -1, core::vector3df(x ,0 ,y), core::vector3df(-90, 0, 0), core::vector3df(0.025f, 0.025f, 0.025f));
 
-
-
 }
 
 int Bomberman::Game::right()
