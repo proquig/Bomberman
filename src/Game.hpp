@@ -12,11 +12,18 @@ namespace Bomberman
   class Game
   {
    private:
+  /* pour classe personnage */
+  float x;
+    float y;
+
     Bomberman::Irrlicht &irr;
 
     irr::video::SMaterial _material;
 
     scene::IMeshSceneNode *_m_scene;
+
+    scene::IMeshSceneNode *_wall;
+
     scene::ISceneNode *_scene;
 
 
@@ -24,6 +31,10 @@ namespace Bomberman
     Game();
     void run();
     ~Game();
+    int right();
+    int left();
+    int up();
+    int down();
   };
 }
 
