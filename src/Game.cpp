@@ -3,6 +3,7 @@
 //
 
 #include "Game.hpp"
+#include "Character.hpp"
 
 Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
 {
@@ -53,16 +54,15 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
     }
 
 
-  /* claase perso */
-  //scene::IAnimatedMesh  * man = irr.getSmgr()->getMesh("./media/Bomberman/BomberMan.3ds");
-  scene::IAnimatedMesh  * man = irr.getSmgr()->getMesh("./media/Test/ninja.b3d");
-//  irr.getSmgr()->getParameters()->setAttribute(scene::CSM_TEXTURE_PATH, "./media/Bomberman");
+  /* claase perso
+  scene::IAnimatedMesh  *man = irr.getSmgr()->getMesh("./media/Test/ninja.b3d");
   _perso = irr.getSmgr()->addAnimatedMeshSceneNode(man, _scene, -1, core::vector3df(x ,0 ,y), core::vector3df(0, 0, 0), core::vector3df(1.025f, 1.025f, 1.025f));
   _perso->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
   _perso->setMD2Animation(scene::EMAT_STAND);
   _perso->getMaterial(0).NormalizeNormals = true;
   _perso->getMaterial(0).Lighting = true;
-  _perso->setAnimationSpeed(8.f);
+  _perso->setAnimationSpeed(8.f);*/
+
 
 }
 
@@ -81,37 +81,6 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
         selector->drop();
 
  */
-int Bomberman::Game::right()
-{
-  x += 0.5;
-  _perso->setPosition(irr::core::vector3df(x ,0,y));
-  _perso->setRotation(irr::core::vector3df(0, 90, 0));
-  return (0);
-}
-
-int Bomberman::Game::left()
-{
-  x -= 0.5;
-  _perso->setPosition(irr::core::vector3df(x, 0, y));
-  _perso->setRotation(irr::core::vector3df(0, -90, 0));
-  return (0);
-}
-
-int Bomberman::Game::up()
-{
-  y += 0.5;
-  _perso->setPosition(irr::core::vector3df(x , 0, y));
-  _perso->setRotation(irr::core::vector3df(0, 0, 0));
-  return (0);
-}
-
-int Bomberman::Game::down()
-{
-  y -= 0.5;
-  _perso->setPosition(irr::core::vector3df(x, 0, y));
-  _perso->setRotation(irr::core::vector3df(0, 180, 0));
-  return (0);
-}
 
 Bomberman::Game::~Game()
 {
@@ -120,19 +89,19 @@ Bomberman::Game::~Game()
 void 		Bomberman::Game::run()
 {
   irr.getSmgr()->addCameraSceneNode(_m_scene, core::vector3df(0, 45, -10), core::vector3df(0,0,0));
-
-  _perso->setFrameLoop(0, 14);
+  //_perso->setFrameLoop(0, 60);
+  Character lol;
   while (irr.getDevice()->run())
     {
-
     if (irr.event.IsKeyDown(irr::KEY_KEY_Z))
-      Bomberman::Game::up();
+      lol.set_pos(UP);
     if (irr.event.IsKeyDown(irr::KEY_KEY_S))
-      Bomberman::Game::down();
+      lol.set_pos(DOWN);
     if (irr.event.IsKeyDown(irr::KEY_KEY_Q))
-      Bomberman::Game::left();
+      lol.set_pos(LEFT);
     if (irr.event.IsKeyDown(irr::KEY_KEY_D))
-      Bomberman::Game::right();
+      lol.set_pos(RIGHT);
+
       irr.getDriver()->beginScene(true, true, video::SColor(255,100,101,140));
       irr.getSmgr()->drawAll();
       irr.getGui()->drawAll();
