@@ -3,7 +3,6 @@
 //
 
 #include "Game.hpp"
-#include <IGeometryCreator.h>
 
 Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
 {
@@ -54,36 +53,42 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
     }
 
   scene::IAnimatedMesh  * man = irr.getSmgr()->getMesh("./media/Bomberman/BomberMan.3ds");
-  irr.getSmgr()->getParameters()->setAttribute(scene::CSM_TEXTURE_PATH, "./media/Bomberman");
-  _scene = irr.getSmgr()->addAnimatedMeshSceneNode(man, _m_scene, -1, core::vector3df(x ,0 ,y), core::vector3df(-90, 0, 0), core::vector3df(0.025f, 0.025f, 0.025f));
-  _scene->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
+//  irr.getSmgr()->getParameters()->setAttribute(scene::CSM_TEXTURE_PATH, "./media/Bomberman");
+  _perso = irr.getSmgr()->addAnimatedMeshSceneNode(man, _scene, -1, core::vector3df(x ,0 ,y), core::vector3df(-90, 0, 0), core::vector3df(0.025f, 0.025f, 0.025f));
+  _perso->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
+  _perso->setMD2Animation(scene::EMAT_STAND);
+  _perso->setMaterialTexture(0, irr.getDriver()->getTexture("./media/Bomberman/"));
 }
 
 int Bomberman::Game::right()
 {
   x += 0.2;
-  _scene->setPosition(irr::core::vector3df(x ,0,y));
+  _perso->setPosition(irr::core::vector3df(x ,0,y));
+  _perso->setRotation(irr::core::vector3df(-90, -90, 0));
   return (0);
 }
 
 int Bomberman::Game::left()
 {
   x -= 0.2;
-  _scene->setPosition(irr::core::vector3df(x, 0, y));
+  _perso->setPosition(irr::core::vector3df(x, 0, y));
+  _perso->setRotation(irr::core::vector3df(-90, 90, 0));
   return (0);
 }
 
 int Bomberman::Game::up()
 {
   y += 0.2;
-  _scene->setPosition(irr::core::vector3df(x , 0,y));
+  _perso->setPosition(irr::core::vector3df(x , 0, y));
+  _perso->setRotation(irr::core::vector3df(-90, 180, 0));
   return (0);
 }
 
 int Bomberman::Game::down()
 {
   y -= 0.2;
-  _scene->setPosition(irr::core::vector3df(x, 0, y));
+  _perso->setPosition(irr::core::vector3df(x, 0, y));
+  _perso->setRotation(irr::core::vector3df(-90, 0, 0));
   return (0);
 }
 
@@ -94,7 +99,7 @@ Bomberman::Game::~Game()
 
 void 		Bomberman::Game::run()
 {
-  irr.getSmgr()->addCameraSceneNode(0, core::vector3df(0, 40, -40), core::vector3df(0,5,0));
+  irr.getSmgr()->addCameraSceneNode(_m_scene, core::vector3df(0, 45, -10), core::vector3df(0,0,0));
 
   while (irr.getDevice()->run())
     {

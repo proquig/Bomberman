@@ -21,11 +21,11 @@ namespace Bomberman
     irr::video::SMaterial _material;
 
     scene::IMeshSceneNode *_m_scene;
-
     scene::IMeshSceneNode *_wall;
 
     scene::ISceneNode *_scene;
 
+    scene::IAnimatedMeshSceneNode *_perso;
 
    public:
     Game();
