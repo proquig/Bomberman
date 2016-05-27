@@ -54,46 +54,64 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
 
 
   /* claase perso */
-  scene::IAnimatedMesh  * man = irr.getSmgr()->getMesh("./media/Bomberman/BomberMan.3ds");
+  //scene::IAnimatedMesh  * man = irr.getSmgr()->getMesh("./media/Bomberman/BomberMan.3ds");
+  scene::IAnimatedMesh  * man = irr.getSmgr()->getMesh("./media/Test/ninja.b3d");
 //  irr.getSmgr()->getParameters()->setAttribute(scene::CSM_TEXTURE_PATH, "./media/Bomberman");
-  _perso = irr.getSmgr()->addAnimatedMeshSceneNode(man, _scene, -1, core::vector3df(x ,0 ,y), core::vector3df(-90, 0, 0), core::vector3df(0.025f, 0.025f, 0.025f));
+  _perso = irr.getSmgr()->addAnimatedMeshSceneNode(man, _scene, -1, core::vector3df(x ,0 ,y), core::vector3df(0, 0, 0), core::vector3df(1.025f, 1.025f, 1.025f));
   _perso->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
   _perso->setMD2Animation(scene::EMAT_STAND);
-  _perso->setMaterialTexture(0, irr.getDriver()->getTexture("./media/Bomberman/"));
+  _perso->getMaterial(0).NormalizeNormals = true;
+  _perso->getMaterial(0).Lighting = true;
+  _perso->setAnimationSpeed(8.f);
+
 }
 
+/*
+ *  node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("../../media/ninja.b3d"),
+                                                0, IDFlag_IsPickable | IDFlag_IsHighlightable);
+        node->setScale(core::vector3df(10));
+        node->setPosition(core::vector3df(-75,-66,-80));
+        node->setRotation(core::vector3df(0,90,0));
+        node->setAnimationSpeed(8.f);
+        node->getMaterial(0).NormalizeNormals = true;
+        node->getMaterial(0).Lighting = true;
+        // Just do the same as we did above.
+        selector = smgr->createTriangleSelector(node);
+        node->setTriangleSelector(selector);
+        selector->drop();
+
+ */
 int Bomberman::Game::right()
 {
-  x += 0.2;
+  x += 0.5;
   _perso->setPosition(irr::core::vector3df(x ,0,y));
-  _perso->setRotation(irr::core::vector3df(-90, -90, 0));
+  _perso->setRotation(irr::core::vector3df(0, 90, 0));
   return (0);
 }
 
 int Bomberman::Game::left()
 {
-  x -= 0.2;
+  x -= 0.5;
   _perso->setPosition(irr::core::vector3df(x, 0, y));
-  _perso->setRotation(irr::core::vector3df(-90, 90, 0));
+  _perso->setRotation(irr::core::vector3df(0, -90, 0));
   return (0);
 }
 
 int Bomberman::Game::up()
 {
-  y += 0.2;
+  y += 0.5;
   _perso->setPosition(irr::core::vector3df(x , 0, y));
-  _perso->setRotation(irr::core::vector3df(-90, 180, 0));
+  _perso->setRotation(irr::core::vector3df(0, 0, 0));
   return (0);
 }
 
 int Bomberman::Game::down()
 {
-  y -= 0.2;
+  y -= 0.5;
   _perso->setPosition(irr::core::vector3df(x, 0, y));
-  _perso->setRotation(irr::core::vector3df(-90, 0, 0));
+  _perso->setRotation(irr::core::vector3df(0, 180, 0));
   return (0);
 }
-
 
 Bomberman::Game::~Game()
 {
@@ -103,6 +121,7 @@ void 		Bomberman::Game::run()
 {
   irr.getSmgr()->addCameraSceneNode(_m_scene, core::vector3df(0, 45, -10), core::vector3df(0,0,0));
 
+  _perso->setFrameLoop(0, 14);
   while (irr.getDevice()->run())
     {
 
