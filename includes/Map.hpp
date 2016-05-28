@@ -23,9 +23,9 @@ namespace Bomberman
 
    public:
     Map();
-
-    void createMap();
-
+    void 			createMap();
+    void 			creatBlock();
+    scene::IMeshSceneNode 	*creatBreakBlock();
     ~Map()
     {
     }

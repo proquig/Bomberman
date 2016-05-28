@@ -29,6 +29,8 @@ Bomberman::Bomb::~Bomb()
 {
   this->explosion();
   this->_state = EXPLODED;
+  delete this->_bomb;
+  delete this->_scene;
 }
 
 void                Bomberman::Bomb::explosion()
