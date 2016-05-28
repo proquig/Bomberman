@@ -87,6 +87,7 @@ void Bomberman::Game::run()
   u32 now = 0;
   while (irr.getDevice()->run())
     {
+      /*
       u32 then = irr.getDevice()->getTimer()->getTime();
       if (irr.event.IsKeyDown(irr::KEY_KEY_Z))
 	lol.set_pos(UP);
@@ -106,8 +107,9 @@ void Bomberman::Game::run()
 	  lol.base();
 	  now = 0;
 	}
-
-      irr.getDriver()->beginScene(true, true, video::SColor(255,100,101,140));
+      */
+      lol.catch_event(irr.event.getKeys());
+      irr.getDriver()->beginScene(true, true, video::SColor(255, 100, 101, 140));
       irr.getDriver()->draw2DImage(background, core::rect<s32>(0, 0, 1920, 1080),
 				   core::rect<s32>(0, 0, 1920, 1080));
       irr.getSmgr()->drawAll();

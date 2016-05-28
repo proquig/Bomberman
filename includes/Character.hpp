@@ -5,42 +5,49 @@
 // Login   <proqui_g@epitech.net>
 // 
 // Started on  Fri May 27 18:46:24 2016 Guillaume PROQUIN
-// Last update Fri May 27 19:06:40 2016 Guillaume PROQUIN
+// Last update Sat May 28 13:00:07 2016 Guillaume PROQUIN
 //
 
-#ifndef				__CHARACTER_HPP__
-# define			__CHARACTER_HPP__
+#ifndef						__CHARACTER_HPP__
+# define					__CHARACTER_HPP__
 
-#include			"Irrlicht.hpp"
+#include					"Irrlicht.hpp"
 
-enum DIRECTION
+enum						ACTION
 {
-  UP,
-  DOWN,
-  LEFT,
-  RIGHT
+  GO_UP,
+  GO_DOWN,
+  GO_LEFT,
+  GO_RIGHT,
+  PUT_BOMB,
+  JUMP
 };
 
-class				Character
+class						Character;
+
+typedef						void (Character::*CharMemFn)(ACTION);
+
+class						Character
 {
 private:
-  Bomberman::Irrlicht		&_irr;
-  scene::IAnimatedMesh		*_scene;
-  scene::IAnimatedMeshSceneNode	*_character;
-  float				_x;
-  float				_y;
+  Bomberman::Irrlicht				&_irr;
+  scene::IAnimatedMesh				*_scene;
+  scene::IAnimatedMeshSceneNode			*_character;
+  float						_x;
+  float						_y;
+  static const std::map<EKEY_CODE, ACTION>	_events;
 public:
   Character();
   Character(float x, float y);
   ~Character();
-  float				get_x() const;
-  float				get_y() const;
-  scene::IAnimatedMeshSceneNode	*get_character() const;
-  void				set_pos(DIRECTION direction);
-  void				set_orientation(DIRECTION direction);
-  void				test();
-  void				u();
-  void				base();
+  float						get_x() const;
+  float						get_y() const;
+  void						set_pos(ACTION direction);
+  void						set_orientation(ACTION direction);
+  void						put_bomb(ACTION action);
+  void						do_action(ACTION action);
+  void						jump(ACTION action);
+  void						catch_event(std::vector<bool> keys);
 };
 
 #endif

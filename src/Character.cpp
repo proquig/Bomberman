@@ -5,11 +5,19 @@
 // Login   <proqui_g@epitech.net>
 // 
 // Started on  Fri May 27 18:01:17 2016 Guillaume PROQUIN
-// Last update Fri May 27 19:23:03 2016 Guillaume PROQUIN
+// Last update Sat May 28 12:59:39 2016 Guillaume PROQUIN
 //
 
 #include <unistd.h>
 #include "Character.hpp"
+
+const std::map<EKEY_CODE, ACTION>	Character::_events = {
+  {KEY_KEY_Z, GO_UP},
+  {KEY_KEY_S, GO_DOWN},
+  {KEY_KEY_Q, GO_LEFT},
+  {KEY_KEY_D, GO_RIGHT},
+  {KEY_KEY_U, JUMP}
+};
 
 Character::Character() : _irr(Bomberman::Irrlicht::instance())
 {
@@ -36,17 +44,17 @@ Character::~Character()
 {
 }
 
-float	Character::get_x() const
+float			Character::get_x() const
 {
   return (this->_x);
 }
 
-float	Character::get_y() const
+float			Character::get_y() const
 {
   return (this->_y);
 }
 
-void	Character::set_pos(DIRECTION direction)
+void			Character::set_pos(ACTION direction)
 {
   float	position[][2] =
     {
@@ -62,6 +70,7 @@ void	Character::set_pos(DIRECTION direction)
   this->_character->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
 }
 
+/*
 void		Character::u()
 {
   this->_character->setFrameLoop(145, 157);
@@ -80,21 +89,47 @@ void	Character::test()
   std::cout << "STATUS: " << status << std::endl;
   status++;
 }
-
-void	Character::set_orientation(DIRECTION direction)
+*/
+void			Character::set_orientation(ACTION direction)
 {
-  int	orientation[4];
+  int			orientation[4];
 
-  orientation[UP] = 0;
-  orientation[DOWN] = 180;
-  orientation[LEFT] = -90;
-  orientation[RIGHT] = 90;
+  orientation[GO_UP] = 0;
+  orientation[GO_DOWN] = 180;
+  orientation[GO_LEFT] = -90;
+  orientation[GO_RIGHT] = 90;
   this->_character->setRotation(irr::core::vector3df(0, orientation[direction], 0));
 }
 
-scene::IAnimatedMeshSceneNode *Character::get_character() const
+void			Character::put_bomb(ACTION action)
 {
-  return (this->_character);
 }
 
+void			Character::jump(ACTION action)
+{
+}
 
+void				Character::do_action(ACTION action)
+{
+  CharMemFn			actions[] = {
+    &Character::set_pos,
+    &Character::set_pos,
+    &Character::set_pos,
+    &Character::set_pos,
+    &Character::put_bomb,
+    &Character::jump,
+  };
+
+  (this->*actions[action])(action);
+}
+
+void						Character::catch_event(std::vector<bool> keys)
+{
+  std::map<EKEY_CODE, ACTION>::const_iterator	it;
+  u32						i;
+
+  i = 0;
+  for (std::map<EKEY_CODE, ACTION>::const_iterator it = this->_events.begin(); it != this->_events.end(); ++it)
+    if (keys[it->first])
+      this->do_action(it->second);
+}

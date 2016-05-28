@@ -3,5 +3,4 @@
 mkdir -p build
 cd build
 cmake ..
-make
-./Bomberman
+make && ./Bomberman

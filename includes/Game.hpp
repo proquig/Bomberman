@@ -6,6 +6,7 @@
 #define CPP_INDIE_STUDIO_GAME_HPP
 
 #include <Irrlicht.hpp>
+#include <map>
 
 namespace Bomberman
 {

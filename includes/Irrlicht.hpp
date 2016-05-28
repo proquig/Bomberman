@@ -6,6 +6,7 @@
 #define CPP_INDIE_STUDIO_IRRLICHT_HPP
 
 #include <irrlicht.h>
+#include <map>
 #include "driverChoice.h"
 #include "EventReceiver.hpp"
 
