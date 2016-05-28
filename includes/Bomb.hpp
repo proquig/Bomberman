@@ -4,24 +4,35 @@
 
 #include "Irrlicht.hpp"
 
+namespace Bomberman
+{
+  class Bomb
+  {
+   public:
+    enum state
+    {
+      AWAITING,
+      POSED,
+      EXPLODED
+    };
 
-class		Bomb {
-public:
-  enum state {
-    AWAITING,
-    POSED,
-    EXPLODED
+    Bomb();
+
+    Bomb(int pX, int pY);
+
+    ~Bomb();
+
+    void setState(Bomb::state const &c);
+
+    void explosion();
+
+   private:
+
+    scene::IAnimatedMesh *_bomb;
+    scene::IAnimatedMeshSceneNode *_scene;
+    Bomberman::Irrlicht &_irr;
+    enum state _state;
+    int _px;
+    int _py;
   };
-  Bomb();
-  Bomb(int pX, int pY);
-  ~Bomb();
-  std::string getMesh() const;
-  void	      setState(Bomb::state const& c);
-  void	      explosion();
-
-private:
-  std::string _mesh;
-  enum state _state;
-  int		_px;
-  int		_py;
-};
+}
