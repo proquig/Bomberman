@@ -1,14 +1,13 @@
 //
 // Character.cpp for indie_studio in /home/proqui_g/rendu/cpp_indie_studio/src
-// 
+//
 // Made by Guillaume PROQUIN
 // Login   <proqui_g@epitech.net>
-// 
+//
 // Started on  Fri May 27 18:01:17 2016 Guillaume PROQUIN
 // Last update Sat May 28 12:59:39 2016 Guillaume PROQUIN
 //
 
-#include <unistd.h>
 #include "Character.hpp"
 
 const std::map<EKEY_CODE, ACTION>	Character::_events = {
@@ -58,10 +57,10 @@ void			Character::set_pos(ACTION direction)
 {
   float	position[][2] =
     {
-      {0, 0.2},
-      {0, -0.2},
-      {-0.2, 0},
-      {0.2, 0}
+      {0, 0.2f},
+      {0, -0.2f},
+      {-0.2f, 0},
+      {0.2f, 0}
     };
 
   this->_x += position[direction][0];
