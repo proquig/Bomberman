@@ -91,3 +91,10 @@ void	Character::set_orientation(DIRECTION direction)
   orientation[RIGHT] = 90;
   this->_character->setRotation(irr::core::vector3df(0, orientation[direction], 0));
 }
+
+scene::IAnimatedMeshSceneNode *Character::get_character() const
+{
+  return (this->_character);
+}
+
+

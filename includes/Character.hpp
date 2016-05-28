@@ -35,6 +35,7 @@ public:
   ~Character();
   float				get_x() const;
   float				get_y() const;
+  scene::IAnimatedMeshSceneNode	*get_character() const;
   void				set_pos(DIRECTION direction);
   void				set_orientation(DIRECTION direction);
   void				test();
