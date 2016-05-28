@@ -12,9 +12,6 @@ namespace Bomberman
   class Game
   {
    private:
-    /* pour classe personnage */
-    float x;
-    float y;
 
     Bomberman::Irrlicht &irr;
 
@@ -34,13 +31,6 @@ namespace Bomberman
 
     ~Game();
 
-    int right();
-
-    int left();
-
-    int up();
-
-    int down();
   };
 }
 

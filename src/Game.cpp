@@ -10,8 +10,6 @@
 
 Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
 {
-  x = 0;
-  y = 0;
   _material.Lighting = true;
 
   _scene = irr.getSmgr()->getRootSceneNode();
@@ -21,23 +19,23 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
 					    core::dimension2df(1.f, 1.f));
   _m_scene = irr.getSmgr()->addMeshSceneNode(plan);
   _m_scene->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
-  irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.5f);
-  _m_scene->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/Wall_Normal.JPG"));
+  irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.01f);
+  _m_scene->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/brick.jpg"));
 
   for (int wallnbr = 0; wallnbr <= X; wallnbr += 5)
     {
       scene::IMesh *cube = irr.getSmgr()->getGeometryCreator()->createCubeMesh(core::vector3df(5.f, 5.f, 5.f));
       _wall = irr.getSmgr()->addMeshSceneNode(cube, _m_scene);
       _wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
-      irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.5f);
-      _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/rock-wall-6-1.jpg"));
+      irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(cube, 0.0001f);
+      _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/wall.jpg"));
       _wall->setPosition(irr::core::vector3df(X / 2 - wallnbr, 2.5, Y / 2));
 
       scene::IMesh *cube2 = irr.getSmgr()->getGeometryCreator()->createCubeMesh(core::vector3df(5.f, 5.f, 5.f));
       _wall = irr.getSmgr()->addMeshSceneNode(cube2, _m_scene);
       _wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
-      irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.5f);
-      _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/rock-wall-6-1.jpg"));
+      irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(cube2, 0.0001f);
+      _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/wall.jpg"));
       _wall->setPosition(irr::core::vector3df(X / 2 - wallnbr, 2.5, -Y / 2));
     }
 
@@ -46,15 +44,15 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
       scene::IMesh *cube = irr.getSmgr()->getGeometryCreator()->createCubeMesh(core::vector3df(5.f, 5.f, 5.f));
       _wall = irr.getSmgr()->addMeshSceneNode(cube, _m_scene);
       _wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
-      irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.5f);
-      _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/rock-wall-6-1.jpg"));
+      irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(cube, 0.0001f);
+      _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/wall.jpg"));
       _wall->setPosition(irr::core::vector3df(X / 2, 2.5, Y / 2 - wallnbr));
 
       scene::IMesh *cube2 = irr.getSmgr()->getGeometryCreator()->createCubeMesh(core::vector3df(5.f, 5.f, 5.f));
       _wall = irr.getSmgr()->addMeshSceneNode(cube2, _m_scene);
       _wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
-      irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.5f);
-      _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/rock-wall-6-1.jpg"));
+      irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(cube2, 0.0001f);
+      _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/wall.jpg"));
       _wall->setPosition(irr::core::vector3df(-X/ 2, 2.5, Y / 2 - wallnbr));
     }
 
@@ -84,7 +82,7 @@ void Bomberman::Game::run()
 {
   Character lol;
   scene::ICameraSceneNode *camera = irr.getSmgr()->addCameraSceneNode(_m_scene, core::vector3df(0, 60, -20), core::vector3df(0, 0, 0));
-  irr::video::ITexture *background = irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg"),
+  irr::video::ITexture *background = irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
 
   u32 now = 0;
   while (irr.getDevice()->run())
