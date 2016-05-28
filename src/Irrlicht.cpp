@@ -20,6 +20,9 @@ Bomberman::Irrlicht::Irrlicht()
 
   if (this->_device == NULL)
     throw (exception("Can't Load OpenGL"));
+
+  this->_device->getVideoDriver()->getMaterial2D().TextureLayer[0].BilinearFilter=true;
+  this->_device->getVideoDriver()->getMaterial2D().AntiAliasing = video::EAAM_FULL_BASIC;
   this->_device->getVideoDriver()->setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, false);
   this->_device->setWindowCaption(L"Bomberman");
 }

@@ -56,15 +56,21 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
     }
 
 
-  /* claase perso
-  scene::IAnimatedMesh  *man = irr.getSmgr()->getMesh("./media/Test/ninja.b3d");
-  _perso = irr.getSmgr()->addAnimatedMeshSceneNode(man, _scene, -1, core::vector3df(x ,0 ,y), core::vector3df(0, 0, 0), core::vector3df(1.025f, 1.025f, 1.025f));
-  _perso->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
-  _perso->setMD2Animation(scene::EMAT_STAND);
-  _perso->getMaterial(0).NormalizeNormals = true;
-  _perso->getMaterial(0).Lighting = true;
-  _perso->setAnimationSpeed(8.f);
-*/
+  scene::ITriangleSelector* selector = 0;
+  selector = irr.getSmgr()->createOctreeTriangleSelector(
+	  _m_scene->getMesh(), _m_scene, 128);
+  _m_scene->setTriangleSelector(selector);
+
+  scene::ICameraSceneNode *camera = irr.getSmgr()->addCameraSceneNode(_m_scene, core::vector3df(0, 45, -10), core::vector3df(0, 0, 0));
+
+  scene::ISceneNodeAnimator* anim = irr.getSmgr()->createCollisionResponseAnimator(
+	  selector, camera, core::vector3df(0,0,0),
+	  core::vector3df(0,0,0), core::vector3df(0,0,0));
+  selector->drop(); // As soon as we're done with the selector, drop it.
+  camera->addAnimator(anim);
+  anim->drop();
+  //http://irrlicht-fr.org/viewtopic.php?id=1670
+
 }
 
 Bomberman::Game::~Game()
@@ -73,21 +79,32 @@ Bomberman::Game::~Game()
 
 void Bomberman::Game::run()
 {
-  irr.getSmgr()->addCameraSceneNode(_m_scene, core::vector3df(0, 45, -10), core::vector3df(0, 0, 0));
-  //_perso->setFrameLoop(0, 60);
   Character lol;
+  u32 now = 0;
   while (irr.getDevice()->run())
     {
+      u32 then = irr.getDevice()->getTimer()->getTime();
       if (irr.event.IsKeyDown(irr::KEY_KEY_Z))
-	lol.set_pos(UP);
-      if (irr.event.IsKeyDown(irr::KEY_KEY_S))
-	lol.set_pos(DOWN);
-      if (irr.event.IsKeyDown(irr::KEY_KEY_Q))
-	lol.set_pos(LEFT);
-      if (irr.event.IsKeyDown(irr::KEY_KEY_D))
-	lol.set_pos(RIGHT);
-
-      irr.getDriver()->beginScene(true, true, video::SColor(255, 100, 101, 140));
+      lol.set_pos(UP);
+    if (irr.event.IsKeyDown(irr::KEY_KEY_S))
+      lol.set_pos(DOWN);
+    if (irr.event.IsKeyDown(irr::KEY_KEY_Q))
+      lol.set_pos(LEFT);
+    if (irr.event.IsKeyDown(irr::KEY_KEY_D))
+      lol.set_pos(RIGHT);
+      if (irr.event.IsKeyDown(irr::KEY_SPACE))
+	lol.test();
+      if (irr.event.IsKeyDown(irr::KEY_KEY_U))
+	{
+	  now = irr.getDevice()->getTimer()->getTime();
+	  lol.u();
+	}
+      if (now && then > (now + 1800))
+	{
+	  lol.base();
+	  now = 0;
+	}
+      irr.getDriver()->beginScene(true, true, video::SColor(255,100,101,140));
       irr.getSmgr()->drawAll();
       irr.getGui()->drawAll();
       irr.getDriver()->endScene();

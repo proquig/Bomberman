@@ -37,6 +37,9 @@ public:
   float				get_y() const;
   void				set_pos(DIRECTION direction);
   void				set_orientation(DIRECTION direction);
+  void				test();
+  void				u();
+  void				base();
 };
 
 #endif
