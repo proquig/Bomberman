@@ -5,12 +5,12 @@
 // Login   <proqui_g@epitech.net>
 //
 // Started on  Fri May 27 18:01:17 2016 Guillaume PROQUIN
-// Last update Sat May 28 16:37:19 2016 Guillaume PROQUIN
+// Last update Sat May 28 19:36:37 2016 Guillaume PROQUIN
 //
 
 #include "Character.hpp"
 
-const std::map<irr::EKEY_CODE, ACTION>		Character::_events = {
+const std::map<irr::EKEY_CODE, Bomberman::Character::ACTION>			Bomberman::Character::_events = {
   {irr::KEY_KEY_Z, GO_UP},
   {irr::KEY_KEY_S, GO_DOWN},
   {irr::KEY_KEY_Q, GO_LEFT},
@@ -19,10 +19,11 @@ const std::map<irr::EKEY_CODE, ACTION>		Character::_events = {
   {irr::KEY_DOWN, GO_DOWN},
   {irr::KEY_LEFT, GO_LEFT},
   {irr::KEY_RIGHT, GO_RIGHT},
-  {irr::KEY_KEY_U, JUMP}
+  {irr::KEY_KEY_U, JUMP},
+  {irr::KEY_SPACE, PUT_BOMB}
 };
 
-Character::Character() :			_irr(Bomberman::Irrlicht::instance())
+Bomberman::Character::Character() :			_irr(Bomberman::Irrlicht::instance())
 {
   this->_x = 0;
   this->_y = 0;
@@ -34,34 +35,35 @@ Character::Character() :			_irr(Bomberman::Irrlicht::instance())
   this->_character->setAnimationSpeed(8.f);
   this->_character->setLoopMode(false);
   this->_character->setFrameLoop(START_FRAME, START_FRAME);
+  this->add_bomb();
 }
 
-Character::Character(float x, float y) :	Character::Character()
+Bomberman::Character::Character(float x, float y) :	Bomberman::Character::Character()
 {
   this->_x = x;
   this->_y = y;
 }
 
-Character::~Character()
+Bomberman::Character::~Character()
 {
 }
 
-irr::scene::IAnimatedMeshSceneNode			*Character::get_node() const
+irr::scene::IAnimatedMeshSceneNode			*Bomberman::Character::get_node() const
 {
   return (this->_character);
 }
 
-float						Character::get_x() const
+float							Bomberman::Character::get_x() const
 {
   return (this->_x);
 }
 
-float						Character::get_y() const
+float							Bomberman::Character::get_y() const
 {
   return (this->_y);
 }
 
-void						Character::set_pos(ACTION direction)
+void							Bomberman::Character::set_pos(ACTION direction)
 {
   float	position[][2] =
     {
@@ -82,7 +84,7 @@ void						Character::set_pos(ACTION direction)
     }
 }
 
-void						Character::set_orientation(ACTION direction)
+void							Bomberman::Character::set_orientation(ACTION direction)
 {
   int			orientation[4];
 
@@ -93,21 +95,29 @@ void						Character::set_orientation(ACTION direction)
   this->_character->setRotation(irr::core::vector3df(0, orientation[direction], 0));
 }
 
-void						Character::add_bomb()
+void							Bomberman::Character::add_bomb()
 {
+  this->_bombs.push_back(new Bomberman::Bomb());
 }
 
-void						Character::put_bomb(ACTION action)
+void							Bomberman::Character::put_bomb(ACTION action)
 {
+  std::vector<Bomberman::Bomb*>::iterator		it;
+
+  it = this->_bombs.begin();
+  while (it != this->_bombs.end() && (*it)->getExplosionTime())
+    ++it;
+  if (it != this->_bombs.end())
+    (*it)->put(this->_x, this->_y);
 }
 
-void						Character::afk()
+void							Bomberman::Character::afk()
 {
   AnimationEndCallback	*callback = new AnimationEndCallback();
   this->_character->setAnimationEndCallback(callback);
 }
 
-void						Character::jump(ACTION action)
+void							Bomberman::Character::jump(ACTION action)
 {
   if (this->_character->getStartFrame() == START_FRAME)
     {
@@ -116,7 +126,7 @@ void						Character::jump(ACTION action)
     }
 }
 
-void						Character::do_action(ACTION action)
+void							Bomberman::Character::do_action(ACTION action)
 {
   CharMemFn					actions[] = {
     &Character::set_pos,
@@ -130,7 +140,7 @@ void						Character::do_action(ACTION action)
   (this->*actions[action])(action);
 }
 
-void						Character::catch_event(std::vector<bool> keys)
+void							Bomberman::Character::catch_event(std::vector<bool> keys)
 {
   std::map<irr::EKEY_CODE, ACTION>::const_iterator	it;
   irr::u32						i;
