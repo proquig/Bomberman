@@ -1,7 +1,12 @@
 //
-// Created by joris_a
+// Bomb.cpp for indie_studio in /home/proqui_g/rendu/cpp_indie_studio
+// 
+// Made by Guillaume PROQUIN
+// Login   <proqui_g@epitech.net>
+// 
+// Started on  Sat May 28 16:07:06 2016 Guillaume PROQUIN
+// Last update Sat May 28 16:07:08 2016 Guillaume PROQUIN
 //
-
 
 #include "Irrlicht.hpp"
 #include "Bomb.hpp"

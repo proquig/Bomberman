@@ -5,7 +5,7 @@
 // Login   <proqui_g@epitech.net>
 //
 // Started on  Fri May 27 18:01:17 2016 Guillaume PROQUIN
-// Last update Sat May 28 15:54:56 2016 Guillaume PROQUIN
+// Last update Sat May 28 16:13:42 2016 Guillaume PROQUIN
 //
 
 #include "Character.hpp"
@@ -15,6 +15,10 @@ const std::map<EKEY_CODE, ACTION>	Character::_events = {
   {KEY_KEY_S, GO_DOWN},
   {KEY_KEY_Q, GO_LEFT},
   {KEY_KEY_D, GO_RIGHT},
+  {KEY_UP, GO_UP},
+  {KEY_DOWN, GO_DOWN},
+  {KEY_LEFT, GO_LEFT},
+  {KEY_RIGHT, GO_RIGHT},
   {KEY_KEY_U, JUMP}
 };
 
@@ -69,7 +73,7 @@ void			Character::set_pos(ACTION direction)
   if (this->_character->getStartFrame() == START_FRAME)
     {
       this->_character->setFrameLoop(START_WALK_FRAME, END_WALK_FRAME);
-      //this->afk();
+      this->afk();
     }
 }
 
@@ -82,6 +86,10 @@ void			Character::set_orientation(ACTION direction)
   orientation[GO_LEFT] = -90;
   orientation[GO_RIGHT] = 90;
   this->_character->setRotation(irr::core::vector3df(0, orientation[direction], 0));
+}
+
+void			Character::add_bomb()
+{
 }
 
 void			Character::put_bomb(ACTION action)

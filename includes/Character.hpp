@@ -5,7 +5,7 @@
 // Login   <proqui_g@epitech.net>
 // 
 // Started on  Fri May 27 18:46:24 2016 Guillaume PROQUIN
-// Last update Sat May 28 15:51:13 2016 Guillaume PROQUIN
+// Last update Sat May 28 16:13:27 2016 Guillaume PROQUIN
 //
 
 #ifndef						__CHARACTER_HPP__
@@ -49,6 +49,7 @@ public:
   float						get_y() const;
   void						set_pos(ACTION direction);
   void						set_orientation(ACTION direction);
+  void						add_bomb();
   void						put_bomb(ACTION action);
   void						do_action(ACTION action);
   void						jump(ACTION action);
