@@ -5,38 +5,38 @@
 // Login   <proqui_g@epitech.net>
 //
 // Started on  Fri May 27 18:01:17 2016 Guillaume PROQUIN
-// Last update Sat May 28 16:13:42 2016 Guillaume PROQUIN
+// Last update Sat May 28 16:37:19 2016 Guillaume PROQUIN
 //
 
 #include "Character.hpp"
 
-const std::map<EKEY_CODE, ACTION>	Character::_events = {
-  {KEY_KEY_Z, GO_UP},
-  {KEY_KEY_S, GO_DOWN},
-  {KEY_KEY_Q, GO_LEFT},
-  {KEY_KEY_D, GO_RIGHT},
-  {KEY_UP, GO_UP},
-  {KEY_DOWN, GO_DOWN},
-  {KEY_LEFT, GO_LEFT},
-  {KEY_RIGHT, GO_RIGHT},
-  {KEY_KEY_U, JUMP}
+const std::map<irr::EKEY_CODE, ACTION>		Character::_events = {
+  {irr::KEY_KEY_Z, GO_UP},
+  {irr::KEY_KEY_S, GO_DOWN},
+  {irr::KEY_KEY_Q, GO_LEFT},
+  {irr::KEY_KEY_D, GO_RIGHT},
+  {irr::KEY_UP, GO_UP},
+  {irr::KEY_DOWN, GO_DOWN},
+  {irr::KEY_LEFT, GO_LEFT},
+  {irr::KEY_RIGHT, GO_RIGHT},
+  {irr::KEY_KEY_U, JUMP}
 };
 
-Character::Character() : _irr(Bomberman::Irrlicht::instance())
+Character::Character() :			_irr(Bomberman::Irrlicht::instance())
 {
   this->_x = 0;
   this->_y = 0;
   this->_scene = this->_irr.getSmgr()->getMesh("./assets/ninja/ninja.b3d");
-  this->_character = this->_irr.getSmgr()->addAnimatedMeshSceneNode(this->_scene, 0, -1, core::vector3df(0 ,0 ,0), core::vector3df(0, 0, 0), core::vector3df(1.025f, 1.025f, 1.025f));
-  this->_character->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
-  this->_character->setMD2Animation(scene::EMAT_STAND);
+  this->_character = this->_irr.getSmgr()->addAnimatedMeshSceneNode(this->_scene, 0, -1, irr::core::vector3df(0 ,0 ,0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(1.025f, 1.025f, 1.025f));
+  this->_character->setMaterialFlag(irr::video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
+  this->_character->setMD2Animation(irr::scene::EMAT_STAND);
   this->_character->setMaterialTexture(0, this->_irr.getDriver()->getTexture("./assets/ninja/nskinrd.jpg"));
   this->_character->setAnimationSpeed(8.f);
   this->_character->setLoopMode(false);
   this->_character->setFrameLoop(START_FRAME, START_FRAME);
 }
 
-Character::Character(float x, float y) : Character::Character()
+Character::Character(float x, float y) :	Character::Character()
 {
   this->_x = x;
   this->_y = y;
@@ -46,17 +46,22 @@ Character::~Character()
 {
 }
 
-float			Character::get_x() const
+irr::scene::IAnimatedMeshSceneNode			*Character::get_node() const
+{
+  return (this->_character);
+}
+
+float						Character::get_x() const
 {
   return (this->_x);
 }
 
-float			Character::get_y() const
+float						Character::get_y() const
 {
   return (this->_y);
 }
 
-void			Character::set_pos(ACTION direction)
+void						Character::set_pos(ACTION direction)
 {
   float	position[][2] =
     {
@@ -77,7 +82,7 @@ void			Character::set_pos(ACTION direction)
     }
 }
 
-void			Character::set_orientation(ACTION direction)
+void						Character::set_orientation(ACTION direction)
 {
   int			orientation[4];
 
@@ -88,21 +93,21 @@ void			Character::set_orientation(ACTION direction)
   this->_character->setRotation(irr::core::vector3df(0, orientation[direction], 0));
 }
 
-void			Character::add_bomb()
+void						Character::add_bomb()
 {
 }
 
-void			Character::put_bomb(ACTION action)
+void						Character::put_bomb(ACTION action)
 {
 }
 
-void			Character::afk()
+void						Character::afk()
 {
   AnimationEndCallback	*callback = new AnimationEndCallback();
   this->_character->setAnimationEndCallback(callback);
 }
 
-void			Character::jump(ACTION action)
+void						Character::jump(ACTION action)
 {
   if (this->_character->getStartFrame() == START_FRAME)
     {
@@ -111,9 +116,9 @@ void			Character::jump(ACTION action)
     }
 }
 
-void				Character::do_action(ACTION action)
+void						Character::do_action(ACTION action)
 {
-  CharMemFn			actions[] = {
+  CharMemFn					actions[] = {
     &Character::set_pos,
     &Character::set_pos,
     &Character::set_pos,
@@ -127,11 +132,11 @@ void				Character::do_action(ACTION action)
 
 void						Character::catch_event(std::vector<bool> keys)
 {
-  std::map<EKEY_CODE, ACTION>::const_iterator	it;
-  u32						i;
+  std::map<irr::EKEY_CODE, ACTION>::const_iterator	it;
+  irr::u32						i;
 
   i = 0;
-  for (std::map<EKEY_CODE, ACTION>::const_iterator it = this->_events.begin(); it != this->_events.end(); ++it)
+  for (std::map<irr::EKEY_CODE, ACTION>::const_iterator it = this->_events.begin(); it != this->_events.end(); ++it)
     if (keys[it->first])
       this->do_action(it->second);
 }

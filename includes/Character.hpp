@@ -5,7 +5,7 @@
 // Login   <proqui_g@epitech.net>
 // 
 // Started on  Fri May 27 18:46:24 2016 Guillaume PROQUIN
-// Last update Sat May 28 16:13:27 2016 Guillaume PROQUIN
+// Last update Sat May 28 16:27:07 2016 Guillaume PROQUIN
 //
 
 #ifndef						__CHARACTER_HPP__
@@ -36,15 +36,16 @@ class						Character
 {
 private:
   Bomberman::Irrlicht				&_irr;
-  scene::IAnimatedMesh				*_scene;
-  scene::IAnimatedMeshSceneNode			*_character;
+  irr::scene::IAnimatedMesh			*_scene;
+  irr::scene::IAnimatedMeshSceneNode		*_character;
   float						_x;
   float						_y;
-  static const std::map<EKEY_CODE, ACTION>	_events;
+  static const std::map<irr::EKEY_CODE, ACTION>	_events;
 public:
   Character();
   Character(float x, float y);
   ~Character();
+  irr::scene::IAnimatedMeshSceneNode		*get_node() const;
   float						get_x() const;
   float						get_y() const;
   void						set_pos(ACTION direction);

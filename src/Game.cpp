@@ -25,16 +25,16 @@ Bomberman::Game::~Game()
 void Bomberman::Game::run()
 {
   Character lol;
-  scene::ICameraSceneNode *camera = irr.getSmgr()->addCameraSceneNode(0, core::vector3df(0, 60, -20),
-								      core::vector3df(0, 0, 0));
+  irr::scene::ICameraSceneNode *camera = irr.getSmgr()->addCameraSceneNode(0, irr::core::vector3df(0, 60, -20),
+									   irr::core::vector3df(0, 0, 0));
   irr::video::ITexture *background = irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
-  u32 now = 0;
+  irr::u32 now = 0;
   while (irr.getDevice()->run())
     {
       lol.catch_event(irr.event.getKeys());
-      irr.getDriver()->beginScene(true, true, video::SColor(255, 100, 101, 140));
-      irr.getDriver()->draw2DImage(background, core::rect<s32>(0, 0, 1920, 1080),
-				   core::rect<s32>(0, 0, 1920, 1080));
+      irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
+      irr.getDriver()->draw2DImage(background, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
+				   irr::core::rect<irr::s32>(0, 0, 1920, 1080));
       irr.getSmgr()->drawAll();
       irr.getGui()->drawAll();
       irr.getDriver()->endScene();

@@ -12,16 +12,14 @@
 #pragma comment(lib, "Irrlicht.lib")
 #endif
 
-using namespace irr;
-
-class EventReceiver :	public IEventReceiver {
+class EventReceiver :	public irr::IEventReceiver {
 public:
-  virtual bool		OnEvent(const SEvent& event);
-  virtual bool		IsKeyDown(EKEY_CODE keyCode) const;
+  virtual bool		OnEvent(const irr::SEvent& event);
+  virtual bool		IsKeyDown(irr::EKEY_CODE keyCode) const;
   void			MyEventReceiver();
   std::vector<bool>	getKeys();
 private:
-  bool			KeyIsDown[KEY_KEY_CODES_COUNT];
+  bool			KeyIsDown[irr::KEY_KEY_CODES_COUNT];
 };
 
 

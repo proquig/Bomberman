@@ -59,9 +59,9 @@ Bomberman::Menu::Action Bomberman::Menu::run()
       if (_irr.event.IsKeyDown(irr::KEY_RETURN))
 	return it->second;
 
-      _irr.getDriver()->beginScene(true, true, video::SColor(255, 120, 102, 136));
-      _irr.getDriver()->draw2DImage(it->first, core::rect<s32>(0, 0, 1920, 1080),
-				   core::rect<s32>(0, 0, 1920, 1080));
+      _irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 120, 102, 136));
+      _irr.getDriver()->draw2DImage(it->first, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
+				    irr::core::rect<irr::s32>(0, 0, 1920, 1080));
       _irr.getDriver()->endScene();
     }
   return QUIT;

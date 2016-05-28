@@ -28,8 +28,8 @@ namespace Bomberman
 
    private:
 
-    scene::IAnimatedMesh *_bomb;
-    scene::IAnimatedMeshSceneNode *_scene;
+    irr::scene::IAnimatedMesh *_bomb;
+    irr::scene::IAnimatedMeshSceneNode *_scene;
     Bomberman::Irrlicht &_irr;
     enum state _state;
     int _px;

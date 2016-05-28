@@ -5,7 +5,7 @@
 // Login   <proqui_g@epitech.net>
 // 
 // Started on  Sat May 28 16:07:06 2016 Guillaume PROQUIN
-// Last update Sat May 28 16:07:08 2016 Guillaume PROQUIN
+// Last update Sat May 28 16:32:45 2016 Guillaume PROQUIN
 //
 
 #include "Irrlicht.hpp"
@@ -19,11 +19,11 @@ Bomberman::Bomb::Bomb() : _irr(Bomberman::Irrlicht::instance())
 Bomberman::Bomb::Bomb(int pX, int pY) : _irr(Bomberman::Irrlicht::instance())
 {
   this->_bomb = this->_irr.getSmgr()->getMesh("./assets/Bomb/Bomb.obj");
-  this->_scene = this->_irr.getSmgr()->addAnimatedMeshSceneNode(this->_bomb, 0, -1, core::vector3df(pX, 0, pY),
-								    core::vector3df(0, 0, 0),
-								    core::vector3df(1.025f, 1.025f, 1.025f));
-  this->_scene->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
-  this->_scene->setMD2Animation(scene::EMAT_STAND);
+  this->_scene = this->_irr.getSmgr()->addAnimatedMeshSceneNode(this->_bomb, 0, -1, irr::core::vector3df(pX, 0, pY),
+								irr::core::vector3df(0, 0, 0),
+								irr::core::vector3df(1.025f, 1.025f, 1.025f));
+  this->_scene->setMaterialFlag(irr::video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
+  this->_scene->setMD2Animation(irr::scene::EMAT_STAND);
   this->_scene->setMaterialTexture(0, this->_irr.getDriver()->getTexture("./assets/ninja/nskinrd.jpg"));
   this->_state = POSED;
   this->_px = pX;
@@ -47,4 +47,3 @@ void                Bomberman::Bomb::setState(Bomberman::Bomb::state const &c)
 {
   this->_state = c;
 }
-

@@ -14,7 +14,7 @@ namespace Bomberman
   {
    private:
     Bomberman::Irrlicht &irr;
-    std::vector<scene::IMeshSceneNode *> _wall;
+    std::vector<irr::scene::IMeshSceneNode *> _wall;
 
    public:
     Game();
