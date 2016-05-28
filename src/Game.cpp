@@ -3,6 +3,7 @@
 //
 
 #include <Bomb.hpp>
+#include <Menu.hpp>
 #include "Game.hpp"
 #include "Character.hpp"
 #include "Map.hpp"
@@ -45,7 +46,7 @@ Bomberman::Game::~Game()
 
 void Bomberman::Game::run()
 {
-  Character lol;
+  Character lol(0, 0);
   irr::scene::ICameraSceneNode *camera = irr.getSmgr()->addCameraSceneNode(0, irr::core::vector3df(0, 60, -20),
 									   irr::core::vector3df(0, 0, 0));
   irr::video::ITexture *background = irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
@@ -53,6 +54,11 @@ void Bomberman::Game::run()
   while (irr.getDevice()->run())
     {
       lol.catch_event(irr.event.getKeys());
+      if (irr.event.IsKeyDown(irr::KEY_ESCAPE))
+	{
+	  Bomberman::Menu menu;
+	  menu.run();
+	}
       irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
       irr.getDriver()->draw2DImage(background, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
 				   irr::core::rect<irr::s32>(0, 0, 1920, 1080));

@@ -11,6 +11,7 @@
 #ifndef							__CHARACTER_HPP__
 # define						__CHARACTER_HPP__
 
+# include						"Obj.hpp"
 # include						"Irrlicht.hpp"
 # include						"AnimationEndCallback.hpp"
 # include						"Bomb.hpp"
@@ -21,7 +22,7 @@
 
 namespace						Bomberman
 {
-  class							Character
+  class							Character : public Obj
   {
   public:
     enum						ACTION
@@ -35,20 +36,12 @@ namespace						Bomberman
       };
   private:
     typedef						void (Character::*CharMemFn)(Character::ACTION);
-    Bomberman::Irrlicht					&_irr;
-    irr::scene::IAnimatedMesh				*_scene;
-    irr::scene::IAnimatedMeshSceneNode			*_character;
-    float						_x;
-    float						_y;
     static const std::map<irr::EKEY_CODE, ACTION>	_events;
     std::vector<Bomberman::Bomb*>			_bombs;
   public:
     Character();
     Character(float x, float y);
     ~Character();
-    irr::scene::IAnimatedMeshSceneNode			*get_node() const;
-    float						get_x() const;
-    float						get_y() const;
     void						set_pos(ACTION direction);
     void						set_orientation(ACTION direction);
     void						add_bomb();

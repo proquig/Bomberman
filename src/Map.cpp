@@ -3,6 +3,7 @@
 //
 
 #include <list>
+#include "Obj.hpp"
 #include "Map.hpp"
 
 Bomberman::Map::Map() : _irr(Bomberman::Irrlicht::instance())
@@ -19,13 +20,7 @@ void                Bomberman::Map::createMap()
 
   _scene = this->_irr.getSmgr()->getRootSceneNode();
 
-  irr::scene::IMesh *plan = this->_irr.getSmgr()->getGeometryCreator()
-    ->createPlaneMesh(irr::core::dimension2df(X, Y), irr::core::dimension2d<irr::u32>(1, 1), 0,
-		      irr::core::dimension2df(1.f, 1.f));
-  this->_meshScene = this->_irr.getSmgr()->addMeshSceneNode(plan);
-  this->_meshScene->setMaterialFlag(irr::video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
-  this->_irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.01f);
-  this->_meshScene->setMaterialTexture(0, this->_irr.getDriver()->getTexture("./assets/Te/brick.jpg"));
+  Bomberman::Obj obj("", "./assets/Te/brick.jpg", X, Y, Bomberman::Obj::PLAN);
 
   for (int wallnbr = 0; wallnbr <= X; wallnbr += 5)
     {
@@ -43,7 +38,7 @@ void                Bomberman::Map::createMap()
 
 irr::scene::IMeshSceneNode *Bomberman::Map::createBreakableWall()
 {
-  irr::scene::IMeshSceneNode *wall;
+/*  irr::scene::IMeshSceneNode *wall;
   static int 		r = 1;
   srand((unsigned int) time(NULL));
 
@@ -54,8 +49,8 @@ irr::scene::IMeshSceneNode *Bomberman::Map::createBreakableWall()
     {
     for (int wallnbr = 0; wallnbr <= X; wallnbr += 5)
 	{
-	  if ( it->first == X / 2 - wallnbr && it->second == Y / 2 ||
-		  it->first == X / 2 - wallnbr && it->second == -Y / 2)
+	  if ( it->first <= X / 2 - wallnbr && it->second <= Y / 2 ||
+		  it->first <= X / 2 - wallnbr && it->second <= -Y / 2)
 	    {
 	      it = this->_wallBreak.begin();
 	      x = (rand() + r) % X / 2;
@@ -66,8 +61,8 @@ irr::scene::IMeshSceneNode *Bomberman::Map::createBreakableWall()
       for (int wallnbr = 0; wallnbr <= Y; wallnbr += 5)
 	{
 
-	  if ( it->first == X / 2 && it->second == Y / 2 - wallnbr ||
-		  it->first == X / 2 - wallnbr && it->second == -Y / 2)
+	  if ( it->first <= X / 2 && it->second <= Y / 2 - wallnbr ||
+		  it->first <= X / 2  && it->second <= -Y / 2 - wallnbr)
 	  {
 	    it = this->_wallBreak.begin();
 	    x = (rand() + r) % X / 2;
@@ -89,18 +84,14 @@ irr::scene::IMeshSceneNode *Bomberman::Map::createBreakableWall()
   this->_irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(cube, 0.0001f);
   wall->setMaterialTexture(0, this->_irr.getDriver()->getTexture("./assets/Te/water_ice.jpg"));
   wall->setPosition(irr::core::vector3df(x, 2.5, y));
+*/
+  irr::scene::IMeshSceneNode *wall;
 
+  wall = 0;
   return wall;
 }
 
 void Bomberman::Map::createWall(int x, int y) const
 {
-  irr::scene::IMeshSceneNode *wall;
-
-  irr::scene::IMesh *cube = this->_irr.getSmgr()->getGeometryCreator()->createCubeMesh(irr::core::vector3df(5.f, 5.f, 5.f));
-  wall = this->_irr.getSmgr()->addMeshSceneNode(cube, this->_meshScene);
-  wall->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-  this->_irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(cube, 0.0001f);
-  wall->setMaterialTexture(0, this->_irr.getDriver()->getTexture("./assets/Te/wall.jpg"));
-  wall->setPosition(irr::core::vector3df(x, 2.5, y));
+  Bomberman::Obj obj("", "./assets/Te/brick.jpg", x, y, Bomberman::Obj::BRICK);
 }

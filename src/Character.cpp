@@ -23,18 +23,11 @@ const std::map<irr::EKEY_CODE, Bomberman::Character::ACTION>			Bomberman::Charac
   {irr::KEY_SPACE, PUT_BOMB}
 };
 
-Bomberman::Character::Character() :			_irr(Bomberman::Irrlicht::instance())
+Bomberman::Character::Character() :
+	Bomberman::Obj::Obj("./assets/ninja/ninja.b3d", "./assets/ninja/nskinrd.jpg", 0, 0, CHARACTER)
 {
-  this->_x = 0;
-  this->_y = 0;
-  this->_scene = this->_irr.getSmgr()->getMesh("./assets/ninja/ninja.b3d");
-  this->_character = this->_irr.getSmgr()->addAnimatedMeshSceneNode(this->_scene, 0, -1, irr::core::vector3df(0 ,0 ,0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(1.025f, 1.025f, 1.025f));
-  this->_character->setMaterialFlag(irr::video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
-  this->_character->setMD2Animation(irr::scene::EMAT_STAND);
-  this->_character->setMaterialTexture(0, this->_irr.getDriver()->getTexture("./assets/ninja/nskinrd.jpg"));
-  this->_character->setAnimationSpeed(8.f);
-  this->_character->setLoopMode(false);
-  this->_character->setFrameLoop(START_FRAME, START_FRAME);
+  this->_animated_node->setLoopMode(false);
+  this->_animated_node->setFrameLoop(START_FRAME, START_FRAME);
   this->add_bomb();
 }
 
@@ -46,21 +39,6 @@ Bomberman::Character::Character(float x, float y) :	Bomberman::Character::Charac
 
 Bomberman::Character::~Character()
 {
-}
-
-irr::scene::IAnimatedMeshSceneNode			*Bomberman::Character::get_node() const
-{
-  return (this->_character);
-}
-
-float							Bomberman::Character::get_x() const
-{
-  return (this->_x);
-}
-
-float							Bomberman::Character::get_y() const
-{
-  return (this->_y);
 }
 
 void							Bomberman::Character::set_pos(ACTION direction)
@@ -76,10 +54,10 @@ void							Bomberman::Character::set_pos(ACTION direction)
   this->_x += position[direction][0];
   this->_y += position[direction][1];
   this->set_orientation(direction);
-  this->_character->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
-  if (this->_character->getStartFrame() == START_FRAME)
+  this->_animated_node->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
+  if (this->_animated_node->getStartFrame() == START_FRAME)
     {
-      this->_character->setFrameLoop(START_WALK_FRAME, END_WALK_FRAME);
+      this->_animated_node->setFrameLoop(START_WALK_FRAME, END_WALK_FRAME);
       this->afk();
     }
 }
@@ -92,7 +70,7 @@ void							Bomberman::Character::set_orientation(ACTION direction)
   orientation[GO_DOWN] = 180;
   orientation[GO_LEFT] = -90;
   orientation[GO_RIGHT] = 90;
-  this->_character->setRotation(irr::core::vector3df(0, orientation[direction], 0));
+  this->_animated_node->setRotation(irr::core::vector3df(0, orientation[direction], 0));
 }
 
 void							Bomberman::Character::add_bomb()
@@ -114,14 +92,14 @@ void							Bomberman::Character::put_bomb(ACTION action)
 void							Bomberman::Character::afk()
 {
   AnimationEndCallback	*callback = new AnimationEndCallback();
-  this->_character->setAnimationEndCallback(callback);
+  this->_animated_node->setAnimationEndCallback(callback);
 }
 
 void							Bomberman::Character::jump(ACTION action)
 {
-  if (this->_character->getStartFrame() == START_FRAME)
+  if (this->_animated_node->getStartFrame() == START_FRAME)
     {
-      this->_character->setFrameLoop(145, 157);
+      this->_animated_node->setFrameLoop(145, 157);
       this->afk();
     }
 }
@@ -143,9 +121,7 @@ void							Bomberman::Character::do_action(ACTION action)
 void							Bomberman::Character::catch_event(std::vector<bool> keys)
 {
   std::map<irr::EKEY_CODE, ACTION>::const_iterator	it;
-  irr::u32						i;
 
-  i = 0;
   for (std::map<irr::EKEY_CODE, ACTION>::const_iterator it = this->_events.begin(); it != this->_events.end(); ++it)
     if (keys[it->first])
       this->do_action(it->second);
