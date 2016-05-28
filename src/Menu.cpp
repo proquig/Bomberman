@@ -7,13 +7,12 @@
 #include "Menu.hpp"
 #include "sound/MusicManager.hpp"
 
-Bomberman::Menu::Menu() : irr(Bomberman::Irrlicht::instance())
+Bomberman::Menu::Menu() : _irr(Bomberman::Irrlicht::instance())
 {
-  this->texture.push_back(std::make_pair(irr.getDriver()->getTexture("./assets/Menu/Gauntlet_Menu.png"), NEW_SINGLE_GAME));
-  this->texture.push_back(std::make_pair(irr.getDriver()->getTexture("./assets/Menu/Gauntlet_Menu1.png"), LOAD_SINGLE_GAME));
-  this->texture.push_back(std::make_pair(irr.getDriver()->getTexture("./assets/Menu/Gauntlet_Menu2.png"), MULTIPLAYER_GAME));
-  this->texture.push_back(std::make_pair(irr.getDriver()->getTexture("./assets/Menu/Gauntlet_Menu3.png"), QUIT));
-  this->it = texture.begin();
+  this->_texture.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/Gauntlet_Menu.png"), NEW_SINGLE_GAME));
+  this->_texture.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/Gauntlet_Menu1.png"), LOAD_SINGLE_GAME));
+  this->_texture.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/Gauntlet_Menu2.png"), MULTIPLAYER_GAME));
+  this->_texture.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/Gauntlet_Menu3.png"), QUIT));
 }
 
 Bomberman::Menu::~Menu()
@@ -35,33 +34,35 @@ Bomberman::Menu::Action Bomberman::Menu::run()
       std::cerr << e.what() << std::endl;
     }
 
-  while (irr.getDevice()->run())
+  t_texture_list::iterator it = _texture.begin();
+
+  while (_irr.getDevice()->run())
     {
       usleep(100000);
-      if (irr.event.IsKeyDown(irr::KEY_KEY_Z))
+      if (_irr.event.IsKeyDown(irr::KEY_UP))
 	{
-	  if (it == texture.begin())
+	  if (it == _texture.begin())
 	    {
-	      it = texture.end();
+	      it = _texture.end();
 	      it--;
 	    }
 	  else
 	    it--;
 	}
-      else if (irr.event.IsKeyDown(irr::KEY_KEY_S))
+      else if (_irr.event.IsKeyDown(irr::KEY_DOWN))
 	{
 	  it++;
-	  if (it == texture.end()--)
-	    it = texture.begin();
+	  if (it == _texture.end()--)
+	    it = _texture.begin();
 	}
-      if (irr.event.IsKeyDown(irr::KEY_RETURN))
+
+      if (_irr.event.IsKeyDown(irr::KEY_RETURN))
 	return it->second;
-      irr.getDriver()->beginScene(true, true, video::SColor(255, 120, 102, 136));
-      irr.getDriver()->draw2DImage(it->first, core::rect<s32>(0, 0, 1920, 1080),
+
+      _irr.getDriver()->beginScene(true, true, video::SColor(255, 120, 102, 136));
+      _irr.getDriver()->draw2DImage(it->first, core::rect<s32>(0, 0, 1920, 1080),
 				   core::rect<s32>(0, 0, 1920, 1080));
-      core::position2d<s32> m = irr.getDevice()->getCursorControl()->getPosition();
-      irr.getDriver()->endScene();
+      _irr.getDriver()->endScene();
     }
-  irr.getDevice()->drop();
   return QUIT;
 }

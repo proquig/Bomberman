@@ -24,9 +24,8 @@ namespace Bomberman
    private:
     typedef std::list<std::pair<irr::video::ITexture *, Action>> t_texture_list;
 
-    Bomberman::Irrlicht &irr;
-    t_texture_list texture;
-    t_texture_list::iterator it;
+    Bomberman::Irrlicht &_irr;
+    t_texture_list _texture;
 
    public:
     Menu();

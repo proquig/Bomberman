@@ -10,7 +10,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/Sound/MusicManager.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Game.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Irrlicht.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/includes/Game.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Exception.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Bomb.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/includes/Exception.hpp" isTestSource="false" />
@@ -19,6 +18,7 @@
       <sourceFolder url="file://$MODULE_DIR$/includes/Menu.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/includes/EventReceiver.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/includes/Character.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/Game.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/includes/sound/MusicManager.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/includes/Irrlicht.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />

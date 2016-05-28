@@ -25,6 +25,10 @@ file(
 
 add_executable(Bomberman ${SOURCES} ${HEADERS})
 
+target_include_directories(Bomberman PRIVATE includes PRIVATE includes/sound)
+target_link_libraries(Bomberman ${IRRLICHT_LIBRARY})
+target_link_libraries(Bomberman IrrKlang)
+
 add_custom_command(
         TARGET Bomberman POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
@@ -39,8 +43,10 @@ add_custom_command(
         $<TARGET_FILE_DIR:Bomberman>/lib
 )
 
-target_include_directories(Bomberman PRIVATE includes PRIVATE includes/sound)
-target_link_libraries(Bomberman ${IRRLICHT_LIBRARY})
-target_link_libraries(Bomberman ikpFlac)
-target_link_libraries(Bomberman ikpMP3)
-target_link_libraries(Bomberman IrrKlang)
+add_custom_command(
+        TARGET Bomberman POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${CMAKE_HOME_DIRECTORY}/lib/ikpFlac.so
+        ${CMAKE_HOME_DIRECTORY}/lib/ikpMP3.so
+        $<TARGET_FILE_DIR:Bomberman>
+)
