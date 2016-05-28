@@ -5,7 +5,7 @@
 // Login   <proqui_g@epitech.net>
 // 
 // Started on  Fri May 27 18:46:24 2016 Guillaume PROQUIN
-// Last update Sat May 28 18:36:31 2016 Guillaume PROQUIN
+// Last update Sat May 28 20:06:32 2016 Guillaume PROQUIN
 //
 
 #ifndef							__CHARACTER_HPP__
@@ -50,6 +50,7 @@ namespace						Bomberman
     void						jump(ACTION action);
     void						afk();
     void						catch_event(std::vector<bool> keys);
+    void						handle_event();
   };
 }
 

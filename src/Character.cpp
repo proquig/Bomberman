@@ -5,7 +5,7 @@
 // Login   <proqui_g@epitech.net>
 //
 // Started on  Fri May 27 18:01:17 2016 Guillaume PROQUIN
-// Last update Sat May 28 19:36:37 2016 Guillaume PROQUIN
+// Last update Sat May 28 20:23:06 2016 Guillaume PROQUIN
 //
 
 #include "Character.hpp"
@@ -80,13 +80,32 @@ void							Bomberman::Character::add_bomb()
 
 void							Bomberman::Character::put_bomb(ACTION action)
 {
-  std::vector<Bomberman::Bomb*>::iterator		it;
+  int							i;
+  //std::vector<Bomberman::Bomb*>::iterator		it;
 
-  it = this->_bombs.begin();
-  while (it != this->_bombs.end() && (*it)->getExplosionTime())
-    ++it;
+  i = -1;
+  while (++i < this->_bombs.size() && this->_bombs[i]->getExplosionTime());
+  /*while (it != this->_bombs.end() && (*it)->getExplosionTime())
+    {
+      std::cout << "OK BITCH" << std::endl;
+      std::cout << ((it == this->_bombs.end()) ? "true" : "false") << std::endl;
+      ++it;
+      std::cout << ((it == this->_bombs.end()) ? "true" : "false") << std::endl;
+    }
+  std::cout << "----" << std::endl;
+  */
+  std::cout << this->_bombs.size() << " & " << i << std::endl;
+  if (i < this->_bombs.size())
+    this->_bombs[i]->put(this->_x, this->_y);
+  /*
   if (it != this->_bombs.end())
-    (*it)->put(this->_x, this->_y);
+    {
+      (*it)->put(this->_x, this->_y);
+      std::cout << "POSEY" << std::endl;
+    }
+  else
+    std::cout << "NOT POSEY" << std::endl;
+  */
 }
 
 void							Bomberman::Character::afk()
@@ -125,4 +144,16 @@ void							Bomberman::Character::catch_event(std::vector<bool> keys)
   for (std::map<irr::EKEY_CODE, ACTION>::const_iterator it = this->_events.begin(); it != this->_events.end(); ++it)
     if (keys[it->first])
       this->do_action(it->second);
+}
+
+void							Bomberman::Character::handle_event()
+{
+  std::vector<Bomberman::Bomb*>::iterator		it;
+
+  for (it = this->_bombs.begin(); it != this->_bombs.end(); ++it)
+    {
+      if ((*it)->getExplosionTime() \
+	  && this->_irr.getDevice()->getTimer()->getTime() > (*it)->getExplosionTime())
+	  (*it)->explode();
+    }
 }

@@ -51,8 +51,11 @@ void Bomberman::Game::run()
 									   irr::core::vector3df(0, 0, 0));
   irr::video::ITexture *background = irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
   irr::u32 now = 0;
+  lol.add_bomb();
+  lol.add_bomb();
   while (irr.getDevice()->run())
     {
+      lol.handle_event();
       lol.catch_event(irr.event.getKeys());
       if (irr.event.IsKeyDown(irr::KEY_ESCAPE))
 	{
