@@ -4,76 +4,62 @@
 
 #include "Map.hpp"
 
-Bomberman::Map::Map() : irr(Bomberman::Irrlicht::instance())
+Bomberman::Map::Map() : _irr(Bomberman::Irrlicht::instance())
+{
+}
+
+Bomberman::Map::~Map()
 {
 }
 
 void                Bomberman::Map::createMap()
 {
   _material.Lighting = true;
-  _scene = irr.getSmgr()->getRootSceneNode();
-  scene::IMesh *plan = irr.getSmgr()->getGeometryCreator()
+
+  _scene = this->_irr.getSmgr()->getRootSceneNode();
+
+  scene::IMesh *plan = this->_irr.getSmgr()->getGeometryCreator()
 			  ->createPlaneMesh(core::dimension2df(X, Y), core::dimension2d<u32>(1, 1), 0,
 					    core::dimension2df(1.f, 1.f));
-  _m_scene = irr.getSmgr()->addMeshSceneNode(plan);
-  _m_scene->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
-  irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.01f);
-  _m_scene->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/Sand_floor.jpg"));
+  this->_meshScene = this->_irr.getSmgr()->addMeshSceneNode(plan);
+  this->_meshScene->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
+  this->_irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(plan, 0.01f);
+  this->_meshScene->setMaterialTexture(0, this->_irr.getDriver()->getTexture("./assets/Te/brick.jpg"));
 
   for (int wallnbr = 0; wallnbr <= X; wallnbr += 5)
     {
-      scene::IMesh *cube = irr.getSmgr()->getGeometryCreator()->createCubeMesh(core::vector3df(5.f, 5.f, 5.f));
-      _wall = irr.getSmgr()->addMeshSceneNode(cube, _m_scene);
-      _wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
-      irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(cube, 0.0001f);
-      _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/wall.jpg"));
-      _wall->setPosition(irr::core::vector3df(X / 2 - wallnbr, 2.5, Y / 2));
-
-      scene::IMesh *cube2 = irr.getSmgr()->getGeometryCreator()->createCubeMesh(core::vector3df(5.f, 5.f, 5.f));
-      _wall = irr.getSmgr()->addMeshSceneNode(cube2, _m_scene);
-      _wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
-      irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(cube2, 0.0001f);
-      _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/wall.jpg"));
-      _wall->setPosition(irr::core::vector3df(X / 2 - wallnbr, 2.5, -Y / 2));
+      createWall(X / 2 - wallnbr, Y / 2);
+      createWall(X / 2 - wallnbr, -Y / 2);
     }
 
   for (int wallnbr = 0; wallnbr <= Y; wallnbr += 5)
     {
-      scene::IMesh *cube = irr.getSmgr()->getGeometryCreator()->createCubeMesh(core::vector3df(5.f, 5.f, 5.f));
-      _wall = irr.getSmgr()->addMeshSceneNode(cube, _m_scene);
-      _wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
-      irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(cube, 0.0001f);
-      _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/wall.jpg"));
-      _wall->setPosition(irr::core::vector3df(X / 2, 2.5, Y / 2 - wallnbr));
-
-      scene::IMesh *cube2 = irr.getSmgr()->getGeometryCreator()->createCubeMesh(core::vector3df(5.f, 5.f, 5.f));
-      _wall = irr.getSmgr()->addMeshSceneNode(cube2, _m_scene);
-      _wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
-      irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(cube2, 0.0001f);
-      _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/wall.jpg"));
-      _wall->setPosition(irr::core::vector3df(-X / 2, 2.5, Y / 2 - wallnbr));
+      createWall(X / 2, Y / 2 - wallnbr);
+      createWall(-X / 2, Y / 2 - wallnbr);
+      //scene::ISceneNodeAnimator *r = this->_irr.getSmgr()->createCollisionResponseAnimator(wall->getTriangleSelector(), _scene);
     }
 }
 
-scene::IMeshSceneNode *Bomberman::Map::creatBreakBlock()
+void Bomberman::Map::createBreakableWall(int x, int y) const
 {
-  scene::IMesh *cube = irr.getSmgr()->getGeometryCreator()->createCubeMesh(core::vector3df(5.f, 5.f, 5.f));
-  _wall = irr.getSmgr()->addMeshSceneNode(cube, _m_scene);
-  _wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
-  irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(cube, 0.0001f);
-  _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/water_ice.jpg"));
-  _wall->setPosition(irr::core::vector3df(0, 2.5,0));
+  scene::IMeshSceneNode *wall;
+
+  scene::IMesh *cube = this->_irr.getSmgr()->getGeometryCreator()->createCubeMesh(core::vector3df(5.f, 5.f, 5.f));
+  wall = this->_irr.getSmgr()->addMeshSceneNode(cube, _meshScene);
+  wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
+  this->_irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(cube, 0.0001f);
+  wall->setMaterialTexture(0, this->_irr.getDriver()->getTexture("./assets/Te/water_ice.jpg"));
+  wall->setPosition(irr::core::vector3df(0, 2.5,0));
 }
 
-void Bomberman::Map::creatBlock()
+void Bomberman::Map::createWall(int x, int y) const
 {
-  for (int wallnbr = 0; wallnbr <= Y; wallnbr += 5)
-    {
-      scene::IMesh *cube = irr.getSmgr()->getGeometryCreator()->createCubeMesh(core::vector3df(5.f, 5.f, 5.f));
-      _wall = irr.getSmgr()->addMeshSceneNode(cube, _m_scene);
-      _wall->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
-      irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(cube, 0.0001f);
-      _wall->setMaterialTexture(0, irr.getDriver()->getTexture("./assets/Te/wall.jpg"));
-      _wall->setPosition(irr::core::vector3df(X / 2 - wallnbr, 2.5, Y / 2 - wallnbr));
-    }
+  scene::IMeshSceneNode *wall;
+
+  scene::IMesh *cube = this->_irr.getSmgr()->getGeometryCreator()->createCubeMesh(core::vector3df(5.f, 5.f, 5.f));
+  wall = this->_irr.getSmgr()->addMeshSceneNode(cube, this->_meshScene);
+  wall->setMaterialFlag(video::EMF_LIGHTING, false);
+  this->_irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(cube, 0.0001f);
+  wall->setMaterialTexture(0, this->_irr.getDriver()->getTexture("./assets/Te/wall.jpg"));
+  wall->setPosition(core::vector3df(x, 2.5, y));
 }

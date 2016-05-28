@@ -15,20 +15,22 @@ namespace Bomberman
   class Map
   {
    private:
-    Bomberman::Irrlicht &irr;
+    Bomberman::Irrlicht &_irr;
     irr::video::SMaterial _material;
-    scene::IMeshSceneNode *_m_scene;
-    scene::IMeshSceneNode *_wall;
+    scene::IMeshSceneNode *_meshScene;
     scene::ISceneNode *_scene;
 
    public:
     Map();
+
+    ~Map();
+
     void 			createMap();
-    void 			creatBlock();
-    scene::IMeshSceneNode 	*creatBreakBlock();
-    ~Map()
-    {
-    }
+
+    void 			createBreakableWall(int x, int y) const;
+
+   private:
+    void createWall(int x, int y) const;
   };
 }
 #endif //CPP_INDIE_STUDIO_MAP_HPP
