@@ -5,7 +5,7 @@
 // Login   <proqui_g@epitech.net>
 // 
 // Started on  Fri May 27 18:01:17 2016 Guillaume PROQUIN
-// Last update Sat May 28 12:59:39 2016 Guillaume PROQUIN
+// Last update Sat May 28 15:54:56 2016 Guillaume PROQUIN
 //
 
 #include <unistd.h>
@@ -23,15 +23,14 @@ Character::Character() : _irr(Bomberman::Irrlicht::instance())
 {
   this->_x = 0;
   this->_y = 0;
-  //this->_scene = this->_irr.getSmgr()->getMesh("./assets/Test/ninja.b3d");
   this->_scene = this->_irr.getSmgr()->getMesh("./assets/ninja/ninja.b3d");
   this->_character = this->_irr.getSmgr()->addAnimatedMeshSceneNode(this->_scene, 0, -1, core::vector3df(0 ,0 ,0), core::vector3df(0, 0, 0), core::vector3df(1.025f, 1.025f, 1.025f));
   this->_character->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
   this->_character->setMD2Animation(scene::EMAT_STAND);
   this->_character->setMaterialTexture(0, this->_irr.getDriver()->getTexture("./assets/ninja/nskinrd.jpg"));
   this->_character->setAnimationSpeed(8.f);
-  //TODO: géré les bon bails :D
-  this->_character->setFrameLoop(0, 14);
+  this->_character->setLoopMode(false);
+  this->_character->setFrameLoop(START_FRAME, START_FRAME);
 }
 
 Character::Character(float x, float y) : Character::Character()
@@ -68,28 +67,13 @@ void			Character::set_pos(ACTION direction)
   this->_y += position[direction][1];
   this->set_orientation(direction);
   this->_character->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
+  if (this->_character->getStartFrame() == START_FRAME)
+    {
+      this->_character->setFrameLoop(START_WALK_FRAME, END_WALK_FRAME);
+      this->afk();
+    }
 }
 
-/*
-void		Character::u()
-{
-  this->_character->setFrameLoop(145, 157);
-}
-
-void		Character::base()
-{
-  this->_character->setFrameLoop(0, 14);
-}
-
-void	Character::test()
-{
-  static int status = 0;
-
-  this->_character->setFrameLoop(status, status + 1);
-  std::cout << "STATUS: " << status << std::endl;
-  status++;
-}
-*/
 void			Character::set_orientation(ACTION direction)
 {
   int			orientation[4];
@@ -105,8 +89,19 @@ void			Character::put_bomb(ACTION action)
 {
 }
 
+void			Character::afk()
+{
+  AnimationEndCallback	*callback = new AnimationEndCallback();
+  this->_character->setAnimationEndCallback(callback);
+}
+
 void			Character::jump(ACTION action)
 {
+  if (this->_character->getStartFrame() == START_FRAME)
+    {
+      this->_character->setFrameLoop(145, 157);
+      this->afk();
+    }
 }
 
 void				Character::do_action(ACTION action)

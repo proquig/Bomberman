@@ -5,13 +5,18 @@
 // Login   <proqui_g@epitech.net>
 // 
 // Started on  Fri May 27 18:46:24 2016 Guillaume PROQUIN
-// Last update Sat May 28 13:00:07 2016 Guillaume PROQUIN
+// Last update Sat May 28 15:51:13 2016 Guillaume PROQUIN
 //
 
 #ifndef						__CHARACTER_HPP__
 # define					__CHARACTER_HPP__
 
 #include					"Irrlicht.hpp"
+#include					"AnimationEndCallback.hpp"
+
+# define					START_FRAME 0
+# define					START_WALK_FRAME 1
+# define					END_WALK_FRAME 10
 
 enum						ACTION
 {
@@ -47,6 +52,7 @@ public:
   void						put_bomb(ACTION action);
   void						do_action(ACTION action);
   void						jump(ACTION action);
+  void						afk();
   void						catch_event(std::vector<bool> keys);
 };
 
