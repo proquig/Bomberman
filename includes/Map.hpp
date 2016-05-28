@@ -26,8 +26,6 @@ namespace			Bomberman
     ~Map();
 
     void 			createMap();
-    void 			creatBlock();
-    irr::scene::IMeshSceneNode 	*creatBreakBlock();
     irr::scene::IMeshSceneNode	*createBreakableWall(int x, int y) const;
 
    private:
