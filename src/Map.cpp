@@ -40,7 +40,7 @@ void                Bomberman::Map::createMap()
     }
 }
 
-void Bomberman::Map::createBreakableWall(int x, int y) const
+scene::IMeshSceneNode *Bomberman::Map::createBreakableWall(int x, int y) const
 {
   scene::IMeshSceneNode *wall;
 
@@ -50,6 +50,8 @@ void Bomberman::Map::createBreakableWall(int x, int y) const
   this->_irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(cube, 0.0001f);
   wall->setMaterialTexture(0, this->_irr.getDriver()->getTexture("./assets/Te/water_ice.jpg"));
   wall->setPosition(irr::core::vector3df(0, 2.5,0));
+
+  return wall;
 }
 
 void Bomberman::Map::createWall(int x, int y) const

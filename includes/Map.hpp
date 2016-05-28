@@ -27,7 +27,7 @@ namespace Bomberman
 
     void 			createMap();
 
-    void 			createBreakableWall(int x, int y) const;
+    scene::IMeshSceneNode	*createBreakableWall(int x, int y) const;
 
    private:
     void createWall(int x, int y) const;
