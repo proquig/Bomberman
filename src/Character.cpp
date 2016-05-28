@@ -69,7 +69,7 @@ void			Character::set_pos(ACTION direction)
   if (this->_character->getStartFrame() == START_FRAME)
     {
       this->_character->setFrameLoop(START_WALK_FRAME, END_WALK_FRAME);
-      this->afk();
+      //this->afk();
     }
 }
 
