@@ -15,7 +15,28 @@ Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
   Bomberman::Map *map = new Map;
   map->createMap();
 
-  //_wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
+  _wall.push_back(map->createBreakableWall());
 }
 
 Bomberman::Game::~Game()

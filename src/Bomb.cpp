@@ -16,12 +16,12 @@ Bomberman::Bomb::Bomb() : _irr(Bomberman::Irrlicht::instance())
   this->_x = 0;
   this->_y = 0;
   this->_state = AWAITING;
-  this->_scene = this->_irr.getSmgr()->getMesh("./assets/bomb.3ds");
+  this->_scene = this->_irr.getSmgr()->getMesh("./assets/Bomb/Bomb.obj");
   this->_bomb = this->_irr.getSmgr()->addAnimatedMeshSceneNode(this->_scene, 0, -1, irr::core::vector3df(0, 0, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(1.025f, 1.025f, 1.025f));
   this->_bomb->setVisible(false);
   this->_bomb->setMaterialFlag(irr::video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
   this->_bomb->setMD2Animation(irr::scene::EMAT_STAND);
-  this->_bomb->setMaterialTexture(0, this->_irr.getDriver()->getTexture("./assets/ninja/nskinrd.jpg"));
+  this->_bomb->setMaterialTexture(0, this->_irr.getDriver()->getTexture("./assets/Bomb/plasma-grenade.jpg"));
 }
 
 Bomberman::Bomb::Bomb(float x, float y) : Bomb::Bomb()

@@ -6,6 +6,8 @@
 #define				CPP_INDIE_STUDIO_MAP_HPP
 
 #include			"Irrlicht.hpp"
+#include			<random>
+#include			<list>
 
 # define			X 90
 # define			Y 70
@@ -20,13 +22,17 @@ namespace			Bomberman
     irr::scene::IMeshSceneNode	*_meshScene;
     irr::scene::ISceneNode	*_scene;
 
+    typedef std::list<std::pair<int, int>> t_Wall;
+
+    t_Wall			_wallBreak;
+
    public:
     Map();
 
     ~Map();
 
     void 			createMap();
-    irr::scene::IMeshSceneNode	*createBreakableWall(int x, int y) const;
+    irr::scene::IMeshSceneNode	*createBreakableWall();
 
    private:
     void createWall(int x, int y) const;
