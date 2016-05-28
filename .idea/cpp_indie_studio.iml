@@ -8,6 +8,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Character.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Sound/MusicManager.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Sound/SoundManager.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/sound/SoundManager.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Game.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Irrlicht.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Exception.cpp" isTestSource="false" />

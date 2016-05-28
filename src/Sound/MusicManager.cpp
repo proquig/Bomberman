@@ -13,8 +13,8 @@ Bomberman::MusicManager &Bomberman::MusicManager::instance()
 }
 
 Bomberman::MusicManager::MusicManager() : _irr(Bomberman::Irrlicht::instance()),
-			    _engine(irrklang::createIrrKlangDevice()),
-			    _music(nullptr)
+					  _engine(irrklang::createIrrKlangDevice()),
+					  _music(nullptr)
 {}
 
 Bomberman::MusicManager::MusicManager(const Bomberman::MusicManager &sound) : _irr(sound._irr)
