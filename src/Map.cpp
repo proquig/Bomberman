@@ -20,7 +20,7 @@ void                Bomberman::Map::createMap()
 
   _scene = this->_irr.getSmgr()->getRootSceneNode();
 
-  Bomberman::Obj obj("", "./assets/Te/brick.jpg", X, Y, Bomberman::Obj::PLAN);
+  Bomberman::Obj obj("", "./assets/Te/Sand_floor.jpg", X, Y, Bomberman::Obj::PLAN);
 
   for (int wallnbr = 0; wallnbr <= X; wallnbr += 5)
     {
@@ -32,8 +32,12 @@ void                Bomberman::Map::createMap()
     {
       createWall(X / 2, Y / 2 - wallnbr);
       createWall(-X / 2, Y / 2 - wallnbr);
-      //scene::ISceneNodeAnimator *r = this->_irr.getSmgr()->createCollisionResponseAnimator(wall->getTriangleSelector(), _scene);
     }
+}
+
+void 			Bomberman::Map::putObj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::Obj::TYPE type)
+{
+  this->_objs.push_back(new Bomberman::Obj(mesh_path, texture_path, x, y, type));
 }
 
 irr::scene::IMeshSceneNode *Bomberman::Map::createBreakableWall()
@@ -88,10 +92,12 @@ irr::scene::IMeshSceneNode *Bomberman::Map::createBreakableWall()
   irr::scene::IMeshSceneNode *wall;
 
   wall = 0;
+  std::cout << this->_objs.size() << std::endl;
+
   return wall;
 }
 
-void Bomberman::Map::createWall(int x, int y) const
+void Bomberman::Map::createWall(int x, int y)
 {
-  Bomberman::Obj obj("", "./assets/Te/brick.jpg", x, y, Bomberman::Obj::BRICK);
+  putObj("", "./assets/Te/brick.jpg", x, y, Bomberman::Obj::BRICK);
 }
