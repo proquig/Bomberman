@@ -37,7 +37,16 @@ void Bomberman::SoundManager::registerSound(const std::string &key, const std::s
   this->_sounds.insert(std::pair<std::string, irrklang::ISound *>(key, sound));
 }
 
-void Bomberman::SoundManager::playSound(const std::string &id)
+bool Bomberman::SoundManager::playSound(const std::string &id)
 {
-  this->_sounds[id]->setIsPaused(false);
+  std::map<std::string, irrklang::ISound *>::iterator sound;
+
+  sound = this->_sounds.find(id);
+  if (sound != this->_sounds.end())
+    {
+      sound->second->setIsPaused(false);
+      return true;
+    }
+  else
+    return false;
 }

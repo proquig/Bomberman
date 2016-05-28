@@ -40,7 +40,7 @@ namespace Bomberman
    public:
     void registerSound(const std::string &id, const std::string &path);
 
-    void playSound(const std::string &id);
+    bool playSound(const std::string &id);
   };
 }
 

@@ -12,10 +12,10 @@
 
 Bomberman::Game::Game() : irr(Bomberman::Irrlicht::instance())
 {
-  Bomberman::Map *map = new Bomberman::Map;
+  Bomberman::Map *map = new Map;
   map->createMap();
 
-  _wall.push_back(map->creatBreakBlock());
+  //_wall.push_back(map->createBreakableWall());
 }
 
 Bomberman::Game::~Game()
