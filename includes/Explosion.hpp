@@ -14,7 +14,7 @@ namespace				Bomberman
 {
   class					Explosion {
   public:
-    Explosion(int x, int y);
+    Explosion(float x, float y);
     ~Explosion();
 
   private:
