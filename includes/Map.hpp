@@ -10,8 +10,8 @@
 # include			<random>
 # include			<list>
 
-# define			X 90
-# define			Y 70
+# define			MAPSIZE_X 90
+# define			MAPSIZE_Y 70
 
 namespace			Bomberman
 {
@@ -19,23 +19,18 @@ namespace			Bomberman
   {
    private:
     std::vector<Bomberman::Obj *> _objs;
-
     Bomberman::Irrlicht		&_irr;
     irr::video::SMaterial	_material;
     irr::scene::ISceneNode	*_scene;
-
     typedef std::list<std::pair<int, int>> t_Wall;
-
     t_Wall			_wallBreak;
 
    public:
     Map();
-
     ~Map();
-
     bool			checkPosition(float x, float y, float range);
     void 			createMap();
-    irr::scene::IMeshSceneNode	*createBreakableWall();
+    Bomberman::Obj 		*putObjSomewhere(Bomberman::Obj::TYPE type);
     Bomberman::Obj		*putObj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::Obj::TYPE type);
 
    private:

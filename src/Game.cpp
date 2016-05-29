@@ -16,13 +16,11 @@ Bomberman::Game::Game() : _irr(Bomberman::Irrlicht::instance())
   this->_map = new Bomberman::Map();
   this->_map->createMap();
 
-/* this->_wall.push_back(this->_map->createBreakableWall());
-  this->_wall.push_back(this->_map->createBreakableWall());
-  this->_wall.push_back(this->_map->createBreakableWall());
-  this->_wall.push_back(this->_map->createBreakableWall());
-  this->_wall.push_back(this->_map->createBreakableWall());
-*/
-
+  for (int i = 0; i < 20; ++i)
+    {
+      this->_map->putObjSomewhere(Bomberman::Obj::BOX);
+      this->_map->putObjSomewhere(Bomberman::Obj::BRICK);
+    }
 }
 
 Bomberman::Game::~Game()
