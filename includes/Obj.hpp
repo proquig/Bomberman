@@ -36,6 +36,7 @@ namespace Bomberman
    public:
     Obj(const std::string &mesh_path, const std::string &texture_path, float x, float y, TYPE type);
     virtual ~Obj();
+    Bomberman::IObj*			create();
     float 				getX() const;
     float 				getY() const;
     irr::u32 				getExplosionTime() const;

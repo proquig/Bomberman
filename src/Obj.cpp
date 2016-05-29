@@ -68,6 +68,11 @@ Bomberman::Obj::~Obj()
 {
 }
 
+Bomberman::IObj*		Bomberman::Obj::create()
+{
+  return (NULL);
+}
+
 float 				Bomberman::Obj::getX() const
 {
   return (this->_x);

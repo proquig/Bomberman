@@ -5,7 +5,7 @@
 // Login   <proqui_g@epitech.net>
 // 
 // Started on  Sat May 28 16:07:06 2016 Guillaume PROQUIN
-// Last update Sat May 28 19:37:34 2016 Guillaume PROQUIN
+// Last update Sun May 29 18:17:57 2016 Guillaume PROQUIN
 //
 
 #include "Irrlicht.hpp"
@@ -25,6 +25,11 @@ Bomberman::Bomb::~Bomb()
   //this->_state = EXPLODED;
   //delete this->_animated_node;
   //delete this->_scene;
+}
+
+Bomberman::Obj*	Bomberman::Bomb::create()
+{
+  return (new Bomb());
 }
 
 void		Bomberman::Bomb::reset()

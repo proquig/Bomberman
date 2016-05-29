@@ -5,7 +5,7 @@
 // Login   <proqui_g@epitech.net>
 // 
 // Started on  Fri May 27 18:46:24 2016 Guillaume PROQUIN
-// Last update Sun May 29 10:06:52 2016 Guillaume PROQUIN
+// Last update Sun May 29 18:18:20 2016 Guillaume PROQUIN
 //
 
 #ifndef							__CHARACTER_HPP__
@@ -46,6 +46,7 @@ namespace						Bomberman
     Character(Bomberman::Map *map);
     Character(float x, float y);
     ~Character();
+    Bomberman::Obj*					create();
     void						set_pos(ACTION direction);
     void						set_orientation(ACTION direction);
     void						add_bomb();

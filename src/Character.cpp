@@ -5,7 +5,7 @@
 // Login   <proqui_g@epitech.net>
 //
 // Started on  Fri May 27 18:01:17 2016 Guillaume PROQUIN
-// Last update Sun May 29 13:28:53 2016 Guillaume PROQUIN
+// Last update Sun May 29 18:18:32 2016 Guillaume PROQUIN
 //
 
 #include "Character.hpp"
@@ -48,6 +48,11 @@ Bomberman::Character::Character(float x, float y) :	Bomberman::Character::Charac
 
 Bomberman::Character::~Character()
 {
+}
+
+Bomberman::Obj*					Bomberman::Character::create()
+{
+  return (new Character());
 }
 
 void							Bomberman::Character::set_pos(ACTION direction)

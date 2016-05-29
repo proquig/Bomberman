@@ -13,9 +13,10 @@ namespace Bomberman
   {
    public:
     virtual ~IObj();
-    float 				getX() const;
-    float 				getY() const;
-    void				explode();
+    virtual Bomberman::IObj*		create() = 0;
+    virtual float 			getX() const = 0;
+    virtual float 			getY() const = 0;
+    virtual void			explode() = 0;
   };
 };
 

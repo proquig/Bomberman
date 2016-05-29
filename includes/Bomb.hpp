@@ -26,6 +26,7 @@ namespace				Bomberman
   public:
     Bomb();
     ~Bomb();
+    Bomberman::Obj*			create();
     void				reset();
     void				put(float x, float y);
     void				explode();
