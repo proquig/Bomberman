@@ -56,17 +56,13 @@ Bomberman::Obj *Bomberman::Map::putObj(const std::string &mesh_path, const std::
 
 Bomberman::Obj *                Bomberman::Map::createObj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
 {
-  //int					i;
-  //(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)>
    std::map<Bomberman::TYPE, pointeur> objs = {
-	   {BRICK, &Map::create}
+	   {TYPE::CHARACTER, &Map::create},
+	   {BOX, &Map::create},
+	   {PLAN, &Map::create},
+	   {BOMB, &Map::create},
+	   {CHARACTER, &Map::create}
    };
-
-   /* {BOX, &Bomberman::Obj::create},
-    {PLAN, &Bomberman::Obj::create},
-    {BOMB, &Bomberman::Obj::create},
-    {CHARACTER, &Bomberman::Obj::create}*/
-
   //i = -1;
   //while (++i < objs.size())
   //if (objs[i]->first == type)
