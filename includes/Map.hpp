@@ -15,13 +15,14 @@
 # define			MAPSIZE_X 90
 # define			MAPSIZE_Y 70
 
-typedef				Bomberman::Obj* (Bomberman::Obj::*MapMemFn)(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
+//typedef				Bomberman::IObj* (Bomberman::Obj::*MapMemFn)(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
 
 namespace			Bomberman
 {
   class				Map
   {
    private:
+    typedef Bomberman::Obj	*(Map::*pointeur)(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     std::vector<Bomberman::Obj *> _objs;
     Bomberman::Irrlicht		&_irr;
     irr::video::SMaterial	_material;
@@ -34,9 +35,17 @@ namespace			Bomberman
     ~Map();
     bool			checkPosition(float x, float y, float range);
     void 			createMap();
-    Bomberman::Obj		*putObjSomewhere(const std::string &mesh_path, const std::string &texture_path, Bomberman::TYPE type);
+
+     Bomberman::Obj		*putObjSomewhere(const std::string &mesh_path, const std::string &texture_path, Bomberman::TYPE type);
+    Bomberman::Obj*		create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
+    {
+      return (new Obj(mesh_path, texture_path, x, y, type));
+    }
+
     //Bomberman::Obj 		*putObjSomewhere(Bomberman::Obj::TYPE type);
     Bomberman::Obj*		createObj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
+
+
     Bomberman::Obj		*putObj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
 
    private:

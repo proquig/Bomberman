@@ -25,7 +25,7 @@ namespace Bomberman
 
    public:
     template <typename T>
-    T*					create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
+    static T*				create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
     {
       return new T(mesh_path, texture_path, x, y, type);
     }
