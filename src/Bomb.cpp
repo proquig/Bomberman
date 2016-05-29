@@ -52,6 +52,5 @@ void		Bomberman::Bomb::explode()
   //RESET
 
   this->exp = new Explosion(this->_x, this->_y);
-  std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-  delete (this->exp);
+ // delete (this->exp);
 }

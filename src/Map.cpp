@@ -35,7 +35,7 @@ void		Bomberman::Map::createMap()
 {
   _material.Lighting = true;
   _scene = this->_irr.getSmgr()->getRootSceneNode();
-  Bomberman::Obj obj("", "./assets/Te/Sand_floor.jpg", MAPSIZE_X, MAPSIZE_Y, Bomberman::Obj::PLAN);
+  Bomberman::Obj obj("", "./assets/Floor/grass2.jpg", MAPSIZE_X, MAPSIZE_Y, Bomberman::Obj::PLAN);
 
   for (int wallnbr = 0; wallnbr <= MAPSIZE_X; wallnbr += 5)
     {
@@ -59,8 +59,6 @@ Bomberman::Obj *Bomberman::Map::putObj(const std::string &mesh_path, const std::
 
 Bomberman::Obj *		Bomberman::Map::putObjSomewhere(Bomberman::Obj::TYPE type)
 {
-  irr::scene::IMeshSceneNode *wall = 0;
-
   static int r = 1;
   srand((unsigned int) time(NULL));
   r += rand() * rand();
@@ -72,7 +70,7 @@ Bomberman::Obj *		Bomberman::Map::putObjSomewhere(Bomberman::Obj::TYPE type)
       y = (rand() + r) % (MAPSIZE_Y / 2);
     }
   return(type == Bomberman::Obj::BOX ? putObj("./assets/Box/ItmCarrierBox00.obj", "./assets/Box/ItmCommonBoxB00.png", x, y, Bomberman::Obj::BOX) :
-  putObj("./assets/Box/ItmBox00.obj", "./assets/Box/ItmBox01_00.png", x, y, Bomberman::Obj::BRICK));
+  putObj("./assets/Box/ItmBox00.obj", "./assets/Box/ItmBox01_00.png", x, y, type));
 }
 
 void Bomberman::Map::createWall(int x, int y)

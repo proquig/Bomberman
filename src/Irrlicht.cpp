@@ -16,14 +16,10 @@ Bomberman::Irrlicht::Irrlicht()
 {
   irr::video::E_DRIVER_TYPE driverType = irr::video::EDT_OPENGL;
   this->_device = irr::createDevice(driverType, irr::core::dimension2d<irr::u32>(1920, 1080),
-				    0, false, true, false, &this->event);
+				    32, false, true, false, &this->event);
 
   if (this->_device == NULL)
     throw (exception("Can't Load OpenGL"));
-
-/*  this->_device->getVideoDriver()->getMaterial2D().TextureLayer[0].BilinearFilter=true;
-  this->_device->getVideoDriver()->getMaterial2D().AntiAliasing = irr::video::EAAM_FULL_BASIC;*/
-  this->_device->setResizable(true);
   this->_device->getVideoDriver()->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);
   this->_device->setWindowCaption(L"Bomberman");
 }
@@ -35,7 +31,6 @@ Bomberman::Irrlicht &Bomberman::Irrlicht::operator=(const Bomberman::Irrlicht &)
 
 Bomberman::Irrlicht::~Irrlicht()
 {
-  this->_device->drop();
 }
 
 irr::IrrlichtDevice *Bomberman::Irrlicht::getDevice() const

@@ -19,19 +19,16 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
       this->_animated_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
       this->_animated_node->setMD2Animation(irr::scene::EMAT_STAND);
       this->_animated_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path.c_str()));
-      this->_animated_node->setAnimationSpeed(16.f);
+      this->_animated_node->setAnimationSpeed(25.f);
     }
 
   if (type == BOMB)
     {
-      this->_animated_mesh = this->_irr.getSmgr()->getMesh(mesh_path.c_str());
+      this->_animated_mesh = this->_irr.getSmgr()->getMesh("/home/cloquet/Documents/cpp/cpp_indie_studio/assets/Bomb/model.dae");//mesh_path.c_str());
       this->_animated_node = this->_irr.getSmgr()
 				 ->addAnimatedMeshSceneNode(this->_animated_mesh, 0, -1, irr::core::vector3df(x, 0, y),
-							    irr::core::vector3df(0, 0, 0),irr::core::vector3df(2.0f, 2.0f, 2.0f));
+							    irr::core::vector3df(0, 0, 0),irr::core::vector3df(0.03f, 0.03f, 0.03f));
       this->_animated_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-      this->_animated_node->setMD2Animation(irr::scene::EMAT_STAND);
-      this->_irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(this->_animated_mesh, 2.0f);
-      this->_animated_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path.c_str()));
       this->_animated_node->setAnimationSpeed(16.f);
     }
 
@@ -62,23 +59,13 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
 					  irr::core::dimension2df(1.f, 1.f));
       this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh);
       this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-      this->_irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(this->_mesh, 0.01f);
+      this->_irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(this->_mesh, 0.51f);
       this->_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path.c_str()));
     }
-
-/*
-  this->_mesh = this->_irr.getSmgr()->getGeometryCreator()->createCubeMesh(irr::core::vector3df(5.f, 5.f, 5.f));
-  this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh);
-  this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-  this->_irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(this->_mesh, 0.0001f);
-  this->_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path));
-  this->_node->setPosition(irr::core::vector3df(x, 2.5, y));
-*/
 }
 
 Bomberman::Obj::~Obj()
 {
-
 }
 
 float 				Bomberman::Obj::getX() const
