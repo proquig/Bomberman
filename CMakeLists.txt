@@ -24,12 +24,13 @@ file(
         includes/*.hpp
 )
 
+add_subdirectory(lib/tinyxml2)
 add_executable(Bomberman ${SOURCES} ${HEADERS})
 
 target_include_directories(Bomberman PRIVATE includes PRIVATE includes/sound PRIATE includes/xml)
 target_link_libraries(Bomberman ${IRRLICHT_LIBRARY})
 target_link_libraries(Bomberman IrrKlang)
-#target_link_libraries(Bomberman tinyxml2)
+target_link_libraries(Bomberman tinyxml2)
 
 add_custom_command(
         TARGET Bomberman POST_BUILD
@@ -40,15 +41,9 @@ add_custom_command(
 
 add_custom_command(
         TARGET Bomberman POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_HOME_DIRECTORY}/lib
-        $<TARGET_FILE_DIR:Bomberman>/lib
-)
-
-add_custom_command(
-        TARGET Bomberman POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_HOME_DIRECTORY}/lib/ikpFlac.so
         ${CMAKE_HOME_DIRECTORY}/lib/ikpMP3.so
+        ${CMAKE_HOME_DIRECTORY}/lib/libIrrKlang.so
         $<TARGET_FILE_DIR:Bomberman>
 )
