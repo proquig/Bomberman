@@ -50,5 +50,22 @@ void		Bomberman::Bomb::explode()
   //ANIMATION
   //HIDE
   //RESET
-  //std::cout << "Boom !" << std::endl;
+  this->_ps = this->_irr.getSmgr()->addParticleSystemSceneNode(false);
+  this->_em = _ps->createBoxEmitter(irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7), irr::core::vector3df(0.0f,0.06f,0.0f), 80, 100, irr::video::SColor(0,255,255,255), irr::video::SColor(0,255,255,255), 800,2000,0, irr::core::dimension2df(10.f,10.f), irr::core::dimension2df(20.f,20.f));
+  _ps->setEmitter(this->_em);
+  _em->drop();
+
+  irr::scene::IParticleAffector* paf = _ps->createFadeOutParticleAffector();
+
+  _ps->addAffector(paf); // same goes for the affector
+  paf->drop();
+
+  _ps->setPosition(irr::core::vector3df(-70,60,40));
+  _ps->setScale(irr::core::vector3df(2,2,2));
+  _ps->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+  _ps->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
+  _ps->setMaterialTexture(0, _irr.getDriver()->getTexture("./assets/Bomb/Explosion.jpg"));
+  _ps->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
+  
+  std::cout << "Boom !" << std::endl;
 }

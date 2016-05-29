@@ -20,6 +20,9 @@ namespace				Bomberman
       };
   private:
     STATE				_state;
+    irr::scene::IParticleSystemSceneNode	*_ps;
+    irr::scene::IParticleEmitter		*_em;
+
    public:
     Bomb();
     ~Bomb();
