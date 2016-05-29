@@ -5,7 +5,7 @@
 // Login   <proqui_g@epitech.net>
 //
 // Started on  Fri May 27 18:01:17 2016 Guillaume PROQUIN
-// Last update Sat May 28 20:23:06 2016 Guillaume PROQUIN
+// Last update Sun May 29 13:28:53 2016 Guillaume PROQUIN
 //
 
 #include "Character.hpp"
@@ -31,6 +31,15 @@ Bomberman::Character::Character() :
   this->add_bomb();
 }
 
+Bomberman::Character::Character(Bomberman::Map *map) :
+	Bomberman::Obj::Obj("./assets/ninja/ninja.b3d", "./assets/ninja/nskinrd.jpg", 0, 0, CHARACTER)
+{
+  this->_map = map;
+  this->_animated_node->setLoopMode(false);
+  this->_animated_node->setFrameLoop(START_FRAME, START_FRAME);
+  this->add_bomb();
+}
+
 Bomberman::Character::Character(float x, float y) :	Bomberman::Character::Character()
 {
   this->_x = x;
@@ -51,14 +60,17 @@ void							Bomberman::Character::set_pos(ACTION direction)
       {0.2f, 0}
     };
 
-  this->_x += position[direction][0];
-  this->_y += position[direction][1];
-  this->set_orientation(direction);
-  this->_animated_node->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
-  if (this->_animated_node->getStartFrame() == START_FRAME)
+  if (this->_map->checkPosition(this->_x + position[direction][0], this->_y + position[direction][1], 2.5))
     {
-      this->_animated_node->setFrameLoop(START_WALK_FRAME, END_WALK_FRAME);
-      this->afk();
+      this->_x += position[direction][0];
+      this->_y += position[direction][1];
+      this->set_orientation(direction);
+      this->_animated_node->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
+      if (this->_animated_node->getStartFrame() == START_FRAME)
+	{
+	  this->_animated_node->setFrameLoop(START_WALK_FRAME, END_WALK_FRAME);
+	  this->afk();
+	}
     }
 }
 
@@ -75,37 +87,19 @@ void							Bomberman::Character::set_orientation(ACTION direction)
 
 void							Bomberman::Character::add_bomb()
 {
+  //Bomberman::Map::putObj("./assets/Bomb/Bomb.obj", "./assets/Bomb/plasma-grenade.jpg", 0, 0, Bomberman::Obj::BOMB);
+  //this->_bombs.push_back(Bomberman::Map::putObj("./assets/Bomb/Bomb.obj", "./assets/Bomb/plasma-grenade.jpg", 0, 0, Bomberman::Obj::BOMB));
   this->_bombs.push_back(new Bomberman::Bomb());
 }
 
 void							Bomberman::Character::put_bomb(ACTION action)
 {
   int							i;
-  //std::vector<Bomberman::Bomb*>::iterator		it;
 
   i = -1;
   while (++i < this->_bombs.size() && this->_bombs[i]->getExplosionTime());
-  /*while (it != this->_bombs.end() && (*it)->getExplosionTime())
-    {
-      std::cout << "OK BITCH" << std::endl;
-      std::cout << ((it == this->_bombs.end()) ? "true" : "false") << std::endl;
-      ++it;
-      std::cout << ((it == this->_bombs.end()) ? "true" : "false") << std::endl;
-    }
-  std::cout << "----" << std::endl;
-  */
-  std::cout << this->_bombs.size() << " & " << i << std::endl;
   if (i < this->_bombs.size())
     this->_bombs[i]->put(this->_x, this->_y);
-  /*
-  if (it != this->_bombs.end())
-    {
-      (*it)->put(this->_x, this->_y);
-      std::cout << "POSEY" << std::endl;
-    }
-  else
-    std::cout << "NOT POSEY" << std::endl;
-  */
 }
 
 void							Bomberman::Character::afk()

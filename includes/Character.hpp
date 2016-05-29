@@ -5,7 +5,7 @@
 // Login   <proqui_g@epitech.net>
 // 
 // Started on  Fri May 27 18:46:24 2016 Guillaume PROQUIN
-// Last update Sat May 28 20:06:32 2016 Guillaume PROQUIN
+// Last update Sun May 29 10:06:52 2016 Guillaume PROQUIN
 //
 
 #ifndef							__CHARACTER_HPP__
@@ -15,6 +15,8 @@
 # include						"Irrlicht.hpp"
 # include						"AnimationEndCallback.hpp"
 # include						"Bomb.hpp"
+# include						"Obj.hpp"
+# include						"Map.hpp"
 
 # define						START_FRAME 0
 # define						START_WALK_FRAME 1
@@ -38,8 +40,10 @@ namespace						Bomberman
     typedef						void (Character::*CharMemFn)(Character::ACTION);
     static const std::map<irr::EKEY_CODE, ACTION>	_events;
     std::vector<Bomberman::Bomb*>			_bombs;
+    Bomberman::Map					*_map;
   public:
     Character();
+    Character(Bomberman::Map *map);
     Character(float x, float y);
     ~Character();
     void						set_pos(ACTION direction);

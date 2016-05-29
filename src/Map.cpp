@@ -14,6 +14,23 @@ Bomberman::Map::~Map()
 {
 }
 
+bool						Bomberman::Map::checkPosition(float x, float y, float range)
+{
+  int						i;
+  int						resx;
+  int						resy;
+
+  i = -1;
+  while (++i < this->_objs.size())
+    {
+      resx = this->_objs[i]->getX() - x;
+      resy = this->_objs[i]->getY() - y;
+      if ((resx <= range && resx >= -range) && (resy <= range && resy >= -range))
+	return (false);
+    }
+  return (true);
+}
+
 void                Bomberman::Map::createMap()
 {
   _material.Lighting = true;
@@ -26,6 +43,8 @@ void                Bomberman::Map::createMap()
     {
       createWall(X / 2 - wallnbr, Y / 2);
       createWall(X / 2 - wallnbr, -Y / 2);
+      ///createWall(X - wallnbr, 0);
+      //createWall(X - wallnbr, Y);
     }
 
   for (int wallnbr = 0; wallnbr <= Y; wallnbr += 5)
@@ -35,9 +54,10 @@ void                Bomberman::Map::createMap()
     }
 }
 
-void 			Bomberman::Map::putObj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::Obj::TYPE type)
+Bomberman::Obj		   *Bomberman::Map::putObj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::Obj::TYPE type)
 {
   this->_objs.push_back(new Bomberman::Obj(mesh_path, texture_path, x, y, type));
+  return (this->_objs.back());
 }
 
 irr::scene::IMeshSceneNode *Bomberman::Map::createBreakableWall()
