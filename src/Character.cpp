@@ -5,7 +5,7 @@
 // Login   <proqui_g@epitech.net>
 //
 // Started on  Fri May 27 18:01:17 2016 Guillaume PROQUIN
-// Last update Sun May 29 18:18:32 2016 Guillaume PROQUIN
+// Last update Sun May 29 20:23:04 2016 Guillaume PROQUIN
 //
 
 #include "Character.hpp"
@@ -23,6 +23,7 @@ const std::map<irr::EKEY_CODE, Bomberman::Character::ACTION>			Bomberman::Charac
   {irr::KEY_SPACE, PUT_BOMB}
 };
 
+/*
 Bomberman::Character::Character() :
 	Bomberman::Obj::Obj("./assets/ninja/ninja.b3d", "./assets/ninja/nskinrd.jpg", 0, 0, CHARACTER)
 {
@@ -30,7 +31,9 @@ Bomberman::Character::Character() :
   this->_animated_node->setFrameLoop(START_FRAME, START_FRAME);
   this->add_bomb();
 }
+*/
 
+ /*
 Bomberman::Character::Character(Bomberman::Map *map) :
 	Bomberman::Obj::Obj("./assets/ninja/ninja.b3d", "./assets/ninja/nskinrd.jpg", 0, 0, CHARACTER)
 {
@@ -39,20 +42,31 @@ Bomberman::Character::Character(Bomberman::Map *map) :
   this->_animated_node->setFrameLoop(START_FRAME, START_FRAME);
   this->add_bomb();
 }
-
+ */
+/*
 Bomberman::Character::Character(float x, float y) :	Bomberman::Character::Character()
 {
   this->_x = x;
   this->_y = y;
+}
+*/
+
+Bomberman::Character(const std::string &mesh_path, const std::string &texture_path, float x, float y) :
+  Bomberman::Obj::Obj(test_path, texture_path, x, y, CHARACTER)
+{
+  this->_map = map;
+  this->_animated_node->setLoopMode(false);
+  this->_animated_node->setFrameLoop(START_FRAME, START_FRAME);
+  this->add_bomb();
 }
 
 Bomberman::Character::~Character()
 {
 }
 
-Bomberman::Obj*					Bomberman::Character::create()
+Bomberman::Obj*						Bomberman::Character::create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
 {
-  return (new Character());
+  return (new Character(mesh_path, texture_path, x, y));
 }
 
 void							Bomberman::Character::set_pos(ACTION direction)
@@ -94,7 +108,7 @@ void							Bomberman::Character::add_bomb()
 {
   //Bomberman::Map::putObj("./assets/Bomb/Bomb.obj", "./assets/Bomb/plasma-grenade.jpg", 0, 0, Bomberman::Obj::BOMB);
   //this->_bombs.push_back(Bomberman::Map::putObj("./assets/Bomb/Bomb.obj", "./assets/Bomb/plasma-grenade.jpg", 0, 0, Bomberman::Obj::BOMB));
-  this->_bombs.push_back(new Bomberman::Bomb());
+  this->_bombs.push_back(new Bomberman::Bomb("./assets/Bomb/Bomb.obj", "./assets/Bomb/plasma-grenade.jpg", 0, 0));
 }
 
 void							Bomberman::Character::put_bomb(ACTION action)

@@ -9,18 +9,8 @@
 
 namespace Bomberman
 {
-  class Obj
+  class Obj : public IObj
   {
-   public:
-    enum TYPE
-    {
-      BOX,
-      BRICK,
-      PLAN,
-      BOMB,
-      CHARACTER
-    };
-
    protected:
     Bomberman::Irrlicht 		&_irr;
     irr::scene::IMesh 			*_mesh;
@@ -34,9 +24,9 @@ namespace Bomberman
     irr::u32 				_explosion_time;
 
    public:
-    Obj(const std::string &mesh_path, const std::string &texture_path, float x, float y, TYPE type);
+    Obj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     virtual ~Obj();
-    Bomberman::IObj*			create();
+    Bomberman::IObj*			create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     float 				getX() const;
     float 				getY() const;
     irr::u32 				getExplosionTime() const;

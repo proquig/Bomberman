@@ -3,7 +3,6 @@
 //
 
 #include <list>
-#include "Obj.hpp"
 #include "Map.hpp"
 
 Bomberman::Map::Map() : _irr(Bomberman::Irrlicht::instance())
@@ -35,8 +34,7 @@ void		Bomberman::Map::createMap()
 {
   _material.Lighting = true;
   _scene = this->_irr.getSmgr()->getRootSceneNode();
-  Bomberman::Obj obj("", "./assets/Floor/grass2.jpg", MAPSIZE_X, MAPSIZE_Y, Bomberman::Obj::PLAN);
-
+  Bomberman::Obj obj("", "./assets/Floor/grass2.jpg", MAPSIZE_X, MAPSIZE_Y, Bomberman::PLAN);
   for (int wallnbr = 0; wallnbr <= MAPSIZE_X; wallnbr += 5)
     {
       createWall(MAPSIZE_X / 2 - wallnbr, MAPSIZE_Y / 2);
@@ -50,14 +48,34 @@ void		Bomberman::Map::createMap()
 }
 
 Bomberman::Obj *Bomberman::Map::putObj(const std::string &mesh_path, const std::string &texture_path, float x, float y,
-				       Bomberman::Obj::TYPE type)
+				       Bomberman::TYPE type)
 {
-
   this->_objs.push_back(new Bomberman::Obj(mesh_path, texture_path, x, y, type));
   return (this->_objs.back());
 }
 
-Bomberman::Obj *		Bomberman::Map::putObjSomewhere(Bomberman::Obj::TYPE type)
+Bomberman::IObj*		Bomberman::Map::createObj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
+{
+  int					i;
+  std::map<Bomberman::TYPE, MapMemFn>	objs = {
+    {BRICK, static_cast<MapMemFn>(&Bomberman::Obj::create)}
+    //{BOX, static_cast<MapMemFn>(&Bomberman::Obj::create)},
+    //{PLAN, static_cast<MapMemFn>(&Bomberman::Obj::create)},
+    //{BOMB, static_cast<MapMemFn>(&Bomberman::Bomb::create)},
+    //{CHARACTER, static_cast<MapMemFn>(&Bomberman::Character::create)}
+  };
+
+  //i = -1;
+  //while (++i < objs.size())
+  //if (objs[i]->first == type)
+  //  (*objs[i]->second)(mesh_path, texture_path, x, y, type);
+  for (std::map<Bomberman::TYPE, MapMemFn>::const_iterator it = objs.begin(); it != objs.end(); ++it)
+    if (it->first == type)
+      (*(it->second))(mesh_path, texture_path, x, y, type);
+      //this->do_action(it->second);
+}
+
+Bomberman::Obj *		Bomberman::Map::putObjSomewhere(const std::string &mesh_path, const std::string &texture_path, Bomberman::TYPE type)
 {
   static int r = 1;
   srand((unsigned int) time(NULL));
@@ -69,11 +87,17 @@ Bomberman::Obj *		Bomberman::Map::putObjSomewhere(Bomberman::Obj::TYPE type)
       x = (rand() + r) % (MAPSIZE_X / 2);
       y = (rand() + r) % (MAPSIZE_Y / 2);
     }
+  /*
   return(type == Bomberman::Obj::BOX ? putObj("./assets/Box/ItmCarrierBox00.obj", "./assets/Box/ItmCommonBoxB00.png", x, y, Bomberman::Obj::BOX) :
   putObj("./assets/Box/ItmBox00.obj", "./assets/Box/ItmBox01_00.png", x, y, type));
+
+  */
+  //return(type == Bomberman::Obj::BOX ? putObj("./assets/Box/ItmCarrierBox00.obj", "./assets/Box/ItmCommonBoxB00.png", x, y, Bomberman::Obj::BOX) :
+  //putObj("./assets/Box/ItmBox00.obj", "./assets/Box/ItmBox01_00.png", x, y, Bomberman::Obj::BRICK));
+  return putObj(mesh_path, texture_path, x, y, type);
 }
 
 void Bomberman::Map::createWall(int x, int y)
 {
-  putObj("./assets/Box/ItmCarrierBox00.obj", "./assets/Box/ItmCommonBoxB00.png", x, y, Bomberman::Obj::BRICK);
+  putObj("./assets/Box/ItmCarrierBox00.obj", "./assets/Box/ItmCommonBoxB00.png", x, y, Bomberman::BRICK);
 }

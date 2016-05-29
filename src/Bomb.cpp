@@ -5,14 +5,14 @@
 // Login   <proqui_g@epitech.net>
 // 
 // Started on  Sat May 28 16:07:06 2016 Guillaume PROQUIN
-// Last update Sun May 29 18:17:57 2016 Guillaume PROQUIN
+// Last update Sun May 29 20:21:32 2016 Guillaume PROQUIN
 //
 
 #include "Irrlicht.hpp"
 #include "Bomb.hpp"
 
-Bomberman::Bomb::Bomb() :
-	Bomberman::Obj::Obj("./assets/Bomb/Bomb.obj", "./assets/Bomb/plasma-grenade.jpg", 0, 0, BOMB)
+Bomberman::Bomb::Bomb(const std::string &mesh_path, const std::string &texture_path, float x, float y) :
+	Bomberman::Obj::Obj(mesh_path, texture_path, x, y, BOMB)
 
 {
   this->_state = AWAITING;
@@ -27,9 +27,9 @@ Bomberman::Bomb::~Bomb()
   //delete this->_scene;
 }
 
-Bomberman::Obj*	Bomberman::Bomb::create()
+Bomberman::Obj*	Bomberman::Bomb::create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
 {
-  return (new Bomb());
+  return (new Bomb(mesh_path, texture_path, x, y));
 }
 
 void		Bomberman::Bomb::reset()

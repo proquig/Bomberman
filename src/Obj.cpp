@@ -68,9 +68,15 @@ Bomberman::Obj::~Obj()
 {
 }
 
-Bomberman::IObj*		Bomberman::Obj::create()
+Bomberman::IObj*		Bomberman::Obj::create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
 {
-  return (NULL);
+  std::map<Bomberman::TYPE, (Bomberman::Obj*)(const std::string&, const std::string&, float, float, Bomberman::TYPE)>	objs = {
+    {BRICK, &Bomberman::Obj::create},
+    {BOX, &Bomberman::Obj::create},
+    {PLAN, &Bomberman::Obj::create},
+  };
+  if (objs.at(type))
+    (*objs.at(type)->second())();
 }
 
 float 				Bomberman::Obj::getX() const

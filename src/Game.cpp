@@ -30,22 +30,21 @@ Bomberman::Game::~Game()
 
 void Bomberman::Game::run()
 {
-  Character lol(this->_map);
+  //Character lol(this->_map);
+  Character* lol = dynamic_cast<Bomberman::Character*>(this->_map->putObjSomewhere("./assets/ninja/ninja.b3d", "./assets/ninja/nskinrd.jpg", Bomberman::CHARACTER));
   irr::scene::ICameraSceneNode *camera = this->_irr.getSmgr()->addCameraSceneNode(0, irr::core::vector3df(0, 60, -20),
 									   irr::core::vector3df(0, 0, 0));
   camera->setNearValue(10);
   irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
   irr::u32 now = 0;
-  lol.add_bomb();
-  lol.add_bomb();
-
-
 
   int 	lastFPS = -1;
+  lol->add_bomb();
+  lol->add_bomb();
   while (this->_irr.getDevice()->run())
     {
-      lol.handle_event();
-      lol.catch_event(this->_irr.event.getKeys());
+      lol->handle_event();
+      lol->catch_event(this->_irr.event.getKeys());
       if (this->_irr.event.IsKeyDown(irr::KEY_ESCAPE))
 	{
 	  Bomberman::Menu menu;
