@@ -42,9 +42,9 @@ namespace						Bomberman
     //Character();
     //Character(Bomberman::Map *map);
     //Character(float x, float y);
-    Character(const std::string &mesh_path, const std::string &texture_path, float x, float y);
+    Character(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     ~Character();
-    Bomberman::Obj*					create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
+    //static Bomberman::Obj*				create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     void						set_pos(ACTION direction);
     void						set_orientation(ACTION direction);
     void						add_bomb();

@@ -20,11 +20,11 @@ namespace Bomberman
   class IObj
   {
    public:
-    virtual ~IObj();
-    virtual Bomberman::IObj*		create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type) = 0;
+    //virtual ~IObj() = 0;
+    //virtual Bomberman::IObj*		create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type) = 0;
     virtual float 			getX() const = 0;
     virtual float 			getY() const = 0;
-    virtual void			explode() = 0;
+    virtual irr::u32 			getExplosionTime() const = 0;
   };
 };
 

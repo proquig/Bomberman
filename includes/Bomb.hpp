@@ -27,7 +27,7 @@ namespace				Bomberman
     //Bomb();
     Bomb(const std::string &mesh_path, const std::string &texture_path, float x, float y);
     ~Bomb();
-    Bomberman::Obj*			create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
+    //static Bomberman::Obj*		create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     void				reset();
     void				put(float x, float y);
     void				explode();

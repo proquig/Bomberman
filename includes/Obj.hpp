@@ -24,13 +24,17 @@ namespace Bomberman
     irr::u32 				_explosion_time;
 
    public:
+    template <typename T>
+    T*					create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
+    {
+      return new T(mesh_path, texture_path, x, y, type);
+    }
     Obj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     virtual ~Obj();
-    Bomberman::IObj*			create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
+    //static Bomberman::IObj*		create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     float 				getX() const;
     float 				getY() const;
     irr::u32 				getExplosionTime() const;
-    virtual void			explode();
   };
 };
 

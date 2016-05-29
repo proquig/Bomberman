@@ -27,10 +27,11 @@ Bomberman::Bomb::~Bomb()
   //delete this->_scene;
 }
 
-Bomberman::Obj*	Bomberman::Bomb::create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
+/*Bomberman::Obj*	Bomberman::Bomb::create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
 {
   return (new Bomb(mesh_path, texture_path, x, y));
 }
+*/
 
 void		Bomberman::Bomb::reset()
 {

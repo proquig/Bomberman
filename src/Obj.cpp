@@ -2,6 +2,7 @@
 // Created by cloquet on 28/05/16.
 //
 
+#include <Map.hpp>
 #include "Obj.hpp"
 
 Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_path, float x, float y, TYPE type):
@@ -68,16 +69,18 @@ Bomberman::Obj::~Obj()
 {
 }
 
+/*
 Bomberman::IObj*		Bomberman::Obj::create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
 {
-  std::map<Bomberman::TYPE, (Bomberman::Obj*)(const std::string&, const std::string&, float, float, Bomberman::TYPE)>	objs = {
-    {BRICK, &Bomberman::Obj::create},
-    {BOX, &Bomberman::Obj::create},
-    {PLAN, &Bomberman::Obj::create},
+  std::map<Bomberman::TYPE, MapMemFn>	objs = {
+    {BRICK, static_cast<MapMemFn>(&Bomberman::Obj::create)},
+    {BOX, static_cast<MapMemFn>(&Bomberman::Obj::create)},
+    {PLAN, static_cast<MapMemFn>(&Bomberman::Obj::create)},
   };
-  if (objs.at(type))
-    (*objs.at(type)->second())();
+  //if (objs.at(type))
+   // (*objs.at(type)->second())();
 }
+*/
 
 float 				Bomberman::Obj::getX() const
 {
@@ -92,9 +95,4 @@ float 				Bomberman::Obj::getY() const
 irr::u32 			Bomberman::Obj::getExplosionTime() const
 {
   return (this->_explosion_time);
-}
-
-void				Bomberman::Obj::explode()
-{
-
 }

@@ -51,10 +51,10 @@ Bomberman::Character::Character(float x, float y) :	Bomberman::Character::Charac
 }
 */
 
-Bomberman::Character(const std::string &mesh_path, const std::string &texture_path, float x, float y) :
-  Bomberman::Obj::Obj(test_path, texture_path, x, y, CHARACTER)
+Bomberman::Character::Character(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type) :
+  Bomberman::Obj::Obj(mesh_path, texture_path, x, y, Bomberman::CHARACTER)
 {
-  this->_map = map;
+  //this->_map = map;
   this->_animated_node->setLoopMode(false);
   this->_animated_node->setFrameLoop(START_FRAME, START_FRAME);
   this->add_bomb();
@@ -64,10 +64,12 @@ Bomberman::Character::~Character()
 {
 }
 
+/*
 Bomberman::Obj*						Bomberman::Character::create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
 {
-  return (new Character(mesh_path, texture_path, x, y));
+  return (new Character(mesh_path, texture_path, x, y, type));
 }
+*/
 
 void							Bomberman::Character::set_pos(ACTION direction)
 {
@@ -79,6 +81,7 @@ void							Bomberman::Character::set_pos(ACTION direction)
       {0.2f, 0}
     };
 
+  /*
   if (this->_map->checkPosition(this->_x + position[direction][0], this->_y + position[direction][1], 2.5))
     {
       this->_x += position[direction][0];
@@ -91,6 +94,7 @@ void							Bomberman::Character::set_pos(ACTION direction)
 	  this->afk();
 	}
     }
+    */
 }
 
 void							Bomberman::Character::set_orientation(ACTION direction)
