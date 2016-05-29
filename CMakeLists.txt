@@ -20,14 +20,16 @@ file(
 file(
         GLOB_RECURSE
         HEADERS
+        includes/*.h
         includes/*.hpp
 )
 
 add_executable(Bomberman ${SOURCES} ${HEADERS})
 
-target_include_directories(Bomberman PRIVATE includes PRIVATE includes/sound)
+target_include_directories(Bomberman PRIVATE includes PRIVATE includes/sound PRIATE includes/xml)
 target_link_libraries(Bomberman ${IRRLICHT_LIBRARY})
 target_link_libraries(Bomberman IrrKlang)
+target_link_libraries(Bomberman tinyxml2)
 
 add_custom_command(
         TARGET Bomberman POST_BUILD

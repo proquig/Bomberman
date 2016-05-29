@@ -2,31 +2,60 @@
 <module type="CPP_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src/Main.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/EventReceiver.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/Menu.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/Map.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/Character.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Sound/MusicManager.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Sound/SoundManager.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/Game.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/Irrlicht.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/Exception.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/Bomb.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/AnimationEndCallback.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/includes/Exception.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/includes/Bomb.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/includes/AnimationEndCallback.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/includes/Main.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/includes/Menu.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/includes/Map.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/includes/Character.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/includes/Game.hpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/includes/EventReceiver.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/EventReceiver.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Exception.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/xml/Score.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/xml/ScoreManager.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Bomb.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Character.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Obj.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Map.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Main.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Irrlicht.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Game.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Menu.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/includes/sound/SoundManager.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/includes/sound/MusicManager.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/Character.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/Bomb.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/Menu.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/Game.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/Exception.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/EventReceiver.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/AnimationEndCallback.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/includes/Irrlicht.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/Obj.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/Map.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/Main.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_ISoundStopEventReceiver.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_IVirtualRefCounted.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_vec3d.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_ISoundEffectControl.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_IFileReader.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_IRefCounted.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_ISoundSource.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_ESoundEngineOptions.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_ISound.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_EStreamModes.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_ESoundOutputDrivers.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_IFileFactory.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_ISoundMixedOutputReceiver.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_IAudioRecorder.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_ISoundDeviceList.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_SAudioStreamFormat.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_IAudioStream.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_ISoundEngine.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_IAudioStreamLoader.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/ik_irrKlangTypes.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/irrKlang/irrKlang.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/IObj.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/xml/ScoreManager.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/xml/tinyxml2.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/includes/xml/Score.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake/Modules/FindIrrlicht.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake/Modules/FindIrrKlang.cmake" isTestSource="false" />
