@@ -16,29 +16,13 @@ Bomberman::Game::Game() : _irr(Bomberman::Irrlicht::instance())
   this->_map = new Bomberman::Map();
   this->_map->createMap();
 
+/* this->_wall.push_back(this->_map->createBreakableWall());
   this->_wall.push_back(this->_map->createBreakableWall());
   this->_wall.push_back(this->_map->createBreakableWall());
   this->_wall.push_back(this->_map->createBreakableWall());
-  /*  _wall.push_back(map->createBreakableWall());
-  _wall.push_back(map->createBreakableWall());
-  _wall.push_back(map->createBreakableWall());
-  _wall.push_back(map->createBreakableWall());
-  _wall.push_back(map->createBreakableWall());
-  _wall.push_back(map->createBreakableWall());
-  _wall.push_back(map->createBreakableWall());
-  _wall.push_back(map->createBreakableWall());
-  _wall.push_back(map->createBreakableWall());
-  _wall.push_back(map->createBreakableWall());
-  _wall.push_back(map->createBreakableWall());
-  _wall.push_back(map->createBreakableWall());
-  _wall.push_back(map->createBreakableWall());
-  _wall.push_back(map->createBreakableWall());
-  _wall.push_back(map->createBreakableWall());
-  _wall.push_back(map->createBreakableWall());
-  _wall.push_back(map->createBreakableWall());
-  _wall.push_back(map->createBreakableWall());
-  _wall.push_back(map->createBreakableWall());
-  */
+  this->_wall.push_back(this->_map->createBreakableWall());
+*/
+
 }
 
 Bomberman::Game::~Game()
@@ -67,7 +51,7 @@ void Bomberman::Game::run()
       this->_irr.getDriver()->draw2DImage(background, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
 				   irr::core::rect<irr::s32>(0, 0, 1920, 1080));
       this->_irr.getSmgr()->drawAll();
-      this->_irr.getGui()->drawAll();
+//      this->_irr.getGui()->drawAll();
       this->_irr.getDriver()->endScene();
     }
 }

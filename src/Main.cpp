@@ -10,10 +10,15 @@ Bomberman::Main::Main() : _irrlicht(Irrlicht::instance())
 {
   Menu menu;
 
-  if (menu.run() == Bomberman::Menu::NEW_SINGLE_GAME)
+  Bomberman::Menu::Action action = menu.run();
+  if (action == Bomberman::Menu::NEW_SINGLE_GAME)
     {
       Game G;
       G.run();
+    }
+  if (action == Bomberman::Menu::QUIT)
+    {
+      _irrlicht.getDevice()->drop();
     }
 }
 

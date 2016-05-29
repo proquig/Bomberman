@@ -22,7 +22,7 @@ Bomberman::Menu::~Menu()
 
 Bomberman::Menu::Action Bomberman::Menu::run()
 {
-  Bomberman::MusicManager &s = Bomberman::MusicManager::instance();
+  /*Bomberman::MusicManager &s = Bomberman::MusicManager::instance();
   s.setMusic("./assets/sound/menusong.flac");
 
   try
@@ -33,7 +33,7 @@ Bomberman::Menu::Action Bomberman::Menu::run()
     {
       std::cerr << e.what() << std::endl;
     }
-
+*/
   t_texture_list::iterator it = _texture.begin();
 
   while (_irr.getDevice()->run())
