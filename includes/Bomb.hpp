@@ -7,6 +7,7 @@
 
 # include				"Irrlicht.hpp"
 # include				"Obj.hpp"
+# include				"Explosion.hpp"
 
 namespace				Bomberman
 {
@@ -20,10 +21,9 @@ namespace				Bomberman
       };
   private:
     STATE				_state;
-    irr::scene::IParticleSystemSceneNode	*_ps;
-    irr::scene::IParticleEmitter		*_em;
+    Bomberman::Explosion		*exp;
 
-   public:
+  public:
     Bomb();
     ~Bomb();
     void				reset();

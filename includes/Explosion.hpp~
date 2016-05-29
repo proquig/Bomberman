@@ -1,0 +1,27 @@
+//
+// Created by joris_a
+//
+
+#ifndef					__EXPLOSION_HPP__
+# define				__EXPLOSION_HPP__
+
+# include				"Irrlicht.hpp"
+# include				"Obj.hpp"
+# include				"Bomb.hpp"
+
+namespace				Bomberman
+{
+  class					Explosion : public Bomberman::Obj {
+  public:
+    Explosion(int x, int y);
+    ~Explosion();
+
+  private:
+    irr::scene::IParticleSystemSceneNode	*_ps;
+    irr::scene::IParticleEmitter		*_em;
+    irr::scene::IParticleAffector		*_paf;
+  };
+}
+
+
+#endif 
