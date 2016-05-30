@@ -107,13 +107,19 @@ void Bomberman::Game::handleTime()
   int		i = -1;
 
   while (++i < this->_map->getObjs().size())
-    if (this->_map->getObjs()[i]->getType() == Bomberman::BOMB
-	&& this->_map->getObjs()[i]->getExplosionTime()
-	&& now > this->_map->getObjs()[i]->getExplosionTime())
-      {
-	this->explodeObjs(static_cast<Bomberman::Bomb*>(this->_map->getObjs()[i]));
-	static_cast<Bomberman::Bomb*>(this->_map->getObjs()[i])->explode();
-      }
+    {
+      if (this->_map->getObjs()[i]->getType() == Bomberman::BOMB
+	  && this->_map->getObjs()[i]->getExplosionTime()
+	  && now > this->_map->getObjs()[i]->getExplosionTime())
+	{
+	  this->explodeObjs(static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i]));
+	  static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->explode();
+	}
+      if (this->_map->getObjs()[i]->getType() == Bomberman::BOMB
+	  && this->_map->getObjs()[i]->getAnimation_time()
+	  && now > this->_map->getObjs()[i]->getAnimation_time())
+	static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->clean();
+    }
 }
 
 void Bomberman::Game::handleEvents()

@@ -15,6 +15,10 @@ namespace				Bomberman
   class					Explosion {
   public:
     Explosion(float x, float y);
+    void clear()
+    {
+      this->_ps->remove();
+    }
     ~Explosion();
 
   private:

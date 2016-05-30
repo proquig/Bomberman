@@ -160,3 +160,9 @@ void Bomberman::Obj::reset()
   this->_is_destructible = false;
 }
 */
+irr::u32  Bomberman::Obj::getAnimation_time() const
+{
+  return _animation_time;
+}
+
+

@@ -59,9 +59,17 @@ void		Bomberman::Bomb::put(float x, float y)
   this->_animated_node->setVisible(true);
   this->_state = POSED;
   this->_explosion_time = (this->_irr.getDevice()->getTimer()->getTime() + 2000);
+  this->_animation_time = this->_explosion_time + 1500;
 }
 
 void		Bomberman::Bomb::explode()
 {
   this->reset();
+  this->exp = new Explosion(this->_x, this->_y);
+}
+
+void 		Bomberman::Bomb::clean()
+{
+  this->_animation_time = 0;
+  this->exp->clear();
 }

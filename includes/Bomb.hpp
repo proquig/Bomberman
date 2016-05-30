@@ -32,6 +32,8 @@ namespace				Bomberman
     void				explode();
     float getRange()			const;
     void				setRange(float *range);
+    void				clean();
+
   };
 }
 

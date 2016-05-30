@@ -28,5 +28,5 @@ Bomberman::Explosion::Explosion(float x, float y) : _irr(Bomberman::Irrlicht::in
 
 Bomberman::Explosion::~Explosion()
 {
-  this->_ps->remove();
+
 }
