@@ -20,23 +20,12 @@ namespace			Bomberman
   class				Map
   {
    private:
-//TODO::A voir avec BEN
-/*
-  template <typename T>
-    typedef T (Map<T>::*ptr)(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
-     template <typename T>
-    T		create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
-    {
-      return (new Obj(mesh_path, texture_path, x, y, type));
-    }
-    */
     typedef Bomberman::Obj		*(Map::*ptr)(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
+
     std::vector<Bomberman::Obj *> _objs;
     Bomberman::Irrlicht		&_irr;
     irr::video::SMaterial	_material;
     irr::scene::ISceneNode	*_scene;
-    typedef std::list<std::pair<int, int>> t_Wall;
-    t_Wall			_wallBreak;
 
    public:
     Map();
