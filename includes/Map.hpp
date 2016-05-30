@@ -45,10 +45,19 @@ namespace			Bomberman
     void 			createMap();
 
     Bomberman::Obj		*putObjSomewhere(const std::string &mesh_path, const std::string &texture_path, Bomberman::TYPE type);
+
+    /*
     Bomberman::Obj		*create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
     {
       return (new Obj(mesh_path, texture_path, x, y, type));
     }
+     */
+    template <typename T>
+    Obj		*create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
+    {
+      return (new T(mesh_path, texture_path, x, y, type));
+    }
+
     //Bomberman::Obj 		*putObjSomewhere(Bomberman::Obj::TYPE type);
     Bomberman::Obj*		createObj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     Bomberman::Obj		*putObj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);

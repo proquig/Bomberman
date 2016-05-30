@@ -57,21 +57,24 @@ Bomberman::Obj *Bomberman::Map::putObj(const std::string &mesh_path, const std::
 Bomberman::Obj *                Bomberman::Map::createObj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
 {
    std::map<Bomberman::TYPE, pointeur> objs = {
-	   {TYPE::CHARACTER, &Map::create},
-	   {BOX, &Map::create},
+	   {TYPE::CHARACTER, &Map::create<Character>}
+	   /*{BOX, &Map::create},
 	   {PLAN, &Map::create},
 	   {BOMB, &Map::create},
-	   {CHARACTER, &Map::create}
+	   {CHARACTER, &Map::create}*/
    };
   //i = -1;
   //while (++i < objs.size())
   //if (objs[i]->first == type)
   //  (*objs[i]->second)(mesh_path, texture_path, x, y, type);
-  //for (std::map<Bomberman::TYPE, MapMemFn>::const_iterator it = objs.begin(); it != objs.end(); ++it)
-    //if (it->first == type)
-      //(*(it->second))(mesh_path, texture_path,x, y, type);
-      //(*(it->second))(mesh_path, texture_path, x, y, type);
-      //this->do_action(it->second);
+  for (std::map<Bomberman::TYPE, pointeur >::const_iterator it = objs.begin(); it != objs.end(); ++it)
+    if (it->first == type)
+      {
+	pointeur fn = it->second;
+	(this->*(it->second))(mesh_path, texture_path, x, y, type);
+	//this->do_action(it->second);
+
+      }
 }
 
 Bomberman::Obj *		Bomberman::Map::putObjSomewhere(const std::string &mesh_path, const std::string &texture_path, Bomberman::TYPE type)
