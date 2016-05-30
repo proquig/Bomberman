@@ -86,17 +86,33 @@ irr::u32 			Bomberman::Obj::getExplosionTime() const
 {
   return (this->_explosion_time);
 }
-
 bool 				Bomberman::Obj::isBlockable()
 {
   return (this->_is_blockable);
 }
 
+/*
+ * TODO : We need a way to identify and easily serialize and deserialize mesh
+ */
 tinyxml2::XMLElement *Bomberman::Obj::serialize()
 {
+  time_t current_time;
+
+  time(&current_time);
+  tinyxml2::XMLElement *element = new tinyxml2::XMLElement;
+  element->SetName("object");
+  element->SetAttribute("x", this->_x);
+  element->SetAttribute("y", this->_y);
+  element->SetAttribute("explosionDelay", this->_explosion_time - current_time);
   return nullptr;
 }
 
 void Bomberman::Obj::deserialize(tinyxml2::XMLElement *element)
 {
+  time_t current_time;
+
+  time(&current_time);
+  this->_x = std::stof(element->Attribute("x"));
+  this->_y = std::stof(element->Attribute("y"));
+  this->_explosion_time = (irr::u32) (current_time + std::stoi(element->Attribute("explosionDelay")));
 }
