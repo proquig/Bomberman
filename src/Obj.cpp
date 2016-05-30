@@ -24,7 +24,7 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
 
   if (type == BOMB)
     {
-      this->_animated_mesh = this->_irr.getSmgr()->getMesh("/home/cloquet/Documents/cpp/cpp_indie_studio/assets/Bomb/model.dae");//mesh_path.c_str());
+      this->_animated_mesh = this->_irr.getSmgr()->getMesh("./assets/Bomb/model.dae");//mesh_path.c_str());
       this->_animated_node = this->_irr.getSmgr()
 				 ->addAnimatedMeshSceneNode(this->_animated_mesh, 0, -1, irr::core::vector3df(x, 0, y),
 							    irr::core::vector3df(0, 0, 0),irr::core::vector3df(0.03f, 0.03f, 0.03f));

@@ -31,7 +31,7 @@ Bomberman::Game::~Game()
 void Bomberman::Game::run()
 {
   //Character lol(this->_map);
-  Character* lol = dynamic_cast<Bomberman::Character*>(this->_map->putObjSomewhere("./assets/ninja/ninja.b3d", "./assets/ninja/nskinrd.jpg", Bomberman::CHARACTER));
+  Character* lol = dynamic_cast<Bomberman::Character*>(this->_map->createObjSomewhere("./assets/ninja/ninja.b3d", "./assets/ninja/nskinrd.jpg", Bomberman::CHARACTER));
   irr::scene::ICameraSceneNode *camera = this->_irr.getSmgr()->addCameraSceneNode(0, irr::core::vector3df(0, 60, -20),
 									   irr::core::vector3df(0, 0, 0));
   camera->setNearValue(10);
