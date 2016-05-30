@@ -13,18 +13,17 @@ Bomberman::Main::Main() : _irrlicht(Irrlicht::instance())
   Bomberman::Menu::Action action = menu.run();
   if (action == Bomberman::Menu::NEW_SINGLE_GAME)
     {
-      Game G;
+      Game G(1);
       G.run();
     }
   if (action == Bomberman::Menu::MULTIPLAYER_GAME)
     {
-      Game G;
+      Game G(2);
       G.run();
     }
   if (action == Bomberman::Menu::OPTION)
     {
-      Game G;
-      G.run();
+      _irrlicht.getDevice()->drop();
     }
   if (action == Bomberman::Menu::QUIT)
     {

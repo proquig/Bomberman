@@ -11,7 +11,8 @@
 # define X 90
 # define Y 70
 
-Bomberman::Game::Game() : _irr(Bomberman::Irrlicht::instance())
+Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
+			  _nbPlayer(nb)
 {
   this->_map = new Bomberman::Map();
   this->_map->createMap();

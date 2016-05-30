@@ -16,9 +16,10 @@ namespace					Bomberman
    private:
     Bomberman::Irrlicht				&_irr;
     Bomberman::Map				*_map;
+    size_t 					_nbPlayer;
 
    public:
-    Game();
+    Game(size_t);
     ~Game();
     void					run();
   };
