@@ -59,7 +59,7 @@ void Bomberman::Game::handleMovements()
   for (it = this->_events[0].begin(); it != _events[0].end(); ++it)
     if (this->_irr.event.getKeys()[it->first] && it->second.first < this->_players.size()
       && this->_map->checkPosition(this->_players[it->second.first]->getX() + Bomberman::Game::positions[it->second.second][0],
-				   this->_players[it->second.first]->getY() + Bomberman::Game::positions[it->second.second][0], 5))
+				   this->_players[it->second.first]->getY() + Bomberman::Game::positions[it->second.second][1], 5))
       this->_players[it->second.first]->do_action(it->second.second);
 }
 

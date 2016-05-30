@@ -52,7 +52,5 @@ void		Bomberman::Bomb::put(float x, float y)
 
 void		Bomberman::Bomb::explode()
 {
-  std::cout << "EXPLODE" << std::endl;
   this->reset();
-  //this->exp = new Explosion(this->_x, this->_y);
 }
