@@ -3,7 +3,6 @@
 //
 
 #include <Map.hpp>
-#include "Obj.hpp"
 
 Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_path, float x, float y, TYPE type):
 	_irr(Bomberman::Irrlicht::instance()),
@@ -95,4 +94,13 @@ float 				Bomberman::Obj::getY() const
 irr::u32 			Bomberman::Obj::getExplosionTime() const
 {
   return (this->_explosion_time);
+}
+
+tinyxml2::XMLElement *Bomberman::Obj::serialize()
+{
+  return nullptr;
+}
+
+void Bomberman::Obj::deserialize(tinyxml2::XMLElement *element)
+{
 }

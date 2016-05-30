@@ -5,6 +5,7 @@
 #ifndef CPP_INDIE_STUDIO_OBJ_HPP
 #define CPP_INDIE_STUDIO_OBJ_HPP
 
+#include <xml/tinyxml2.h>
 #include "IObj.hpp"
 
 namespace Bomberman
@@ -36,6 +37,10 @@ namespace Bomberman
     float 				getX() const;
     float 				getY() const;
     irr::u32 				getExplosionTime() const;
+
+    virtual tinyxml2::XMLElement	*serialize() override;
+
+    virtual void deserialize(tinyxml2::XMLElement *element) override;
   };
 };
 
