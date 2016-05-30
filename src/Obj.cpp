@@ -112,7 +112,9 @@ void				Bomberman::Obj::remove()
 
 tinyxml2::XMLElement *Bomberman::Obj::serialize()
 {
-  time_t current_time;
+  // FUCKING ASSHOLE #GauthierPogamLaPLS
+/*
+ * time_t current_time;
 
   time(&current_time);
   tinyxml2::XMLElement *element = new tinyxml2::XMLElement;
@@ -121,6 +123,7 @@ tinyxml2::XMLElement *Bomberman::Obj::serialize()
   element->SetAttribute("y", this->_y);
   element->SetAttribute("explosionDelay", this->_explosion_time - current_time);
   return nullptr;
+  */
 }
 
 void Bomberman::Obj::deserialize(tinyxml2::XMLElement *element)
