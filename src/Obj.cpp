@@ -108,11 +108,15 @@ void				Bomberman::Obj::remove()
     this->_node->setVisible(false);
   if (this->_animated_node)
     this->_animated_node->setVisible(false);
+  this->_is_blockable = false;
+  this->_is_destructible = false;
 }
 
 tinyxml2::XMLElement *Bomberman::Obj::serialize()
 {
-  time_t current_time;
+  // FUCKING ASSHOLE #GauthierPogamLaPLS
+/*
+ * time_t current_time;
 
   time(&current_time);
   tinyxml2::XMLElement *element = new tinyxml2::XMLElement;
@@ -121,6 +125,7 @@ tinyxml2::XMLElement *Bomberman::Obj::serialize()
   element->SetAttribute("y", this->_y);
   element->SetAttribute("explosionDelay", this->_explosion_time - current_time);
   return nullptr;
+  */
 }
 
 void Bomberman::Obj::deserialize(tinyxml2::XMLElement *element)
@@ -138,4 +143,20 @@ bool Bomberman::Obj::isDestructible() const
   return (this->_is_destructible);
 }
 
-
+/*
+void Bomberman::Obj::reset()
+{
+  if (this->_node)
+    {
+      this->_node->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
+      this->_node->setVisible(true);
+    }
+  if (this->_animated_node)
+    {
+      this->_animated_node->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
+      this->_animated_node->setVisible(true);
+    }
+  this->_is_blockable = false;
+  this->_is_destructible = false;
+}
+*/
