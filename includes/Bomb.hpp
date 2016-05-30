@@ -20,15 +20,18 @@ namespace				Bomberman
 	POSED,
       };
   private:
+    float 				*_range;
     STATE				_state;
     Bomberman::Explosion		*exp;
 
   public:
-     Bomb(const std::string &mesh_path, const std::string &texture_path, float x, float y);
+     Bomb(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     ~Bomb();
     void				reset();
     void				put(float x, float y);
     void				explode();
+    float getRange()			const;
+    void				setRange(float *range);
   };
 }
 

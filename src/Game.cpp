@@ -52,6 +52,37 @@ Bomberman::Game::~Game()
 {
 }
 
+void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
+{
+  //std::vector<Bomberman::Obj*>::iterator it;
+
+
+  /*
+  //for (it = this->_map->getObjs().begin(); it != this->_map->getObjs().end(); ++it)
+    //{
+      std::cout << "ADDR: " << &it << std::endl;
+      std::cout << (*it)->getType() << std::endl;
+      if ((*it)->isBlockable()
+	  && this->_map->checkPosition(
+	      bomb->getX()
+	      , bomb->getY(),
+bomb->getRange()))
+	(*it)->remove();
+      	//this->_map->getObjs().erase(it);
+    //}
+    */
+  int i = -1;
+
+  while (++i < this->_map->getObjs().size())
+    if (this->_map->getObjs()[i]->isDestructible()
+	&& !this->_map->checkObjectPosition(this->_map->getObjs()[i], bomb->getX(), bomb->getY(), bomb->getRange()))
+      {
+	//std::cout << "YOU MUST DIE BITCH" << std::endl;
+	this->_map->getObjs()[i]->remove();
+	//this->_map->getObjs().erase(std::remove(this->_map->getObjs().begin(), this->_map->getObjs().end(), i), this->_map->getObjs().end());
+      }
+}
+
 void Bomberman::Game::handleMovements()
 {
   std::map<irr::EKEY_CODE, std::pair<int, Bomberman::Character::ACTION>>::const_iterator	it;
@@ -76,12 +107,13 @@ void Bomberman::Game::handleTime()
   int		i = -1;
 
   while (++i < this->_map->getObjs().size())
-    {
-      //if (this->_map->getObjs()[i]->getExplosionTime())
-	//std::cout << this->_map->getObjs()[i]->getExplosionTime() << " & " << this->_irr.getDevice()->getTimer()->getTime() << std::endl;
-      if (this->_map->getObjs()[i]->getExplosionTime() && now > this->_map->getObjs()[i]->getExplosionTime())
+    if (this->_map->getObjs()[i]->getType() == Bomberman::BOMB
+	&& this->_map->getObjs()[i]->getExplosionTime()
+	&& now > this->_map->getObjs()[i]->getExplosionTime())
+      {
+	this->explodeObjs(static_cast<Bomberman::Bomb*>(this->_map->getObjs()[i]));
 	static_cast<Bomberman::Bomb*>(this->_map->getObjs()[i])->explode();
-    }
+      }
 }
 
 void Bomberman::Game::handleEvents()
@@ -98,10 +130,9 @@ void Bomberman::Game::run()
 									   irr::core::vector3df(0, 0, 0));
   camera->setNearValue(10);
   irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
-
   int 	lastFPS = -1;
-  this->_players[0]->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
-  this->_players[0]->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
+  this->_players[0]->add_bomb(reinterpret_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
+  //this->_players[0]->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
   while (this->_irr.getDevice()->run())
     {
       handleEvents();

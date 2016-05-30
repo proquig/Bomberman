@@ -14,6 +14,18 @@ Bomberman::Map::~Map()
 {
 }
 
+bool 		Bomberman::Map::checkObjectPosition(Bomberman::Obj* obj, float x, float y, float range)
+{
+  int 		i;
+  float		resx;
+  float		resy;
+
+  i = -1;
+  resx = obj->getX() - x;
+  resy = obj->getY() - y;
+  return (!(obj->isBlockable() && (resx <= range && resx >= -range) && (resy <= range && resy >= -range)));
+}
+
 bool		Bomberman::Map::checkPosition(float x, float y, float range)
 {
   int 		i;
@@ -22,13 +34,8 @@ bool		Bomberman::Map::checkPosition(float x, float y, float range)
 
   i = -1;
   while (++i < this->_objs.size())
-    {
-      resx = this->_objs[i]->getX() - x;
-      resy = this->_objs[i]->getY() - y;
-      if (this->_objs[i]->isBlockable()
-      && (resx <= range && resx >= -range) && (resy <= range && resy >= -range))
-	return (false);
-    }
+    if (!checkObjectPosition(this->_objs[i], x, y, range))
+      return (false);
   return (true);
 }
 
@@ -61,7 +68,7 @@ Bomberman::Obj *                Bomberman::Map::createObj(const std::string &mes
 	   {BOX, &Map::create<Obj>},
 	   {PLAN, &Map::create<Obj>},
 	   {CHARACTER, &Map::create<Character>},
-	   {BOMB, &Map::create<Obj>}
+	   {BOMB, &Map::create<Bomb>}
    };
   for (std::map<Bomberman::TYPE, ObjPtr >::const_iterator it = objs.begin(); it != objs.end(); ++it)
     if (it->first == type)

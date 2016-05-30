@@ -45,6 +45,7 @@ namespace			Bomberman
     std::vector<Bomberman::Obj*>	getObjs() const;
     Bomberman::Obj		*createObj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     Bomberman::Obj		*createObjSomewhere(const std::string &mesh_path, const std::string &texture_path, Bomberman::TYPE type);
+    bool			checkObjectPosition(Obj *obj, float x, float y, float range);
   };
 }
 #endif //CPP_INDIE_STUDIO_MAP_HPP

@@ -15,6 +15,7 @@
 Bomberman::Character::Character(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type) :
   Bomberman::Obj::Obj(mesh_path, texture_path, x, y, Bomberman::CHARACTER)
 {
+  this->_range = 10.0;
   this->_animated_node->setLoopMode(false);
   this->_animated_node->setFrameLoop(START_FRAME, START_FRAME);
 }
@@ -22,6 +23,13 @@ Bomberman::Character::Character(const std::string &mesh_path, const std::string 
 Bomberman::Character::~Character()
 {
 }
+
+/*
+float							Bomberman::Character::getRange() const
+{
+  return (this->_range);
+}
+*/
 
 void							Bomberman::Character::set_pos(ACTION direction)
 {
@@ -49,6 +57,7 @@ void							Bomberman::Character::set_orientation(ACTION direction)
 
 void							Bomberman::Character::add_bomb(Bomberman::Bomb* bomb)
 {
+  bomb->setRange(&this->_range);
   this->_bombs.push_back(bomb);
 }
 
@@ -76,6 +85,12 @@ void							Bomberman::Character::jump(ACTION action)
       this->afk();
     }
 }
+
+/*
+ * void 							Bomberman::Character::remove()
+{
+}
+ */
 
 void							Bomberman::Character::do_action(ACTION action)
 {

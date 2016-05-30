@@ -11,10 +11,11 @@
 #include "Irrlicht.hpp"
 #include "Bomb.hpp"
 
-Bomberman::Bomb::Bomb(const std::string &mesh_path, const std::string &texture_path, float x, float y) :
+Bomberman::Bomb::Bomb(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type) :
 	Bomberman::Obj::Obj(mesh_path, texture_path, x, y, BOMB)
 
 {
+  this->_range = NULL;
   this->_state = AWAITING;
   this->_animated_node->setVisible(false);
 }
@@ -32,6 +33,16 @@ Bomberman::Bomb::~Bomb()
   return (new Bomb(mesh_path, texture_path, x, y));
 }
 */
+
+float 		Bomberman::Bomb::getRange() const
+{
+  return (*this->_range);
+}
+
+void		Bomberman::Bomb::setRange(float *range)
+{
+  this->_range = range;
+}
 
 void		Bomberman::Bomb::reset()
 {
