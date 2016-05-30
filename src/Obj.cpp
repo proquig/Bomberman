@@ -87,11 +87,6 @@ irr::u32 			Bomberman::Obj::getExplosionTime() const
   return (this->_explosion_time);
 }
 
-void				Bomberman::Obj::explode()
-{
-
-}
-
 bool 				Bomberman::Obj::isBlockable()
 {
   return (this->_is_blockable);

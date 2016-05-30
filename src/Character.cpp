@@ -89,28 +89,3 @@ void							Bomberman::Character::do_action(ACTION action)
   };
   (this->*actions[action])(action);
 }
-
-/*
-void							Bomberman::Character::catch_event(std::vector<bool> keys)
-{
-  std::map<irr::EKEY_CODE, ACTION>::const_iterator	it;
-
-  for (std::map<irr::EKEY_CODE, ACTION>::const_iterator it = this->_events.begin(); it != this->_events.end(); ++it)
-    if (keys[it->first])
-      this->do_action(it->second);
-}
-*/
-
-/*
-void							Bomberman::Character::handle_event()
-{
-  std::vector<Bomberman::Bomb*>::iterator		it;
-
-  for (it = this->_bombs.begin(); it != this->_bombs.end(); ++it)
-    {
-      if ((*it)->getExplosionTime() \
-	  && this->_irr.getDevice()->getTimer()->getTime() > (*it)->getExplosionTime())
-	  (*it)->explode();
-    }
-}
-*/

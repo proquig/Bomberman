@@ -36,7 +36,6 @@ namespace						Bomberman
       };
   private:
     typedef						void (Character::*CharMemFn)(Character::ACTION);
-    static const std::map<irr::EKEY_CODE, ACTION>	_events;
     std::vector<Bomberman::Bomb*>			_bombs;
   public:
     Character(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
@@ -48,8 +47,6 @@ namespace						Bomberman
     void						do_action(ACTION action);
     void						jump(ACTION action);
     void						afk();
-    //void						catch_event(std::vector<bool> keys);
-    //void						handle_event();
   };
 }
 

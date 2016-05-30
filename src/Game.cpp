@@ -73,13 +73,16 @@ void Bomberman::Game::handleActions()
 
 void Bomberman::Game::handleTime()
 {
-  irr::u32 now = this->_irr.getDevice()->getTimer()->getTime();
-  int 		i;
+  irr::u32 	now = this->_irr.getDevice()->getTimer()->getTime();
+  int		i = -1;
 
-  i = -1;
   while (++i < this->_map->getObjs().size())
-    if (this->_map->getObjs()[i]->getExplosionTime() && now > this->_map->getObjs()[i]->getExplosionTime())
-      this->_map->getObjs()[i]->explode();
+    {
+      //if (this->_map->getObjs()[i]->getExplosionTime())
+	//std::cout << this->_map->getObjs()[i]->getExplosionTime() << " & " << this->_irr.getDevice()->getTimer()->getTime() << std::endl;
+      if (this->_map->getObjs()[i]->getExplosionTime() && now > this->_map->getObjs()[i]->getExplosionTime())
+	static_cast<Bomberman::Bomb*>(this->_map->getObjs()[i])->explode();
+    }
 }
 
 void Bomberman::Game::handleEvents()
