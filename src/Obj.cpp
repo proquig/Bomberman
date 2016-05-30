@@ -108,6 +108,8 @@ void				Bomberman::Obj::remove()
     this->_node->setVisible(false);
   if (this->_animated_node)
     this->_animated_node->setVisible(false);
+  this->_is_blockable = false;
+  this->_is_destructible = false;
 }
 
 tinyxml2::XMLElement *Bomberman::Obj::serialize()
@@ -141,4 +143,20 @@ bool Bomberman::Obj::isDestructible() const
   return (this->_is_destructible);
 }
 
-
+/*
+void Bomberman::Obj::reset()
+{
+  if (this->_node)
+    {
+      this->_node->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
+      this->_node->setVisible(true);
+    }
+  if (this->_animated_node)
+    {
+      this->_animated_node->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
+      this->_animated_node->setVisible(true);
+    }
+  this->_is_blockable = false;
+  this->_is_destructible = false;
+}
+*/
