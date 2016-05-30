@@ -23,24 +23,22 @@ namespace Bomberman
     float				_x;
     float 				_y;
     irr::u32 				_explosion_time;
+    bool 				_is_blockable;
 
    public:
-    /*template <typename T>
-    static T*				create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
-    {
-      return new T(mesh_path, texture_path, x, y, type);
-    }
-     */
     Obj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     virtual ~Obj();
     //static Bomberman::IObj*		create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     float 				getX() const;
     float 				getY() const;
     irr::u32 				getExplosionTime() const;
+    void 				explode();
+    bool				isBlockable();
 
     virtual tinyxml2::XMLElement	*serialize() override;
 
     virtual void deserialize(tinyxml2::XMLElement *element) override;
+
   };
 };
 

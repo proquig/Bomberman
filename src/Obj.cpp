@@ -8,7 +8,8 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
 	_irr(Bomberman::Irrlicht::instance()),
 	_x(x),
 	_y(y),
-	_explosion_time(0)
+	_explosion_time(0),
+	_is_blockable(false)
 {
   if (type == CHARACTER)
     {
@@ -30,6 +31,7 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
 							    irr::core::vector3df(0, 0, 0),irr::core::vector3df(0.03f, 0.03f, 0.03f));
       this->_animated_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
       this->_animated_node->setAnimationSpeed(16.f);
+      this->_animated_node->setVisible(false);
     }
 
   if (type == BRICK)
@@ -40,6 +42,7 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
       this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
       this->_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path.c_str()));
       this->_node->setPosition(irr::core::vector3df(x, 2.5, y));
+      this->_is_blockable = true;
     }
 
   if (type == BOX)
@@ -50,6 +53,7 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
       this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
       this->_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path.c_str()));
       this->_node->setPosition(irr::core::vector3df(x, 2.5, y));
+      this->_is_blockable = true;
     }
 
   if (type == PLAN)
@@ -68,19 +72,6 @@ Bomberman::Obj::~Obj()
 {
 }
 
-/*
-Bomberman::IObj*		Bomberman::Obj::create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
-{
-  std::map<Bomberman::TYPE, MapMemFn>	objs = {
-    {BRICK, static_cast<MapMemFn>(&Bomberman::Obj::create)},
-    {BOX, static_cast<MapMemFn>(&Bomberman::Obj::create)},
-    {PLAN, static_cast<MapMemFn>(&Bomberman::Obj::create)},
-  };
-  //if (objs.at(type))
-   // (*objs.at(type)->second())();
-}
-*/
-
 float 				Bomberman::Obj::getX() const
 {
   return (this->_x);
@@ -94,6 +85,16 @@ float 				Bomberman::Obj::getY() const
 irr::u32 			Bomberman::Obj::getExplosionTime() const
 {
   return (this->_explosion_time);
+}
+
+void				Bomberman::Obj::explode()
+{
+
+}
+
+bool 				Bomberman::Obj::isBlockable()
+{
+  return (this->_is_blockable);
 }
 
 tinyxml2::XMLElement *Bomberman::Obj::serialize()

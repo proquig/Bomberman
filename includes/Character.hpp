@@ -39,21 +39,17 @@ namespace						Bomberman
     static const std::map<irr::EKEY_CODE, ACTION>	_events;
     std::vector<Bomberman::Bomb*>			_bombs;
   public:
-    //Character();
-    //Character(Bomberman::Map *map);
-    //Character(float x, float y);
     Character(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     ~Character();
-    //static Bomberman::Obj*				create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     void						set_pos(ACTION direction);
     void						set_orientation(ACTION direction);
-    void						add_bomb();
+    void						add_bomb(Bomb *bomb);
     void						put_bomb(ACTION action);
     void						do_action(ACTION action);
     void						jump(ACTION action);
     void						afk();
-    void						catch_event(std::vector<bool> keys);
-    void						handle_event();
+    //void						catch_event(std::vector<bool> keys);
+    //void						handle_event();
   };
 }
 

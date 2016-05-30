@@ -25,7 +25,8 @@ bool		Bomberman::Map::checkPosition(float x, float y, float range)
     {
       resx = this->_objs[i]->getX() - x;
       resy = this->_objs[i]->getY() - y;
-      if ((resx <= range && resx >= -range) && (resy <= range && resy >= -range))
+      if (this->_objs[i]->isBlockable()
+      && (resx <= range && resx >= -range) && (resy <= range && resy >= -range))
 	return (false);
     }
   return (true);
@@ -48,16 +49,21 @@ void		Bomberman::Map::createMap()
     }
 }
 
+std::vector<Bomberman::Obj *>                        Bomberman::Map::getObjs() const
+{
+  return (this->_objs);
+}
+
 Bomberman::Obj *                Bomberman::Map::createObj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
 {
-   std::map<Bomberman::TYPE, ptr> objs = {
+   std::map<Bomberman::TYPE, ObjPtr> objs = {
 	   {BRICK, &Map::create<Obj>},
 	   {BOX, &Map::create<Obj>},
 	   {PLAN, &Map::create<Obj>},
 	   {CHARACTER, &Map::create<Character>},
 	   {BOMB, &Map::create<Obj>}
    };
-  for (std::map<Bomberman::TYPE, ptr >::const_iterator it = objs.begin(); it != objs.end(); ++it)
+  for (std::map<Bomberman::TYPE, ObjPtr >::const_iterator it = objs.begin(); it != objs.end(); ++it)
     if (it->first == type)
       {
 	this->_objs.push_back((Obj *const &) (this->*(it->second))(mesh_path, texture_path, x, y, type));
