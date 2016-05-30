@@ -37,9 +37,11 @@ namespace						Bomberman
   private:
     typedef						void (Character::*CharMemFn)(Character::ACTION);
     std::vector<Bomberman::Bomb*>			_bombs;
+    float 						_range;
   public:
     Character(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     ~Character();
+    //float						getRange() const;
     void						set_pos(ACTION direction);
     void						set_orientation(ACTION direction);
     void						add_bomb(Bomb *bomb);
@@ -47,6 +49,8 @@ namespace						Bomberman
     void						do_action(ACTION action);
     void						jump(ACTION action);
     void						afk();
+
+    void remove();
   };
 }
 

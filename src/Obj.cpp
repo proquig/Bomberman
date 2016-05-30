@@ -6,10 +6,14 @@
 
 Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_path, float x, float y, TYPE type):
 	_irr(Bomberman::Irrlicht::instance()),
+	_type(type),
 	_x(x),
 	_y(y),
+	_node(NULL),
+	_animated_node(NULL),
 	_explosion_time(0),
-	_is_blockable(false)
+	_is_blockable(false),
+	_is_destructible(true)
 {
   if (type == CHARACTER)
     {
@@ -43,6 +47,7 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
       this->_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path.c_str()));
       this->_node->setPosition(irr::core::vector3df(x, 2.5, y));
       this->_is_blockable = true;
+      this->_is_destructible = false;
     }
 
   if (type == BOX)
@@ -72,6 +77,11 @@ Bomberman::Obj::~Obj()
 {
 }
 
+Bomberman::TYPE 		Bomberman::Obj::getType() const
+{
+  return (this->_type);
+}
+
 float 				Bomberman::Obj::getX() const
 {
   return (this->_x);
@@ -87,14 +97,19 @@ irr::u32 			Bomberman::Obj::getExplosionTime() const
   return (this->_explosion_time);
 }
 
-bool 				Bomberman::Obj::isBlockable()
+bool 				Bomberman::Obj::isBlockable() const
 {
   return (this->_is_blockable);
 }
 
-/*
- * TODO : We need a way to identify and easily serialize and deserialize mesh
- */
+void				Bomberman::Obj::remove()
+{
+  if (this->_node)
+    this->_node->setVisible(false);
+  if (this->_animated_node)
+    this->_animated_node->setVisible(false);
+}
+
 tinyxml2::XMLElement *Bomberman::Obj::serialize()
 {
   time_t current_time;
@@ -117,3 +132,10 @@ void Bomberman::Obj::deserialize(tinyxml2::XMLElement *element)
   this->_y = std::stof(element->Attribute("y"));
   this->_explosion_time = (irr::u32) (current_time + std::stoi(element->Attribute("explosionDelay")));
 }
+
+bool Bomberman::Obj::isDestructible() const
+{
+  return (this->_is_destructible);
+}
+
+

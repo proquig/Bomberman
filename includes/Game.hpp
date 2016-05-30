@@ -7,6 +7,7 @@
 
 # include					<Irrlicht.hpp>
 # include					<map>
+# include					<algorithm>
 # include					"Map.hpp"
 
 namespace					Bomberman
@@ -35,6 +36,7 @@ namespace					Bomberman
 
     void handleTime();
 
+    void explodeObjs(Bomb *bomb);
   };
 }
 
