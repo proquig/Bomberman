@@ -41,12 +41,11 @@ Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
   this->_map = new Bomberman::Map();
   this->_map->createMap();
 
-/*   for (int i = 0; i < 20; ++i)
+   for (int i = 0; i < 20; ++i)
    {
-     this->_map->createObjSomewhere(Bomberman::BOX);
-     this->_map->createObjSomewhere(Bomberman::BRICK);
+     this->_map->createObjSomewhere(BOXOBJ, BOXTEXT, Bomberman::BOX);
+     this->_map->createObjSomewhere(WALLOBJ, WALLTEXT, Bomberman::BRICK);
    }
-   */
 }
 
 Bomberman::Game::~Game()

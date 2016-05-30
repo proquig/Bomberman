@@ -16,6 +16,8 @@
 # define			MAPSIZE_Y 70
 # define			WALLOBJ "./assets/Box/ItmCarrierBox00.obj"
 # define			WALLTEXT "./assets/Box/ItmCommonBoxB00.png"
+# define			BOXOBJ "./assets/Box/ItmBox01.dae"
+# define			BOXTEXT ""
 # define			FLOORTEXT "./assets/Floor/grass2.jpg"
 
 namespace			Bomberman

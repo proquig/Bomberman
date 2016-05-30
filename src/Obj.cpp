@@ -51,7 +51,7 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
       this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh, 0, -1, irr::core::vector3df(x, 2.5, y), irr::core::vector3df(0, 0, 0),
 							   irr::core::vector3df(0.4f, 0.4f, 0.4f));
       this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-      this->_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path.c_str()));
+      //this->_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path.c_str()));
       this->_node->setPosition(irr::core::vector3df(x, 2.5, y));
       this->_is_blockable = true;
     }
