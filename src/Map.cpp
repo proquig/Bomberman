@@ -35,16 +35,16 @@ void		Bomberman::Map::createMap()
 {
   _material.Lighting = true;
   _scene = this->_irr.getSmgr()->getRootSceneNode();
-  createObj("", "./assets/Floor/grass2.jpg", MAPSIZE_X, MAPSIZE_Y, Bomberman::PLAN);
+  createObj("", FLOORTEXT, MAPSIZE_X, MAPSIZE_Y, Bomberman::PLAN);
   for (int wallnbr = 0; wallnbr <= MAPSIZE_X; wallnbr += 5)
     {
-      createObj("./assets/Box/ItmCarrierBox00.obj", "./assets/Box/ItmCommonBoxB00.png", MAPSIZE_X / 2 - wallnbr, MAPSIZE_Y / 2, Bomberman::BRICK);
-      createObj("./assets/Box/ItmCarrierBox00.obj", "./assets/Box/ItmCommonBoxB00.png", MAPSIZE_X / 2 - wallnbr, -MAPSIZE_Y / 2, Bomberman::BRICK);
+      createObj(WALLOBJ, WALLTEXT, MAPSIZE_X / 2 - wallnbr, MAPSIZE_Y / 2, Bomberman::BRICK);
+      createObj(WALLOBJ, WALLTEXT, MAPSIZE_X / 2 - wallnbr, -MAPSIZE_Y / 2, Bomberman::BRICK);
     }
   for (int wallnbr = 0; wallnbr <= MAPSIZE_Y; wallnbr += 5)
     {
-      createObj("./assets/Box/ItmCarrierBox00.obj", "./assets/Box/ItmCommonBoxB00.png", MAPSIZE_X / 2, MAPSIZE_Y / 2 - wallnbr, Bomberman::BRICK);
-      createObj("./assets/Box/ItmCarrierBox00.obj", "./assets/Box/ItmCommonBoxB00.png", -MAPSIZE_X / 2, MAPSIZE_Y / 2 - wallnbr, Bomberman::BRICK);
+      createObj(WALLOBJ, WALLTEXT, MAPSIZE_X / 2, MAPSIZE_Y / 2 - wallnbr, Bomberman::BRICK);
+      createObj(WALLOBJ, WALLTEXT, -MAPSIZE_X / 2, MAPSIZE_Y / 2 - wallnbr, Bomberman::BRICK);
     }
 }
 
