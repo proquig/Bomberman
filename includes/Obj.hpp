@@ -23,6 +23,7 @@ namespace Bomberman
     float				_x;
     float 				_y;
     irr::u32 				_explosion_time;
+    irr::u32 				_animation_time;
     bool 				_is_blockable;
 
    public:
@@ -31,6 +32,7 @@ namespace Bomberman
     float 				getX() const;
     float 				getY() const;
     irr::u32 				getExplosionTime() const;
+    irr::u32 				getAnimationTime() const;
     bool				isBlockable();
 
     virtual tinyxml2::XMLElement	*serialize() override;

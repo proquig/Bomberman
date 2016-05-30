@@ -21,7 +21,7 @@ namespace				Bomberman
       };
   private:
     STATE				_state;
-    Bomberman::Explosion		*exp;
+    Bomberman::Explosion		*_exp;
 
   public:
      Bomb(const std::string &mesh_path, const std::string &texture_path, float x, float y);
@@ -29,6 +29,7 @@ namespace				Bomberman
     void				reset();
     void				put(float x, float y);
     void				explode();
+    void 				clean();
   };
 }
 

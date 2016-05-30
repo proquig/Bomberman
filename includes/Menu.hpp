@@ -30,19 +30,25 @@ namespace Bomberman
     };
 
    private:
-    typedef std::list<std::pair<irr::video::ITexture *, Action>> t_texture_list;
-    typedef std::list<std::pair<irr::gui::IGUIButton *, Action>> button;
+    typedef void (Menu::*ptr)();
+    typedef std::map<irr::gui::IGUIButton *, ptr> button;
+
 
     Bomberman::Irrlicht &_irr;
     button		_button;
     irr::video::ITexture *_background;
+    std::map<irr::gui::IGUIButton *, ptr> _action;
 
    public:
     Menu();
-
     Action run();
-
     ~Menu();
+    void launchGame();
+    void loadGame();
+    void launchMulti();
+    void launchOption();
+    void quit();
+    void displayCredit();
   };
 }
 

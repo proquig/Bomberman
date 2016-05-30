@@ -4,7 +4,8 @@
 
 #include "Explosion.hpp"
 
-Bomberman::Explosion::Explosion(float x, float y) : _irr(Bomberman::Irrlicht::instance()) {
+Bomberman::Explosion::Explosion(float x, float y) : _irr(Bomberman::Irrlicht::instance())
+{
   this->_ps = this->_irr.getSmgr()->addParticleSystemSceneNode(false);
   this->_em = _ps->createBoxEmitter(irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7),
 				    irr::core::vector3df(0.0f,0.0f,0.0f), 10, 50,
@@ -22,8 +23,8 @@ Bomberman::Explosion::Explosion(float x, float y) : _irr(Bomberman::Irrlicht::in
   _ps->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
   _ps->setMaterialTexture(0, _irr.getDriver()->getTexture("./assets/Bomb/Explosion.jpg"));
   _ps->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
-  
 }
+
 
 Bomberman::Explosion::~Explosion()
 {

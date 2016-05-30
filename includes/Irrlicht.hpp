@@ -49,6 +49,7 @@ namespace Bomberman
 
     virtual ~Irrlicht();
   };
+
 }
 
 

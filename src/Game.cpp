@@ -81,6 +81,8 @@ void Bomberman::Game::handleTime()
 	//std::cout << this->_map->getObjs()[i]->getExplosionTime() << " & " << this->_irr.getDevice()->getTimer()->getTime() << std::endl;
       if (this->_map->getObjs()[i]->getExplosionTime() && now > this->_map->getObjs()[i]->getExplosionTime())
 	static_cast<Bomberman::Bomb*>(this->_map->getObjs()[i])->explode();
+      if (this->_map->getObjs()[i]->getAnimationTime() && now > this->_map->getObjs()[i]->getAnimationTime())
+	static_cast<Bomberman::Bomb*>(this->_map->getObjs()[i])->clean();
     }
 }
 
@@ -104,7 +106,6 @@ void Bomberman::Game::run()
   this->_players[0]->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
   while (this->_irr.getDevice()->run())
     {
-      handleEvents();
       if (this->_irr.getDevice()->isWindowActive())
 	{
 	 this->_irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
@@ -123,6 +124,7 @@ void Bomberman::Game::run()
 	     this->_irr.getDevice()->setWindowCaption(str.c_str());
 	     lastFPS = fps;
 	   }
-       }
+	  handleEvents();
+	}
     }
 }
