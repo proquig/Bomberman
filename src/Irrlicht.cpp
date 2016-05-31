@@ -52,3 +52,16 @@ irr::scene::ISceneManager *Bomberman::Irrlicht::getSmgr() const
 {
   return _device->getSceneManager();
 }
+
+void			Bomberman::Irrlicht::setAll()
+{
+  irr::video::E_DRIVER_TYPE driverType = irr::video::EDT_OPENGL;
+  this->_device = irr::createDevice(driverType, irr::core::dimension2d<irr::u32>(1920, 1080),
+				    32, false, true, false, &this->event);
+
+  if (this->_device == NULL)
+    throw (exception("Can't Load OpenGL"));
+  this->_device->getVideoDriver()->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);
+  this->_device->setWindowCaption(L"Bomberman");
+
+}

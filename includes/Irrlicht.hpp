@@ -30,15 +30,12 @@ namespace Bomberman
     irr::IrrlichtDevice *_device;
 
    public:
-    EventReceiver		event;
-
-    irr::IrrlichtDevice *getDevice() const;
-
-    irr::video::IVideoDriver *getDriver() const;
-
-    irr::gui::IGUIEnvironment *getGui() const;
-
-    irr::scene::ISceneManager *getSmgr() const;
+    EventReceiver			event;
+    irr::IrrlichtDevice 		*getDevice() const;
+    irr::video::IVideoDriver 		*getDriver() const;
+    irr::gui::IGUIEnvironment 		*getGui() const;
+    irr::scene::ISceneManager 		*getSmgr() const;
+    void				setAll();
 
    private:
     Irrlicht();

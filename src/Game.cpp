@@ -144,25 +144,13 @@ int Bomberman::Game::handleEvents()
 
 void Bomberman::Game::run()
 {
-  //this->_players.push_back(static_cast<Bomberman::Character*>(this->_map->createObjSomewhere("./assets/ninja/ninja.b3d", "./assets/ninja/nskinrd.jpg", Bomberman::CHARACTER)));
-  //this->_players.push_back(static_cast<Bomberman::Character*>(this->_map->createObjSomewhere("./assets/ninja/ninja.b3d", "./assets/ninja/nskinbl.jpg", Bomberman::CHARACTER)));
   irr::scene::ICameraSceneNode *camera = this->_irr.getSmgr()->addCameraSceneNode(0, irr::core::vector3df(0, 60, -20),
 									   irr::core::vector3df(0, 0, 0));
   camera->setNearValue(10);
   irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
   int 	lastFPS = -1;
-  //for (int i = 0; i != 3; ++i)
-      //this->_players[i]->add_bomb(reinterpret_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
-  //int i =  -1;
-  //while (++i < this->_map->getObjs().size())
-    //if (this->_map->getObjs()[i]->getType() == Bomberman::CHARACTER)
-      //std::cout << "Everybody must die1" << std::endl;
-  //std::cout << this->_players[0]->isDestructible() << std::endl;
-  //this->_players[0]->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
-  //while (this->_irr.getDevice()->drop())
   while (this->_irr.getDevice()->run() && handleEvents())// && handleEvents())
     {
-      //handleEvents();
       if (this->_irr.getDevice()->isWindowActive())
 	{
 	 this->_irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));

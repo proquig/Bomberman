@@ -17,6 +17,7 @@ Bomberman::Character::Character(const std::string &mesh_path, const std::string 
 {
   this->_bombTime = 0;
   this->_range = 5.0;
+  this->_bombTime = 0;
   this->_animated_node->setLoopMode(false);
   this->_animated_node->setFrameLoop(START_FRAME, START_FRAME);
 }
