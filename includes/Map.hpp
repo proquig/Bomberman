@@ -34,7 +34,7 @@ namespace			Bomberman
    public:
     Map();
     ~Map();
-    bool			checkPosition(float x, float y, float range);
+    bool			checkPosition(float x, float y, float range, bool all = false);
     void 			createMap();
 
     template <typename T>

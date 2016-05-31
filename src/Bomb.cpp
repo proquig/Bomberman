@@ -16,10 +16,10 @@ Bomberman::Bomb::Bomb(const std::string &mesh_path, const std::string &texture_p
 
 {
   this->_range = NULL;
-  this->_state = AWAITING;
+  //this->_state = AWAITING;
   this->_animated_node->setVisible(false);
-  this->exp = new Explosion(this->_x, this->_y);
-  this->exp->getScene()->setVisible(false);
+  //this->exp = new Explosion(this->_x, this->_y);
+  //this->exp->getScene()->setVisible(false);
 }
 
 Bomberman::Bomb::~Bomb()
@@ -48,7 +48,7 @@ void		Bomberman::Bomb::setRange(float *range)
 
 void		Bomberman::Bomb::reset()
 {
-  this->_state = AWAITING;
+  //this->_state = AWAITING;
   this->_explosion_time = 0;
   this->_animated_node->setVisible(false);
 }
@@ -59,22 +59,24 @@ void		Bomberman::Bomb::put(float x, float y)
   this->_y = y;
   this->_animated_node->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
   this->_animated_node->setVisible(true);
-  this->_state = POSED;
+  //this->_state = POSED;
   this->_explosion_time = (this->_irr.getDevice()->getTimer()->getTime() + 2000);
-  this->_animation_time = this->_irr.getDevice()->getTimer()->getTime()  + 2500;
+  //this->_animation_time = (this->_irr.getDevice()->getTimer()->getTime() + 2500);
 }
 
 void		Bomberman::Bomb::explode()
 {
   this->reset();
-  this->exp->getScene()->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
-  this->exp->getScene()->setVisible(true);
+  //this->exp->getScene()->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
+  //this->exp->getScene()->setVisible(true);
   //this->exp = new Explosion(this->_x, this->_y);
 }
-
+/*
 void 		Bomberman::Bomb::clean()
 {
-  this->_animation_time = 0;
-  this->exp->getScene()->setVisible(false);
+  std::cout << "I PASS BITCH" << std::endl;
+  //this->_animation_time = 0;
+  //this->exp->getScene()->setVisible(false);
   //this->exp->clear();
 }
+*/

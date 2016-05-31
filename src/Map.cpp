@@ -4,6 +4,7 @@
 
 #include <list>
 #include <stdlib.h>
+#include <zconf.h>
 #include "Map.hpp"
 
 Bomberman::Map::Map() : _irr(Bomberman::Irrlicht::instance())
@@ -16,23 +17,23 @@ Bomberman::Map::~Map()
 
 bool 		Bomberman::Map::checkObjectPosition(Bomberman::Obj* obj, float x, float y, float range)
 {
-  int 		i;
   float		resx;
   float		resy;
 
-  i = -1;
   resx = obj->getX() - x;
   resy = obj->getY() - y;
   return (!((obj->isBlockable() || obj->getType() == Bomberman::CHARACTER) && (resx <= range && resx >= -range) && (resy <= range && resy >= -range)));
 }
 
-bool		Bomberman::Map::checkPosition(float x, float y, float range)
+bool		Bomberman::Map::checkPosition(float x, float y, float range, bool all)
 {
   int 		i;
 
   i = -1;
   while (++i < this->_objs.size())
-    if (this->_objs[i]->getType() != Bomberman::CHARACTER && !checkObjectPosition(this->_objs[i], x, y, range))
+    if (all && !checkObjectPosition(this->_objs[i], x, y, range))
+      return (false);
+    else if (this->_objs[i]->getType() != Bomberman::CHARACTER && !checkObjectPosition(this->_objs[i], x, y, range))
       return (false);
   return (true);
 }
@@ -81,14 +82,17 @@ Bomberman::Obj *		Bomberman::Map::createObjSomewhere(const std::string &mesh_pat
 {
   static int r = 1;
   srand((unsigned int) time(NULL));
-  r += rand() * rand();
-  float x = 0;
-  float y = 0;
+  int x = 1;
+  int y = 1;
 
-  while (!this->checkPosition(x, y, 5.0))
+  while (!(!(x % 5) && !(y % 5) && this->checkPosition(x, y, 2.5, true)))
     {
-      x = (rand() + r) % (MAPSIZE_X / 2);
-      y = (rand() + r) % (MAPSIZE_Y / 2);
+      x = 1;
+      y = 1;
+      while (x % 5)
+	x = (rand() + rand()) % (MAPSIZE_X / 2);
+      while (y % 5)
+	y = (rand() + rand()) % (MAPSIZE_Y / 2);
     }
-  return createObj(mesh_path, texture_path, x, y, type);
+  return createObj(mesh_path, texture_path, float(x), (float)y, type);
 }

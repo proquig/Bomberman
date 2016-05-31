@@ -13,16 +13,17 @@ namespace				Bomberman
 {
   class					Bomb : public Bomberman::Obj
   {
-  public:
+  /*public:
     enum				STATE
       {
 	AWAITING,
 	POSED,
       };
+      */
   private:
     float 				*_range;
-    STATE				_state;
-    Bomberman::Explosion		*exp;
+    //STATE				_state;
+    //Bomberman::Explosion		*exp;
 
   public:
      Bomb(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
