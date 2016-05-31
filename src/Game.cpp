@@ -52,13 +52,16 @@ Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
 											this->_playersConf[i].second.first,
 											this->_playersConf[i].second.second,
 											Bomberman::CHARACTER)));
-      this->_players.back()->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
+      for (int j = 0; j < 10; ++j)
+      	this->_players.back()->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
     }
 
   for (int i = 0; i < 64; ++i)
     this->_map->createObjSomewhere(WALLOBJ, WALLTEXT, Bomberman::BRICK);
   for (int j = 0; j < 84; ++j)
     this->_map->createObjSomewhere(BOXOBJ, BOXTEXT, Bomberman::BOX);
+  //for (int k = 0; k < this->_map->getObjs().size(); ++k)
+    //std::cout << "X = " << this->_map->getObjs()[k]->getX() << " & Y = " << this->_map->getObjs()[k]->getY() << std::endl;
 }
 
 Bomberman::Game::~Game()
@@ -67,37 +70,12 @@ Bomberman::Game::~Game()
 
 void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
 {
-  //std::vector<Bomberman::Obj*>::iterator it;
-
-
-  /*
-  //for (it = this->_map->getObjs().begin(); it != this->_map->getObjs().end(); ++it)
-    //{
-      std::cout << "ADDR: " << &it << std::endl;
-      std::cout << (*it)->getType() << std::endl;
-      if ((*it)->isBlockable()
-	  && this->_map->checkPosition(
-	      bomb->getX()
-	      , bomb->getY(),
-bomb->getRange()))
-	(*it)->remove();
-      	//this->_map->getObjs().erase(it);
-    //}
-    */
   int i = -1;
 
   while (++i < this->_map->getObjs().size())
-    {
-      if (this->_map->getObjs()[i]->isDestructible()
+    if (this->_map->getObjs()[i]->isDestructible()
 	  && !this->_map->checkObjectPosition(this->_map->getObjs()[i], bomb->getX(), bomb->getY(), bomb->getRange()))
-	{
-	  //if (this->_map->getObjs()[i]->getType() == Bomberman::CHARACTER)
-	    //std::cout << "Everybody must die" << std::endl;
-	  //std::cout << "YOU MUST DIE BITCH" << std::endl;
-	  this->_map->getObjs()[i]->remove();
-	  //this->_map->getObjs().erase(std::remove(this->_map->getObjs().begin(), this->_map->getObjs().end(), i), this->_map->getObjs().end());
-	}
-    }
+	this->_map->getObjs()[i]->remove();
 }
 
 void Bomberman::Game::handleMovements()
@@ -123,44 +101,33 @@ void Bomberman::Game::handleTime()
   irr::u32 	now = this->_irr.getDevice()->getTimer()->getTime();
   int		i = -1;
 
-  /*
   while (++i < this->_map->getObjs().size())
-    {
+    //{
       if (this->_map->getObjs()[i]->getType() == Bomberman::BOMB
-	  && this->_map->getObjs()[i]->getExplosionTime())
+	  && this->_map->getObjs()[i]->getExplosionTime()
+	  && now > this->_map->getObjs()[i]->getExplosionTime())
 	{
 	  this->explodeObjs(static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i]));
 	  static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->explode();
 	}
-      if (this->_map->getObjs()[i]->getType() == Bomberman::BOMB
-	  && this->_map->getObjs()[i]->getAnimation_time()
-	  && now > this->_map->getObjs()[i]->getAnimation_time())
-	static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->clean();
-    }
-    */
-  ///*
-  while (++i < this->_map->getObjs().size())
-    {
-      if (this->_map->getObjs()[i]->getType() == Bomberman::BOMB)
-
 	//{//  && (this->_map->getObjs()[i]->getExplosionTime() || this->_map->getObjs()[i]->getAnimation_time()))
-	{
+	//{
 	  //if (this->_map->getObjs()[i]->getAnimation_time())
 	    //std::cout << "ANIM TIME: " << this->_map->getObjs()[i]->getAnimation_time() << std::endl;
-	  if (this->_map->getObjs()[i]->getExplosionTime() || this->_map->getObjs()[i]->getAnimation_time())
-	    {
+	  //if (this->_map->getObjs()[i]->getExplosionTime() || this->_map->getObjs()[i]->getAnimation_time())
+	    //{
 	      //if (now > this->_map->getObjs()[i]->getAnimation_time())
 		//static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->clean();
-	      if (now > this->_map->getObjs()[i]->getExplosionTime())
-		{
-		  this->explodeObjs(static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i]));
-		  static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->explode();
-		}
-	    }
+	      //if (now > this->_map->getObjs()[i]->getExplosionTime())
+		//{
+		  //this->explodeObjs(static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i]));
+		  //static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->explode();
+		//}
+	    //}
 	  //if (now > this->_map->getObjs()[i]->getAnimation_time())
 	    //static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->clean();
-	}
-    }
+	//}
+    //}
 //*/
 }
 

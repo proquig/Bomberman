@@ -38,6 +38,7 @@ namespace						Bomberman
     typedef						void (Character::*CharMemFn)(Character::ACTION);
     std::vector<Bomberman::Bomb*>			_bombs;
     float 						_range;
+    irr::u32						_bombTime;
   public:
     Character(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     ~Character();

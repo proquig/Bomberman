@@ -15,7 +15,7 @@
 Bomberman::Character::Character(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type) :
   Bomberman::Obj::Obj(mesh_path, texture_path, x, y, Bomberman::CHARACTER)
 {
-  this->_range = 7.0;
+  this->_range = 5.0;
   this->_animated_node->setLoopMode(false);
   this->_animated_node->setFrameLoop(START_FRAME, START_FRAME);
 }
@@ -66,9 +66,15 @@ void							Bomberman::Character::put_bomb(ACTION action)
   int							i;
 
   i = -1;
-  while (++i < this->_bombs.size() && this->_bombs[i]->getExplosionTime());
-  if (i < this->_bombs.size())
-    this->_bombs[i]->put(this->_x, this->_y);
+  if (this->_irr.getDevice()->getTimer()->getTime() > this->_bombTime)
+    {
+      while (++i < this->_bombs.size() && this->_bombs[i]->getExplosionTime());
+      if (i < this->_bombs.size())
+	{
+	  this->_bombTime = (this->_irr.getDevice()->getTimer()->getTime() + 100);
+	  this->_bombs[i]->put(this->_x, this->_y);
+	}
+    }
 }
 
 void							Bomberman::Character::afk()
