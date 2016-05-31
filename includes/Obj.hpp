@@ -42,7 +42,7 @@ namespace Bomberman
     void				reset();
 
 
-    virtual tinyxml2::XMLElement	*serialize() override;
+    virtual tinyxml2::XMLElement	*serialize(tinyxml2::XMLDocument *doc) override;
 
     virtual void deserialize(tinyxml2::XMLElement *element) override;
   };

@@ -112,20 +112,16 @@ void				Bomberman::Obj::remove()
   this->_is_destructible = false;
 }
 
-tinyxml2::XMLElement *Bomberman::Obj::serialize()
+tinyxml2::XMLElement *Bomberman::Obj::serialize(tinyxml2::XMLDocument *doc)
 {
-  // FUCKING ASSHOLE #GauthierPogamLaPLS
-/*
- * time_t current_time;
+  time_t current_time;
 
   time(&current_time);
-  tinyxml2::XMLElement *element = new tinyxml2::XMLElement;
-  element->SetName("object");
+  tinyxml2::XMLElement *element = doc->NewElement("object");
   element->SetAttribute("x", this->_x);
   element->SetAttribute("y", this->_y);
-  element->SetAttribute("explosionDelay", this->_explosion_time - current_time);
+  element->SetAttribute("explosionDelay", (int) (this->_explosion_time - current_time));
   return nullptr;
-  */
 }
 
 void Bomberman::Obj::deserialize(tinyxml2::XMLElement *element)
