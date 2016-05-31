@@ -86,6 +86,7 @@ Bomberman::Obj *		Bomberman::Map::createObjSomewhere(const std::string &mesh_pat
   r += rand() * rand();
   float x = 0;
   float y = 0;
+
   while (!this->checkPosition(x, y, 5.0))
     {
       x = (rand() + r) % (MAPSIZE_X / 2);
