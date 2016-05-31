@@ -26,6 +26,11 @@ Bomberman::Explosion::Explosion(float x, float y) : _irr(Bomberman::Irrlicht::in
 }
 
 
+irr::scene::IParticleSystemSceneNode	*Bomberman::Explosion::getScene()
+{
+  return (this->_ps);
+}
+
 Bomberman::Explosion::~Explosion()
 {
 

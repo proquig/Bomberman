@@ -18,6 +18,8 @@ Bomberman::Bomb::Bomb(const std::string &mesh_path, const std::string &texture_p
   this->_range = NULL;
   this->_state = AWAITING;
   this->_animated_node->setVisible(false);
+  this->exp = new Explosion(this->_x, this->_y);
+  this->exp->getScene()->setVisible(false);
 }
 
 Bomberman::Bomb::~Bomb()
@@ -65,12 +67,14 @@ void		Bomberman::Bomb::put(float x, float y)
 void		Bomberman::Bomb::explode()
 {
   this->reset();
-  this->exp = new Explosion(this->_x, this->_y);
+  this->exp->getScene()->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
+  this->exp->getScene()->setVisible(true);
+  //this->exp = new Explosion(this->_x, this->_y);
 }
 
 void 		Bomberman::Bomb::clean()
 {
-  this->exp->clear();
-  delete this->exp;
   this->_animation_time = 0;
+  this->exp->getScene()->setVisible(false);
+  //this->exp->clear();
 }

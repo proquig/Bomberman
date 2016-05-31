@@ -12,6 +12,7 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
 	_node(NULL),
 	_animated_node(NULL),
 	_explosion_time(0),
+	_animation_time(0),
 	_is_blockable(false),
 	_is_destructible(true)
 {

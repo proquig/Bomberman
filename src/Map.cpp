@@ -23,18 +23,16 @@ bool 		Bomberman::Map::checkObjectPosition(Bomberman::Obj* obj, float x, float y
   i = -1;
   resx = obj->getX() - x;
   resy = obj->getY() - y;
-  return (!(obj->isBlockable() && (resx <= range && resx >= -range) && (resy <= range && resy >= -range)));
+  return (!((obj->isBlockable() || obj->getType() == Bomberman::CHARACTER) && (resx <= range && resx >= -range) && (resy <= range && resy >= -range)));
 }
 
 bool		Bomberman::Map::checkPosition(float x, float y, float range)
 {
   int 		i;
-  float		resx;
-  float		resy;
 
   i = -1;
   while (++i < this->_objs.size())
-    if (!checkObjectPosition(this->_objs[i], x, y, range))
+    if (this->_objs[i]->getType() != Bomberman::CHARACTER && !checkObjectPosition(this->_objs[i], x, y, range))
       return (false);
   return (true);
 }

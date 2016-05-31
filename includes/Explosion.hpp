@@ -20,7 +20,7 @@ namespace				Bomberman
       this->_ps->remove();
     }
     ~Explosion();
-
+    irr::scene::IParticleSystemSceneNode	*getScene();
   private:
     Bomberman::Irrlicht				&_irr;
     irr::scene::IParticleSystemSceneNode	*_ps;

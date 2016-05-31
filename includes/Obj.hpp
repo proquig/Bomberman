@@ -39,7 +39,7 @@ namespace Bomberman
     bool				isBlockable() const;
     bool 				isDestructible() const;
     void				remove();
-    void				reset();
+    //void				reset();
 
 
     virtual tinyxml2::XMLElement	*serialize(tinyxml2::XMLDocument *doc) override;
