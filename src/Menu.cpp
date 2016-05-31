@@ -45,6 +45,12 @@ Bomberman::Menu::Menu() : _irr(Bomberman::Irrlicht::instance())
   button->setImage(_irr.getDriver()->getTexture("./assets/Menu/color.jpg"));
   _action.insert(std::make_pair(button, &Menu::quit));
 
+  button = _irr.getGui()->addButton(irr::core::rect<irr::s32>(WINDOWSIZE_X / 2 - 100,WINDOWSIZE_Y / 2 + 160,
+							      WINDOWSIZE_X / 2 + 100, WINDOWSIZE_Y / 2 + 160 + 32), 0, Menu::GUI_ID_FILE_OPEN_BUTTON, L"Credits", 0);
+  button->setImage(_irr.getDriver()->getTexture("./assets/Menu/color.jpg"));
+  _action.insert(std::make_pair(button, &Menu::displayCredit));
+
+
   _background = _irr.getDriver()->getTexture("./assets/Menu/Menu.png");
 
 }
