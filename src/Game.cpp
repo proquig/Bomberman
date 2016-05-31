@@ -135,6 +135,7 @@ void Bomberman::Game::handleEvents()
 void Bomberman::Game::run()
 {
   this->_players.push_back(static_cast<Bomberman::Character*>(this->_map->createObjSomewhere("./assets/ninja/ninja.b3d", "./assets/ninja/nskinrd.jpg", Bomberman::CHARACTER)));
+  this->_players.push_back(static_cast<Bomberman::Character*>(this->_map->createObjSomewhere("./assets/ninja/ninja.b3d", "./assets/ninja/nskinbl.jpg", Bomberman::CHARACTER)));
   irr::scene::ICameraSceneNode *camera = this->_irr.getSmgr()->addCameraSceneNode(0, irr::core::vector3df(0, 60, -20),
 									   irr::core::vector3df(0, 0, 0));
   camera->setNearValue(10);
