@@ -8,7 +8,7 @@
 #include "Character.hpp"
 #include "Map.hpp"
 
-const std::vector<std::pair<std::string, std::pair<int, int>>> Bomberman::Game::_playersConf = {
+const std::vector<std::pair<std::string, std::pair<int, int>>> Bomberman::Game::_players_conf = {
 	{"./assets/ninja/nskinwh.jpg", {(MAPSIZE_X / 2) - 20, -((MAPSIZE_Y / 2) - 20)}},
 	{"./assets/ninja/nskinbl.jpg", {-((MAPSIZE_X / 2) - 20), (MAPSIZE_Y / 2) - 20}}
 };
@@ -22,40 +22,41 @@ const float Bomberman::Game::positions[4][2] = {
 
 const std::map<irr::EKEY_CODE, std::pair<int, Bomberman::Character::ACTION>> Bomberman::Game::_events[] = {
 	{
-		{irr::KEY_KEY_Z, std::make_pair(0, Bomberman::Character::GO_UP)},
-		{irr::KEY_KEY_S, std::make_pair(0, Bomberman::Character::GO_DOWN)},
-		{irr::KEY_KEY_Q, std::make_pair(0, Bomberman::Character::GO_LEFT)},
-		{irr::KEY_KEY_D, std::make_pair(0, Bomberman::Character::GO_RIGHT)},
-		{irr::KEY_UP, std::make_pair(1, Bomberman::Character::GO_UP)},
-		{irr::KEY_DOWN, std::make_pair(1, Bomberman::Character::GO_DOWN)},
-		{irr::KEY_LEFT, std::make_pair(1, Bomberman::Character::GO_LEFT)},
-		{irr::KEY_RIGHT, std::make_pair(1, Bomberman::Character::GO_RIGHT)},
+		{irr::KEY_KEY_Z, {0, Bomberman::Character::GO_UP}},
+		{irr::KEY_KEY_S, {0, Bomberman::Character::GO_DOWN}},
+		{irr::KEY_KEY_Q, {0, Bomberman::Character::GO_LEFT}},
+		{irr::KEY_KEY_D, {0, Bomberman::Character::GO_RIGHT}},
+		{irr::KEY_UP, {1, Bomberman::Character::GO_UP}},
+		{irr::KEY_DOWN, {1, Bomberman::Character::GO_DOWN}},
+		{irr::KEY_LEFT, {1, Bomberman::Character::GO_LEFT}},
+		{irr::KEY_RIGHT, {1, Bomberman::Character::GO_RIGHT}},
 	},
 	{
-		{irr::KEY_SPACE, std::make_pair(0, Bomberman::Character::PUT_BOMB)},
-		{irr::KEY_KEY_U, std::make_pair(0, Bomberman::Character::JUMP)},
-		{irr::KEY_RETURN, std::make_pair(1, Bomberman::Character::PUT_BOMB)},
-		{irr::KEY_KEY_M, std::make_pair(1, Bomberman::Character::JUMP)}
+		{irr::KEY_SPACE, {0, Bomberman::Character::PUT_BOMB}},
+		{irr::KEY_KEY_U, {0, Bomberman::Character::JUMP}},
+		{irr::KEY_RETURN, {1, Bomberman::Character::PUT_BOMB}},
+		{irr::KEY_KEY_M, {1, Bomberman::Character::JUMP}}
 	}
 };
 
 Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
-			  _nbPlayer(nb)
+			  _nb_players(nb)
 {
   this->_map = new Bomberman::Map();
   this->_map->createMap();
 
-  for (int i = 0; i < this->_nbPlayer; ++i)
+  int j = 0;
+  for (int i = 0; i < this->_nb_players; ++i)
     {
       this->_players.push_back(static_cast<Bomberman::Character*>(this->_map->createObj("./assets/ninja/ninja.b3d",
-											this->_playersConf[i].first,
-											this->_playersConf[i].second.first,
-											this->_playersConf[i].second.second,
+											this->_players_conf[i].first,
+											this->_players_conf[i].second.first,
+											this->_players_conf[i].second.second,
 											Bomberman::CHARACTER)));
-      for (int j = 0; j < 10; ++j)
-      	this->_players.back()->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
+      int k = -1;
+      //while (++k < 10)
+	this->_players.back()->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
     }
-
   for (int i = 0; i < 64; ++i)
     this->_map->createObjSomewhere(WALLOBJ, WALLTEXT, Bomberman::BRICK);
   for (int j = 0; j < 84; ++j)
@@ -131,11 +132,18 @@ void Bomberman::Game::handleTime()
 //*/
 }
 
-void Bomberman::Game::handleEvents()
+int Bomberman::Game::handleEvents()
 {
+  std::vector<Bomberman::Character*>::const_iterator	it;
+  int 							players_alive = 0;
+
   handleTime();
   handleMovements();
   handleActions();
+  for (it = this->_players.begin(); it != this->_players.end(); ++it)
+    if ((*it)->isDestructible())
+      players_alive++;
+  return (players_alive == this->_nb_players);
 }
 
 void Bomberman::Game::run()
@@ -155,9 +163,10 @@ void Bomberman::Game::run()
       //std::cout << "Everybody must die1" << std::endl;
   //std::cout << this->_players[0]->isDestructible() << std::endl;
   //this->_players[0]->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
-  while (this->_irr.getDevice()->run())
+  //while (this->_irr.getDevice()->drop())
+  while (this->_irr.getDevice()->run() && handleEvents())// && handleEvents())
     {
-      handleEvents();
+      //handleEvents();
       if (this->_irr.getDevice()->isWindowActive())
 	{
 	 this->_irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));

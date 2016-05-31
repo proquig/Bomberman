@@ -19,17 +19,17 @@ namespace					Bomberman
    private:
     Bomberman::Irrlicht				&_irr;
     Bomberman::Map				*_map;
-    size_t 					_nbPlayer;
+    size_t 					_nb_players;
     std::vector<Bomberman::Character*>		_players;
     static const std::map<irr::EKEY_CODE, std::pair<int, Bomberman::Character::ACTION>> _events[];
-    static const std::vector<std::pair<std::string, std::pair<int, int>>> _playersConf;
+    static const std::vector<std::pair<std::string, std::pair<int, int>>> _players_conf;
 
    public:
     Game(size_t);
     ~Game();
     void					run();
 
-    void handleEvents();
+    int handleEvents();
 
     void handleMovements();
 
