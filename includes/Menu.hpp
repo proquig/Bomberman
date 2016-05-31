@@ -33,8 +33,6 @@ namespace Bomberman
     std::map<irr::gui::IGUIButton *, ptr> _action;
     std::vector<irr::core::stringw>  _strings;
 
-    void displayMenu();
-    void createMenu();
    public:
     Menu();
     Action run();
