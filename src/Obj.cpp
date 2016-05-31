@@ -118,9 +118,12 @@ tinyxml2::XMLElement *Bomberman::Obj::serialize(tinyxml2::XMLDocument *doc)
 
   time(&current_time);
   tinyxml2::XMLElement *element = doc->NewElement("object");
+  element->SetAttribute("type", this->_type);
   element->SetAttribute("x", this->_x);
   element->SetAttribute("y", this->_y);
   element->SetAttribute("explosionDelay", (int) (this->_explosion_time - current_time));
+  element->SetAttribute("is_blockable", this->_is_blockable);
+  element->SetAttribute("is_destructible", this->_is_destructible);
   return nullptr;
 }
 
@@ -129,9 +132,12 @@ void Bomberman::Obj::deserialize(tinyxml2::XMLElement *element)
   time_t current_time;
 
   time(&current_time);
+  this->_type = (TYPE) std::stoi(element->Attribute("type"));
   this->_x = std::stof(element->Attribute("x"));
   this->_y = std::stof(element->Attribute("y"));
   this->_explosion_time = (irr::u32) (current_time + std::stoi(element->Attribute("explosionDelay")));
+  this->_is_blockable = element->Attribute("is_blockable") == "true";
+  this->_is_destructible = element->Attribute("is_destructible") == "true";
 }
 
 bool Bomberman::Obj::isDestructible() const
