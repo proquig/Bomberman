@@ -21,13 +21,6 @@ namespace Bomberman
       OPTION,
       QUIT
     };
-    enum
-    {
-      GUI_ID_QUIT_BUTTON = 101,
-      GUI_ID_NEW_WINDOW_BUTTON,
-      GUI_ID_FILE_OPEN_BUTTON,
-      GUI_ID_TRANSPARENCY_SCROLL_BAR
-    };
 
    private:
     typedef void (Menu::*ptr)();
@@ -38,6 +31,7 @@ namespace Bomberman
     button		_button;
     irr::video::ITexture *_background;
     std::map<irr::gui::IGUIButton *, ptr> _action;
+    std::vector<irr::core::stringw>  _strings;
 
    public:
     Menu();
