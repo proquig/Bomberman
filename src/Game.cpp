@@ -43,9 +43,6 @@ Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
 			  _nb_players(nb)
 {
   this->_map = new Bomberman::Map();
-  this->_map->createMap();
-
-  int j = 0;
   for (int i = 0; i < this->_nb_players; ++i)
     {
       this->_players.push_back(static_cast<Bomberman::Character*>(this->_map->createObj("./assets/ninja/ninja.b3d",
@@ -53,10 +50,9 @@ Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
 											this->_players_conf[i].second.first,
 											this->_players_conf[i].second.second,
 											Bomberman::CHARACTER)));
-      int k = -1;
-      //while (++k < 10)
-	this->_players.back()->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
+      this->_players.back()->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
     }
+  this->_map->createMap();
   for (int i = 0; i < 64; ++i)
     this->_map->createObjSomewhere(WALLOBJ, WALLTEXT, Bomberman::BRICK);
   for (int j = 0; j < 84; ++j)
