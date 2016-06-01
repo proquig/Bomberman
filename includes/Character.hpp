@@ -16,7 +16,7 @@
 # include						"AnimationEndCallback.hpp"
 # include						"Bomb.hpp"
 
-# define						START_FRAME 0
+# define						START_FRAME 5
 # define						START_WALK_FRAME 1
 # define						END_WALK_FRAME 13
 
@@ -39,6 +39,7 @@ namespace						Bomberman
     std::vector<Bomberman::Bomb*>			_bombs;
     float 						_range;
     irr::u32						_bombTime;
+    //irr::u32						_movTime;
   public:
     Character(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     ~Character();

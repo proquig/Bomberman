@@ -117,11 +117,11 @@ Bomberman::Obj *		Bomberman::Map::createObjSomewhere(const std::string &mesh_pat
       x = 1;
       y = 1;
       while (x % 5)
-	x = (rand() + rand()) % (MAPSIZE_X / 2);
+	x = (rand() - rand()) % (MAPSIZE_X / 2);
       while (y % 5)
-	y = (rand() + rand()) % (MAPSIZE_Y / 2);
+	y = (rand() - rand()) % (MAPSIZE_Y / 2);
     }
-  return createObj(mesh_path, texture_path, float(x), (float)y, type);
+  return createObj(mesh_path, texture_path, float(x), float(y), type);
 }
 
 bool Bomberman::Map::checkObjOnPlan(int x, int y)
@@ -134,8 +134,29 @@ Bomberman::Obj *Bomberman::Map::getObjOnPlan(int x, int y)
   return (this->checkObjOnPlan(x, y) ? this->_plan[x][y] : NULL);
 }
 
-int Bomberman::Map::getRoundPosition(int axis)
+int Bomberman::Map::getRoundPosition(float axis)
 {
+
+  //if ((int)axis % 5 < (5/ 2))
+    return (((((int)axis + (int)(axis > 0) * (5 - 1)) / 5) * 5));
+  //return (((((int)axis + (5 - 1)) / 5) * 5));
+  /*
+  if (axis < 0)
+    return (axis - ((int)axis % 5));
+  return (axis + (5 - (int)axis % 5));
+   */
+  //if (axis > 0)
+  //return (((((int)axis + (int)(axis > 0) * (5 - 1)) / 5) * 5));
+  //return (((((int)axis) / 5) * 5));
+  //return ((((axis + /*(int)(axis > 0) **/ (5 - 1)) / 5) * 5));
+  /*if (axis < 0)
+    return ((int)axis - ((int)axis % 5));
+  else
+    return ((int)axis - ((int)axis % 5));
+    */
+  //return ((((int)axis + 5 / 2) / 5) * 5);
   //std::cout << "x = " << axis << " & new x = " << (((axis + (int)(axis > 0) * (5 - 1)) / 5) * 5) << std::endl;
-  return ((((axis + /*(int)(axis > 0) **/ (5 - 1)) / 5) * 5));
+  //return ((((axis + /*(int)(axis > 0) **/ (5 - 1)) / 5) * 5));
+  //return (((((int)axis + (int)(axis > 0) * (5 - ((int)axis % 5))) / 5) * 5));
+
 }

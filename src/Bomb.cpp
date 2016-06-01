@@ -10,6 +10,7 @@
 
 #include "Irrlicht.hpp"
 #include "Bomb.hpp"
+#include "Map.hpp"
 
 Bomberman::Bomb::Bomb(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type) :
 	Bomberman::Obj::Obj(mesh_path, texture_path, x, y, BOMB)
@@ -55,8 +56,10 @@ void		Bomberman::Bomb::reset()
 
 void		Bomberman::Bomb::put(float x, float y)
 {
-  this->_x = x;
-  this->_y = y;
+  //std::cout << "BEFORE x = " << x << " & y = " << y << std::endl;
+  this->_x = Bomberman::Map::getRoundPosition(x);
+  this->_y = Bomberman::Map::getRoundPosition(y);
+  //std::cout << "AFTER x = " << this->_x << " & y = " << this->_y << std::endl;
   this->_animated_node->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
   this->_animated_node->setVisible(true);
   //this->_state = POSED;

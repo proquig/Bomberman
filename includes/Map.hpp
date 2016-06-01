@@ -48,7 +48,7 @@ namespace			Bomberman
     Bomberman::Obj		*createObjSomewhere(const std::string &mesh_path, const std::string &texture_path, Bomberman::TYPE type);
     bool			checkObjectPosition(Obj *obj, float x, float y, float range);
     std::map<int, std::map<int, Obj *>> getPlan() const;
-    static int 			getRoundPosition(int axis);
+    static int 			getRoundPosition(float axis);
     bool 			checkObjOnPlan(int x, int y);
     Bomberman::Obj*		getObjOnPlan(int x, int y);
     void			createPlan();

@@ -2,36 +2,36 @@
 // Created by cloquet on 24/05/16.
 //
 
-#include <bits/signum.h>
-
 #include <Bomb.hpp>
 #include <Menu.hpp>
 #include <fstream>
 #include <Exception.hpp>
-#include <sstream>
 #include <zconf.h>
-#include <signal.h>
 #include "Game.hpp"
 #include "Character.hpp"
 #include "Map.hpp"
 
 const std::vector<std::pair<std::string, std::pair<int, int>>> Bomberman::Game::_players_conf = {
-	{"./assets/ninja/nskinwh.jpg", {(MAPSIZE_X / 2) - 20,    -((MAPSIZE_Y / 2) - 20)}},
+	{"./assets/ninja/nskinwh.jpg", {(MAPSIZE_X / 2) - 20, -((MAPSIZE_Y / 2) - 20)}},
 	{"./assets/ninja/nskinbl.jpg", {-((MAPSIZE_X / 2) - 20), (MAPSIZE_Y / 2) - 20}}
 };
 
 const float Bomberman::Game::positions[4][2] = {
-	{0,     0.2f},
-	{0,     -0.2f},
+	/*{0, 0.2f},
+	{0, -0.2f},
 	{-0.2f, 0},
-	{0.2f,  0}
+	{0.2f, 0}*/
+	{0, 1},
+	{0, -1},
+	{-1, 0},
+	{1, 0}
 };
 
 const std::map<irr::EKEY_CODE, std::pair<int, Bomberman::Character::ACTION>> Bomberman::Game::_events[] = {
 	{
 		{irr::KEY_KEY_Z, {0, Bomberman::Character::GO_UP}},
 		{irr::KEY_KEY_S, {0, Bomberman::Character::GO_DOWN}},
-		{irr::KEY_KEY_Q,  {0, Bomberman::Character::GO_LEFT}},
+		{irr::KEY_KEY_Q, {0, Bomberman::Character::GO_LEFT}},
 		{irr::KEY_KEY_D, {0, Bomberman::Character::GO_RIGHT}},
 		{irr::KEY_UP, {1, Bomberman::Character::GO_UP}},
 		{irr::KEY_DOWN, {1, Bomberman::Character::GO_DOWN}},
@@ -52,14 +52,12 @@ Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
   this->_map = new Bomberman::Map();
   for (int i = 0; i < this->_nb_players; ++i)
     {
-      this->_players.push_back(static_cast<Bomberman::Character *>(this->_map->createObj("./assets/ninja/ninja.b3d",
-											 this->_players_conf[i].first,
-											 this->_players_conf[i].second
-													       .first,
-											 this->_players_conf[i].second
-													       .second,
-											 Bomberman::CHARACTER)));
-      this->_players.back()->add_bomb(static_cast<Bomberman::Bomb *>(this->_map->createObj("", "", 0, 0, BOMB)));
+      this->_players.push_back(static_cast<Bomberman::Character*>(this->_map->createObj("./assets/ninja/ninja.b3d",
+											this->_players_conf[i].first,
+											this->_players_conf[i].second.first,
+											this->_players_conf[i].second.second,
+											Bomberman::CHARACTER)));
+      this->_players.back()->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
     }
   this->_map->createMap();
   for (int i = 0; i < 42; ++i)
@@ -67,7 +65,7 @@ Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
   for (int j = 0; j < 106; ++j)
     this->_map->createObjSomewhere(BOXOBJ, BOXTEXT, Bomberman::BOX);
   //for (int k = 0; k < this->_map->getObjs().size(); ++k)
-  //std::cout << "X = " << this->_map->getObjs()[k]->getX() << " & Y = " << this->_map->getObjs()[k]->getY() << std::endl;
+    //std::cout << "X = " << this->_map->getObjs()[k]->getX() << " & Y = " << this->_map->getObjs()[k]->getY() << std::endl;
 }
 
 Bomberman::Game::Game(/*size_t nb, */const std::string &name) : _irr(Bomberman::Irrlicht::instance())
@@ -132,9 +130,9 @@ void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
   //std::cout << "BOMB x = " << x << " & y = " << y << std::endl;
   //std::cout << "------------" << std::endl;
   //for (int i = -200; i < 200; ++i)
-  //{
-  //std::cout << Bomberman::Map::getRoundPosition(i) << std::endl;
-  //}
+    //{
+      //std::cout << Bomberman::Map::getRoundPosition(i) << std::endl;
+    //}
   //std::cout << "------------" << std::endl;
   int start_x = x - (((bomb->getRange()) + 1) * 5);
   int start_y = y - (((bomb->getRange()) + 1) * 5);
@@ -147,17 +145,17 @@ void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
 	&& this->_map->getObjOnPlan(x, (start_y + i))->isDestructible())
       this->_map->getObjOnPlan(x, (start_y + i))->remove();
 
-  //{
-  //std::cout << "----" << std::endl;
-  //std::cout << "Real x = " << bomb->getX() << " & real y = " << bomb->getY() << std::endl;
-  //std::cout << "x = " << x << " & y = " << y << std::endl;
-  //std::cout << "start_x = " << start_x << " & start_y = " << start_y << std::endl;
-  //std::cout << "start_x + i = " << (start_x + i) << " & start_y + i = " << (start_y + i) << std::endl;
-  //std::cout << "----" << std::endl;
-  //if (this->_map->checkObjOnPlan((start_x + i), start_y + i)
-  //  && this->_map->getObjOnPlan((start_x + i), (start_y + i))->isDestructible())
-  //this->_map->getObjOnPlan((start_x + i), (start_y + i))->remove();
-  //}
+    //{
+      //std::cout << "----" << std::endl;
+      //std::cout << "Real x = " << bomb->getX() << " & real y = " << bomb->getY() << std::endl;
+      //std::cout << "x = " << x << " & y = " << y << std::endl;
+      //std::cout << "start_x = " << start_x << " & start_y = " << start_y << std::endl;
+      //std::cout << "start_x + i = " << (start_x + i) << " & start_y + i = " << (start_y + i) << std::endl;
+      //std::cout << "----" << std::endl;
+      //if (this->_map->checkObjOnPlan((start_x + i), start_y + i)
+	//  && this->_map->getObjOnPlan((start_x + i), (start_y + i))->isDestructible())
+	//this->_map->getObjOnPlan((start_x + i), (start_y + i))->remove();
+    //}
 /*  while (++i < this->_map->getObjs().size())
     if (this->_map->getObjs()[i]->isDestructible()
 	  && !this->_map->checkObjectPosition(this->_map->getObjs()[i], bomb->getX(), bomb->getY(), bomb->getRange()))
@@ -170,9 +168,8 @@ void Bomberman::Game::handleMovements()
   std::map<irr::EKEY_CODE, std::pair<int, Bomberman::Character::ACTION>>::const_iterator it;
   for (it = this->_events[0].begin(); it != _events[0].end(); ++it)
     if (this->_irr.event.getKeys()[it->first] && it->second.first < this->_players.size()
-	&& this->_map->checkPosition(
-	    this->_players[it->second.first]->getX() + Bomberman::Game::positions[it->second.second][0],
-	    this->_players[it->second.first]->getY() + Bomberman::Game::positions[it->second.second][1], 4.5))
+      && this->_map->checkPosition(this->_players[it->second.first]->getX() + Bomberman::Game::positions[it->second.second][0],
+				   this->_players[it->second.first]->getY() + Bomberman::Game::positions[it->second.second][1], 4.5))
       this->_players[it->second.first]->do_action(it->second.second);
 }
 
@@ -248,18 +245,15 @@ Bomberman::Map *Bomberman::Game::run()
   irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
   int lastFPS = -1;
   //for (int i = 0; i != 3; ++i)
-  //this->_players[i]->add_bomb(reinterpret_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
+      //this->_players[i]->add_bomb(reinterpret_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
   //int i =  -1;
   //while (++i < this->_map->getObjs().size())
-  //if (this->_map->getObjs()[i]->getType() == Bomberman::CHARACTER)
-  //std::cout << "Everybody must die1" << std::endl;
+    //if (this->_map->getObjs()[i]->getType() == Bomberman::CHARACTER)
+      //std::cout << "Everybody must die1" << std::endl;
   //std::cout << this->_players[0]->isDestructible() << std::endl;
   //this->_players[0]->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
   //while (this->_irr.getDevice()->drop())
-
-  pid_t pid;
-  pid_t father;
-  father = getpid();
+  int pause = 0;
   while (this->_irr.getDevice()->run() && handleEvents())
     {
       if (this->_irr.event.getKeys()[irr::KEY_ESCAPE])
