@@ -45,11 +45,11 @@ void							Bomberman::Character::set_pos(ACTION direction)
       //std::cout << " new x = " << this->_x << " & new y = " << this->_y << std::endl;
       this->_animated_node->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
       //this->_animated_node->setPosition(irr::core::vector3df(, 0, (float)Bomberman::Map::getRoundPosition(this->_y)));
-      //if (this->_animated_node->getStartFrame() == START_FRAME)
-	//{
-	  //this->_animated_node->setFrameLoop(START_WALK_FRAME, END_WALK_FRAME);
-	  //this->afk();
-	//}
+      if (this->_animated_node->getStartFrame() == START_FRAME)
+	{
+	  this->_animated_node->setFrameLoop(START_WALK_FRAME, END_WALK_FRAME);
+	  this->afk();
+	}
     //}
 }
 

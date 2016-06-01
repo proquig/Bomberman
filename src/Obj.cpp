@@ -46,7 +46,7 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
     {
       this->_mesh = this->_irr.getSmgr()->getMesh(mesh_path.c_str());
       this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh, 0, -1, irr::core::vector3df(x, 12.5, y), irr::core::vector3df(0, 0, 0),
-							   irr::core::vector3df(2, 2, 2));
+							   irr::core::vector3df(1.7, 1.7, 1.7));
       this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
       this->_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path.c_str()));
       this->_node->setPosition(irr::core::vector3df(x, 12.5, y));
@@ -58,7 +58,7 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
     {
       this->_mesh = this->_irr.getSmgr()->getMesh(mesh_path.c_str());
       this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh, 0, -1, irr::core::vector3df(x, 12.5, y), irr::core::vector3df(0, 90, 0),
-							   irr::core::vector3df(2, 2, 2));
+							   irr::core::vector3df(1.7, 1.7, 1.7));
       this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
       this->_node->setPosition(irr::core::vector3df(x, 12.5, y));
       this->_is_blockable = true;
@@ -68,7 +68,7 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
     {
       this->_mesh = this->_irr.getSmgr()->getGeometryCreator()
 			->createPlaneMesh(irr::core::dimension2df(x, y), irr::core::dimension2d<irr::u32>(1, 1), 0,
-					  irr::core::dimension2df(1.f, 1.f));
+					  irr::core::dimension2df(1, 1));
       this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh);
       this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
       this->_irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(this->_mesh, 0.1);

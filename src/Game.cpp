@@ -13,8 +13,8 @@
 #include "Map.hpp"
 
 const std::vector<std::pair<std::string, std::pair<int, int>>> Bomberman::Game::_players_conf = {
-	{"./assets/ninja/nskinwh.jpg", {(MAPSIZE_X / 2) - 20, -((MAPSIZE_Y / 2) - 20)}},
-	{"./assets/ninja/nskinbl.jpg", {-((MAPSIZE_X / 2) - 20), (MAPSIZE_Y / 2) - 20}}
+	{"./assets/ninja/nskinwh.jpg", {(MAPSIZE_X / 2) - (4 * BLOCKSIZE), -((MAPSIZE_Y / 2) - (4 * BLOCKSIZE))}},
+	{"./assets/ninja/nskinbl.jpg", {-((MAPSIZE_X / 2) - (4 * BLOCKSIZE)), (MAPSIZE_Y / 2) - (4 * BLOCKSIZE)}}
 };
 
 const float Bomberman::Game::positions[4][2] = {
@@ -51,6 +51,12 @@ Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
 				   _nb_players(nb)
 {
   this->_map = new Bomberman::Map();
+  for (int i = 0; i < 42; ++i)
+    this->_map->createObjSomewhere(WALLOBJ, WALLTEXT, Bomberman::BRICK);
+  for (int i = 0; i < 100; ++i)
+    this->_map->createObjSomewhere(BOXOBJ, BOXTEXT, Bomberman::BOX);
+  this->_map->createMap();
+  this->_map->createPlan();
   for (int i = 0; i < this->_nb_players; ++i)
     {
       this->_players.push_back(static_cast<Bomberman::Character*>(this->_map->createObj("./assets/ninja/ninja.b3d",
@@ -58,13 +64,18 @@ Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
 											this->_players_conf[i].second.first,
 											this->_players_conf[i].second.second,
 											Bomberman::CHARACTER)));
-      this->_players.back()->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
+      //for (int z = 0; z < 5; z++)
+	this->_players.back()->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
+      for (int j = -1; j < 2; ++j)
+	{
+	  if (this->_map->getPlan()[this->_players_conf[i].second.first + (j * BLOCKSIZE)][this->_players_conf[i].second.second])
+	      //std::cout << "PASS" << std::endl;
+	      this->_map->getPlan()[this->_players_conf[i].second.first + (j * BLOCKSIZE)][this->_players_conf[i].second.second]->remove();
+	  if (this->_map->getPlan()[this->_players_conf[i].second.first][this->_players_conf[i].second.second + (j * BLOCKSIZE)])
+	    this->_map->getPlan()[this->_players_conf[i].second.first][this->_players_conf[i].second.second + (j * BLOCKSIZE)]->remove();
+	}
     }
-  this->_map->createMap();
-  for (int i = 0; i < 42; ++i)
-    this->_map->createObjSomewhere(WALLOBJ, WALLTEXT, Bomberman::BRICK);
-  for (int j = 0; j < 106; ++j)
-    this->_map->createObjSomewhere(BOXOBJ, BOXTEXT, Bomberman::BOX);
+  //for (int k = -1; k < 2; ++k)
   //for (int k = 0; k < this->_map->getObjs().size(); ++k)
     //std::cout << "X = " << this->_map->getObjs()[k]->getX() << " & Y = " << this->_map->getObjs()[k]->getY() << std::endl;
 }
@@ -170,7 +181,7 @@ void Bomberman::Game::handleMovements()
   for (it = this->_events[0].begin(); it != _events[0].end(); ++it)
     if (this->_irr.event.getKeys()[it->first] && it->second.first < this->_players.size()
       && this->_map->checkPosition(this->_players[it->second.first]->getX() + Bomberman::Game::positions[it->second.second][0],
-				   this->_players[it->second.first]->getY() + Bomberman::Game::positions[it->second.second][1], 4.5))
+				   this->_players[it->second.first]->getY() + Bomberman::Game::positions[it->second.second][1], (BLOCKSIZE - 0.1)))
       this->_players[it->second.first]->do_action(it->second.second);
 }
 
@@ -240,7 +251,7 @@ int Bomberman::Game::handleEvents()
 
 Bomberman::Map *Bomberman::Game::run()
 {
-  irr::scene::ICameraSceneNode *camera = this->_irr.getSmgr()->addCameraSceneNode(0, irr::core::vector3df(0, 60 * 5, -40),
+  irr::scene::ICameraSceneNode *camera = this->_irr.getSmgr()->addCameraSceneNode(0, irr::core::vector3df(0, (12 * BLOCKSIZE), -40),
 										  irr::core::vector3df(0, 0, 0));
   camera->setNearValue(10);
   irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");

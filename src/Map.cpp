@@ -69,15 +69,15 @@ void		Bomberman::Map::createMap()
   _material.Lighting = true;
   _scene = this->_irr.getSmgr()->getRootSceneNode();
   createObj("", FLOORTEXT, MAPSIZE_X, MAPSIZE_Y, Bomberman::PLAN);
-  for (int wallnbr = 0; wallnbr <= MAPSIZE_X; wallnbr += 5)
+  for (int wallnbr = 0; wallnbr <= MAPSIZE_X; wallnbr += BLOCKSIZE)
     {
-      createObj(WALLOBJ, WALLTEXT, MAPSIZE_X / 2 - wallnbr, MAPSIZE_Y / 2, Bomberman::BRICK);
-      createObj(WALLOBJ, WALLTEXT, MAPSIZE_X / 2 - wallnbr, -MAPSIZE_Y / 2, Bomberman::BRICK);
+      createObj(WALLOBJ, WALLTEXT, ((MAPSIZE_X / 2) - wallnbr), (MAPSIZE_Y / 2), Bomberman::BRICK);
+      createObj(WALLOBJ, WALLTEXT, ((MAPSIZE_X / 2) - wallnbr), (-(MAPSIZE_Y / 2)), Bomberman::BRICK);
     }
-  for (int wallnbr = 0; wallnbr <= MAPSIZE_Y; wallnbr += 5)
+  for (int wallnbr = 0; wallnbr <= MAPSIZE_Y; wallnbr += BLOCKSIZE)
     {
-      createObj(WALLOBJ, WALLTEXT, MAPSIZE_X / 2, MAPSIZE_Y / 2 - wallnbr, Bomberman::BRICK);
-      createObj(WALLOBJ, WALLTEXT, -MAPSIZE_X / 2, MAPSIZE_Y / 2 - wallnbr, Bomberman::BRICK);
+      createObj(WALLOBJ, WALLTEXT, (MAPSIZE_X / 2), ((MAPSIZE_Y / 2) - wallnbr), Bomberman::BRICK);
+      createObj(WALLOBJ, WALLTEXT, (-(MAPSIZE_X / 2)), ((MAPSIZE_Y / 2) - wallnbr), Bomberman::BRICK);
     }
 }
 
@@ -112,13 +112,13 @@ Bomberman::Obj *		Bomberman::Map::createObjSomewhere(const std::string &mesh_pat
   int x = 1;
   int y = 1;
 
-  while (!(!(x % 5) && !(y % 5) && this->checkPosition(x, y, 2.5, true)))
+  while (!(!(x % BLOCKSIZE) && !(y % BLOCKSIZE) && this->checkPosition(x, y, (BLOCKSIZE / 2), true)))
     {
       x = 1;
       y = 1;
-      while (x % 5)
+      while (x % BLOCKSIZE)
 	x = (rand() - rand()) % (MAPSIZE_X / 2);
-      while (y % 5)
+      while (y % BLOCKSIZE)
 	y = (rand() - rand()) % (MAPSIZE_Y / 2);
     }
   return createObj(mesh_path, texture_path, float(x), float(y), type);
@@ -138,7 +138,7 @@ int Bomberman::Map::getRoundPosition(float axis)
 {
 
   //if ((int)axis % 5 < (5/ 2))
-    return (((((int)axis + (int)(axis > 0) * (5 - 1)) / 5) * 5));
+    return (((((int)axis + (int)(axis > 0) * (BLOCKSIZE - 1)) / BLOCKSIZE) * BLOCKSIZE));
   //return (((((int)axis + (5 - 1)) / 5) * 5));
   /*
   if (axis < 0)
