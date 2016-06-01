@@ -2,11 +2,15 @@
 // Created by cloquet on 24/05/16.
 //
 
+#include <bits/signum.h>
+
 #include <Bomb.hpp>
 #include <Menu.hpp>
 #include <fstream>
 #include <Exception.hpp>
 #include <sstream>
+#include <zconf.h>
+#include <signal.h>
 #include "Game.hpp"
 #include "Character.hpp"
 #include "Map.hpp"
@@ -67,7 +71,7 @@ Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
 }
 
 Bomberman::Game::Game(/*size_t nb, */const std::string &name) : _irr(Bomberman::Irrlicht::instance())
-							    /*_nb_players(nb)*/
+/*_nb_players(nb)*/
 {
   std::vector<std::string> data;
   std::ifstream file;
@@ -98,7 +102,8 @@ Bomberman::Game::Game(/*size_t nb, */const std::string &name) : _irr(Bomberman::
 													 data[1].c_str()),
 												 (TYPE) atoi(
 													 data[2].c_str()))));
-	      this->_players.back()->add_bomb(static_cast<Bomberman::Bomb *>(this->_map->createObj("", "", 0, 0, BOMB)));
+	      this->_players.back()
+		  ->add_bomb(static_cast<Bomberman::Bomb *>(this->_map->createObj("", "", 0, 0, BOMB)));
 	    }
 	  else if (atoi(data[2].c_str()) != 2)
 	    this->_map->createObj(data[3], data[4], (float) atof(data[0].c_str()), (float) atof(data[1].c_str()),
@@ -218,11 +223,17 @@ int Bomberman::Game::handleEvents()
 {
   std::vector<Bomberman::Character *>::const_iterator it;
   int players_alive = 0;
+  static int pause = 0;
 
   this->_map->createPlan();
-  handleTime();
-  handleMovements();
-  handleActions();
+  if (this->_irr.event.getKeys()[irr::KEY_KEY_P])
+    pause == 0 ? pause = 1 : pause = 0;
+  if (pause == 0)
+    {
+      handleTime();
+      handleMovements();
+      handleActions();
+    }
   for (it = this->_players.begin(); it != this->_players.end(); ++it)
     if ((*it)->isDestructible())
       players_alive++;
@@ -231,7 +242,7 @@ int Bomberman::Game::handleEvents()
 
 Bomberman::Map *Bomberman::Game::run()
 {
-  irr::scene::ICameraSceneNode *camera = this->_irr.getSmgr()->addCameraSceneNode(0, irr::core::vector3df(0, 60, -20),
+  irr::scene::ICameraSceneNode *camera = this->_irr.getSmgr()->addCameraSceneNode(0, irr::core::vector3df(0, 90, -20),
 										  irr::core::vector3df(0, 0, 0));
   camera->setNearValue(10);
   irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
@@ -246,45 +257,31 @@ Bomberman::Map *Bomberman::Game::run()
   //this->_players[0]->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
   //while (this->_irr.getDevice()->drop())
 
-  bool wasActive = true;
+  pid_t pid;
+  pid_t father;
+  father = getpid();
   while (this->_irr.getDevice()->run() && handleEvents())
     {
       if (this->_irr.event.getKeys()[irr::KEY_ESCAPE])
 	return (this->_map);
-/*      if (!this->_irr.getDevice()->isWindowActive())
+      if (this->_irr.getDevice()->isWindowActive())
 	{
-	  if (wasActive)
+	  this->_irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
+	  this->_irr.getDriver()->draw2DImage(background, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
+					      irr::core::rect<irr::s32>(0, 0, 1920, 1080));
+	  this->_irr.getSmgr()->drawAll();
+	  this->_irr.getDriver()->endScene();
+	  int fps = this->_irr.getDriver()->getFPS();
+	  if (lastFPS != fps)
 	    {
-
-	    }
-	  Sleep(100);
-	  continue;
-	}
-      if (!wasActive)
-	{
-
-	}*/
-	  if (this->_irr.getDevice()->isWindowActive())
-	    {
-	      if (this->_irr.event.getKeys()[irr::KEY_KEY_P])
-		std::this_thread::sleep_for (std::chrono::seconds(9999999999));
-	      this->_irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
-	      this->_irr.getDriver()->draw2DImage(background, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
-						  irr::core::rect<irr::s32>(0, 0, 1920, 1080));
-	      //if (this->_irr.event.getKeys()[irr::KEY_ESCAPE])
-	      this->_irr.getSmgr()->drawAll();
-	      this->_irr.getDriver()->endScene();
-	      int fps = this->_irr.getDriver()->getFPS();
-	      if (lastFPS != fps)
-		{
-		  irr::core::stringw str = "Bomberman | driver [";
-		  str += this->_irr.getDriver()->getName();
-		  str += "] FPS :";
-		  str += fps;
-		  this->_irr.getDevice()->setWindowCaption(str.c_str());
-		  lastFPS = fps;
-		}
+	      irr::core::stringw str = "Bomberman | driver [";
+	      str += this->_irr.getDriver()->getName();
+	      str += "] FPS :";
+	      str += fps;
+	      this->_irr.getDevice()->setWindowCaption(str.c_str());
+	      lastFPS = fps;
 	    }
 	}
+    }
   return (NULL);
 }
