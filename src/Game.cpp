@@ -67,15 +67,11 @@ Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
 
 Bomberman::Game::Game(const std::string &name) : _irr(Bomberman::Irrlicht::instance())
 {
-  std::vector<std::string>::iterator it;
   std::vector<std::string> data;
-
   std::ifstream file;
   std::string line;
   std::string word;
   std::stringstream ss;
-  //std::string line;
-  size_t pos;
 
   file.open("save.txt");
   this->_map = new Bomberman::Map();
@@ -89,9 +85,8 @@ Bomberman::Game::Game(const std::string &name) : _irr(Bomberman::Irrlicht::insta
 	      data.push_back(word);
 	      std::cout << word << std::endl;
 	    }
-	  //std::cerr << "Data[0] = "<< data[0]<< "Data[1] = "<< data[1] << "Data[2] = "<< data[2] << "Data[3] = "<< data[3] << "Data[4] = "<< data[4] << std::endl;
-	  _map->createObj(data[3], data[4], std::stof(data[0]), std::stof(data[1]), (TYPE) std::stoi(data[2]));
-	  data.erase(data.begin(), data.end());
+	  _map->createObj(data[3], data[4], std::stof(data[0].c_str()), std::stof(data[1].c_str()), (TYPE) std::stoi(data[2].c_str()));
+	  data.clear();
 	}
     }
 }
