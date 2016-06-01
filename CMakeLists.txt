@@ -27,7 +27,7 @@ file(
 add_subdirectory(lib/tinyxml2)
 add_executable(Bomberman ${SOURCES} ${HEADERS})
 
-target_include_directories(Bomberman PRIVATE includes PRIVATE includes/sound PRIATE includes/xml)
+target_include_directories(Bomberman PRIVATE includes PRIVATE includes/sound PRIATE includes/xml PRIVATE includes/Selene)
 target_link_libraries(Bomberman ${IRRLICHT_LIBRARY})
 target_link_libraries(Bomberman IrrKlang)
 target_link_libraries(Bomberman tinyxml2)
