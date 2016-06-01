@@ -53,9 +53,9 @@ Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
       this->_players.back()->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
     }
   this->_map->createMap();
-  for (int i = 0; i < 64; ++i)
+  for (int i = 0; i < 42; ++i)
     this->_map->createObjSomewhere(WALLOBJ, WALLTEXT, Bomberman::BRICK);
-  for (int j = 0; j < 84; ++j)
+  for (int j = 0; j < 106; ++j)
     this->_map->createObjSomewhere(BOXOBJ, BOXTEXT, Bomberman::BOX);
   //for (int k = 0; k < this->_map->getObjs().size(); ++k)
     //std::cout << "X = " << this->_map->getObjs()[k]->getX() << " & Y = " << this->_map->getObjs()[k]->getY() << std::endl;
@@ -69,10 +69,45 @@ void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
 {
   int i = -1;
 
-  while (++i < this->_map->getObjs().size())
+  //std::cout << (int)this->getX() << std::endl;
+  //std::cout << (int)this->getX() - ((int)this->getX() % 5) << std::endl;
+  //std::cout << ">" << ((((int)this->getX() + (int)(this->getX() > 0) * (5 - 1)) / 5) * 5) << std::endl;
+  int x = Bomberman::Map::getRoundPosition(bomb->getX());
+  int y = Bomberman::Map::getRoundPosition(bomb->getY());
+  //std::cout << "BOMB x = " << x << " & y = " << y << std::endl;
+  //std::cout << "------------" << std::endl;
+  //for (int i = -200; i < 200; ++i)
+    //{
+      //std::cout << Bomberman::Map::getRoundPosition(i) << std::endl;
+    //}
+  //std::cout << "------------" << std::endl;
+  int start_x = x - (((bomb->getRange()) + 1) * 5);
+  int start_y = y - (((bomb->getRange()) + 1) * 5);
+  for (int i = 0; (i < (((bomb->getRange() * 2) + 1)) * 5); ++i)
+    if (this->_map->checkObjOnPlan((start_x + i), y)
+	&& this->_map->getObjOnPlan((start_x + i), y)->isDestructible())
+      this->_map->getObjOnPlan((start_x + i), y)->remove();
+  for (int i = 0; (i < (((bomb->getRange() * 2) + 1)) * 5); ++i)
+    if (this->_map->checkObjOnPlan(x, (start_y + i))
+	&& this->_map->getObjOnPlan(x, (start_y + i))->isDestructible())
+      this->_map->getObjOnPlan(x, (start_y + i))->remove();
+
+    //{
+      //std::cout << "----" << std::endl;
+      //std::cout << "Real x = " << bomb->getX() << " & real y = " << bomb->getY() << std::endl;
+      //std::cout << "x = " << x << " & y = " << y << std::endl;
+      //std::cout << "start_x = " << start_x << " & start_y = " << start_y << std::endl;
+      //std::cout << "start_x + i = " << (start_x + i) << " & start_y + i = " << (start_y + i) << std::endl;
+      //std::cout << "----" << std::endl;
+      //if (this->_map->checkObjOnPlan((start_x + i), start_y + i)
+	//  && this->_map->getObjOnPlan((start_x + i), (start_y + i))->isDestructible())
+	//this->_map->getObjOnPlan((start_x + i), (start_y + i))->remove();
+    //}
+/*  while (++i < this->_map->getObjs().size())
     if (this->_map->getObjs()[i]->isDestructible()
 	  && !this->_map->checkObjectPosition(this->_map->getObjs()[i], bomb->getX(), bomb->getY(), bomb->getRange()))
 	this->_map->getObjs()[i]->remove();
+ */
 }
 
 void Bomberman::Game::handleMovements()
@@ -133,6 +168,7 @@ int Bomberman::Game::handleEvents()
   std::vector<Bomberman::Character*>::const_iterator	it;
   int 							players_alive = 0;
 
+  this->_map->createPlan();
   handleTime();
   handleMovements();
   handleActions();
@@ -149,16 +185,26 @@ void Bomberman::Game::run()
   camera->setNearValue(10);
   irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
   int 	lastFPS = -1;
-  while (this->_irr.getDevice()->run() && handleEvents())// && handleEvents())
+  //for (int i = 0; i != 3; ++i)
+      //this->_players[i]->add_bomb(reinterpret_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
+  //int i =  -1;
+  //while (++i < this->_map->getObjs().size())
+    //if (this->_map->getObjs()[i]->getType() == Bomberman::CHARACTER)
+      //std::cout << "Everybody must die1" << std::endl;
+  //std::cout << this->_players[0]->isDestructible() << std::endl;
+  //this->_players[0]->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
+  //while (this->_irr.getDevice()->drop())
+  int pause = 0;
+  while (this->_irr.getDevice()->run() && handleEvents())
     {
       if (this->_irr.getDevice()->isWindowActive())
 	{
 	 this->_irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
 	 this->_irr.getDriver()->draw2DImage(background, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
 					     irr::core::rect<irr::s32>(0, 0, 1920, 1080));
-	 this->_irr.getSmgr()->drawAll();
+	  //if (this->_irr.event.getKeys()[irr::KEY_ESCAPE])
+	  this->_irr.getSmgr()->drawAll();
 	 this->_irr.getDriver()->endScene();
-
 	 int fps = this->_irr.getDriver()->getFPS();
 	 if (lastFPS != fps)
 	   {

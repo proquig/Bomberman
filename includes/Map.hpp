@@ -30,6 +30,7 @@ namespace			Bomberman
     Bomberman::Irrlicht		&_irr;
     irr::video::SMaterial	_material;
     irr::scene::ISceneNode	*_scene;
+    std::map<int, std::map<int, Bomberman::Obj*>>	_plan;
 
    public:
     Map();
@@ -46,6 +47,11 @@ namespace			Bomberman
     Bomberman::Obj		*createObj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     Bomberman::Obj		*createObjSomewhere(const std::string &mesh_path, const std::string &texture_path, Bomberman::TYPE type);
     bool			checkObjectPosition(Obj *obj, float x, float y, float range);
+    std::map<int, std::map<int, Obj *>> getPlan() const;
+    static int 			getRoundPosition(int axis);
+    bool 			checkObjOnPlan(int x, int y);
+    Bomberman::Obj*		getObjOnPlan(int x, int y);
+    void			createPlan();
   };
 }
 #endif //CPP_INDIE_STUDIO_MAP_HPP

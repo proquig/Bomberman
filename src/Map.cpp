@@ -7,6 +7,8 @@
 #include <zconf.h>
 #include "Map.hpp"
 
+std::map<int, std::map<int, Bomberman::Obj*>>	_plan;
+
 Bomberman::Map::Map() : _irr(Bomberman::Irrlicht::instance())
 {
 }
@@ -36,6 +38,30 @@ bool		Bomberman::Map::checkPosition(float x, float y, float range, bool all)
     else if (this->_objs[i]->getType() != Bomberman::CHARACTER && !checkObjectPosition(this->_objs[i], x, y, range))
       return (false);
   return (true);
+}
+
+std::map<int, std::map<int, Bomberman::Obj*>>	Bomberman::Map::getPlan() const
+{
+  return (this->_plan);
+}
+
+void		Bomberman::Map::createPlan()
+{
+  std::vector<Bomberman::Obj*>::iterator it;
+  int x;
+  int y;
+
+  this->_plan.clear();
+  for (it = this->_objs.begin(); it != this->_objs.end(); ++it)
+    if ((*it)->isBlockable() || (*it)->getType() == Bomberman::CHARACTER)
+      {
+	x = this->getRoundPosition((int)(*it)->getX());
+	y = this->getRoundPosition((int)(*it)->getY());
+	this->_plan[x][y] = (*it);
+	//if ((*it)->getType() == Bomberman::CHARACTER)
+	  //std::cout << "getX = " << (int)(*it)->getX() << " & getY = " << (int)(*it)->getY() << " x = " << x << " & y = " << y << " type = " << this->_plan[x][y]->getType() << std::endl;
+      }
+
 }
 
 void		Bomberman::Map::createMap()
@@ -95,4 +121,20 @@ Bomberman::Obj *		Bomberman::Map::createObjSomewhere(const std::string &mesh_pat
 	y = (rand() + rand()) % (MAPSIZE_Y / 2);
     }
   return createObj(mesh_path, texture_path, float(x), (float)y, type);
+}
+
+bool Bomberman::Map::checkObjOnPlan(int x, int y)
+{
+  return (this->_plan.find(x) != this->_plan.end() && this->_plan[x].find(y) != this->_plan[x].end());
+}
+
+Bomberman::Obj *Bomberman::Map::getObjOnPlan(int x, int y)
+{
+  return (this->checkObjOnPlan(x, y) ? this->_plan[x][y] : NULL);
+}
+
+int Bomberman::Map::getRoundPosition(int axis)
+{
+  //std::cout << "x = " << axis << " & new x = " << (((axis + (int)(axis > 0) * (5 - 1)) / 5) * 5) << std::endl;
+  return ((((axis + /*(int)(axis > 0) **/ (5 - 1)) / 5) * 5));
 }

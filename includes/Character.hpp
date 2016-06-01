@@ -51,7 +51,7 @@ namespace						Bomberman
     void						jump(ACTION action);
     void						afk();
 
-    void remove();
+    //void remove();
   };
 }
 
