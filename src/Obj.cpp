@@ -23,7 +23,7 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
       this->_animated_mesh = this->_irr.getSmgr()->getMesh(mesh_path.c_str());
       this->_animated_node = this->_irr.getSmgr()
 				 ->addAnimatedMeshSceneNode(this->_animated_mesh, 0, -1, irr::core::vector3df(x, 0, y),
-							    irr::core::vector3df(0, 0, 0),irr::core::vector3df(1.0f, 1.0f, 1.0f));
+							    irr::core::vector3df(0, 0, 0),irr::core::vector3df(5, 5, 5));
       this->_animated_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
       this->_animated_node->setMD2Animation(irr::scene::EMAT_STAND);
       this->_animated_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path.c_str()));
@@ -36,7 +36,7 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
       this->_animated_mesh = this->_irr.getSmgr()->getMesh("./assets/Bomb/model.dae");
       this->_animated_node = this->_irr.getSmgr()
 				 ->addAnimatedMeshSceneNode(this->_animated_mesh, 0, -1, irr::core::vector3df(x, 0, y),
-							    irr::core::vector3df(0, 0, 0),irr::core::vector3df(0.03f, 0.03f, 0.03f));
+							    irr::core::vector3df(0, 0, 0),irr::core::vector3df(0.15, 0.15, 0.15));
       this->_animated_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
       this->_animated_node->setAnimationSpeed(16.f);
       this->_animated_node->setVisible(false);
@@ -46,7 +46,7 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
     {
       this->_mesh = this->_irr.getSmgr()->getMesh(mesh_path.c_str());
       this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh, 0, -1, irr::core::vector3df(x, 2.5, y), irr::core::vector3df(0, 90, 0),
-							   irr::core::vector3df(0.32f, 0.32f, 0.32f));
+							   irr::core::vector3df(2, 2, 2));
       this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
       this->_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path.c_str()));
       this->_node->setPosition(irr::core::vector3df(x, 2.5, y));
@@ -58,7 +58,7 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
     {
       this->_mesh = this->_irr.getSmgr()->getMesh(mesh_path.c_str());
       this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh, 0, -1, irr::core::vector3df(x, 2.5, y), irr::core::vector3df(0, 0, 0),
-							   irr::core::vector3df(0.32f, 0.32f, 0.32f));
+							   irr::core::vector3df(2, 2, 2));
       this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
       //this->_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path.c_str()));
       this->_node->setPosition(irr::core::vector3df(x, 2.5, y));

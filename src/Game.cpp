@@ -240,7 +240,7 @@ int Bomberman::Game::handleEvents()
 
 Bomberman::Map *Bomberman::Game::run()
 {
-  irr::scene::ICameraSceneNode *camera = this->_irr.getSmgr()->addCameraSceneNode(0, irr::core::vector3df(0, 90, -20),
+  irr::scene::ICameraSceneNode *camera = this->_irr.getSmgr()->addCameraSceneNode(0, irr::core::vector3df(0, 90 * 5, -20),
 										  irr::core::vector3df(0, 0, 0));
   camera->setNearValue(10);
   irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");

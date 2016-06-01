@@ -12,8 +12,9 @@
 # include			<random>
 # include			<list>
 
-# define			MAPSIZE_X 120
-# define			MAPSIZE_Y 80
+# define			MAPSIZE_X 120 * 5
+# define			MAPSIZE_Y 80 * 5
+# define			BLOCKSIZE 25
 # define			WALLOBJ "./assets/Box/ItmBox01.dae"
 # define			WALLTEXT "./assets/Box/ItmBox01_00.png"
 # define			BOXOBJ "./assets/Box/ItmCarrierBox00.obj"
