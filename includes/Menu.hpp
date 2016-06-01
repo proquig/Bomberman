@@ -32,6 +32,7 @@ namespace Bomberman
     irr::video::ITexture *_background;
     std::map<irr::gui::IGUIButton *, ptr> _action;
     std::vector<irr::core::stringw>  _strings;
+    int 				_nb_player;
 
    public:
     Menu();

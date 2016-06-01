@@ -108,6 +108,7 @@ while (_irr.getDevice()->run())
 
 void Bomberman::Menu::launchGame()
 {
+  this->_nb_player = 1;
   Game G(1);
   Bomberman::Save s(G.run());
   _irr.getSmgr()->clear();
@@ -116,13 +117,16 @@ void Bomberman::Menu::launchGame()
 void Bomberman::Menu::loadGame()
 {
   Game G("save.txt");
-  //G.run();
+  Bomberman::Save(G.run());
+  _irr.getSmgr()->clear();
 }
 
 void Bomberman::Menu::launchMulti()
 {
+  this->_nb_player = 2;
+
   Game G(2);
-  G.run();
+  Bomberman::Save(G.run());
   _irr.getSmgr()->clear();
 }
 

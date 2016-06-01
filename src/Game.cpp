@@ -12,22 +12,22 @@
 #include "Map.hpp"
 
 const std::vector<std::pair<std::string, std::pair<int, int>>> Bomberman::Game::_players_conf = {
-	{"./assets/ninja/nskinwh.jpg", {(MAPSIZE_X / 2) - 20, -((MAPSIZE_Y / 2) - 20)}},
+	{"./assets/ninja/nskinwh.jpg", {(MAPSIZE_X / 2) - 20,    -((MAPSIZE_Y / 2) - 20)}},
 	{"./assets/ninja/nskinbl.jpg", {-((MAPSIZE_X / 2) - 20), (MAPSIZE_Y / 2) - 20}}
 };
 
 const float Bomberman::Game::positions[4][2] = {
-	{0, 0.2f},
-	{0, -0.2f},
+	{0,     0.2f},
+	{0,     -0.2f},
 	{-0.2f, 0},
-	{0.2f, 0}
+	{0.2f,  0}
 };
 
 const std::map<irr::EKEY_CODE, std::pair<int, Bomberman::Character::ACTION>> Bomberman::Game::_events[] = {
 	{
 		{irr::KEY_KEY_Z, {0, Bomberman::Character::GO_UP}},
 		{irr::KEY_KEY_S, {0, Bomberman::Character::GO_DOWN}},
-		{irr::KEY_KEY_Q, {0, Bomberman::Character::GO_LEFT}},
+		{irr::KEY_KEY_Q,  {0, Bomberman::Character::GO_LEFT}},
 		{irr::KEY_KEY_D, {0, Bomberman::Character::GO_RIGHT}},
 		{irr::KEY_UP, {1, Bomberman::Character::GO_UP}},
 		{irr::KEY_DOWN, {1, Bomberman::Character::GO_DOWN}},
@@ -43,17 +43,19 @@ const std::map<irr::EKEY_CODE, std::pair<int, Bomberman::Character::ACTION>> Bom
 };
 
 Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
-			  _nb_players(nb)
+				   _nb_players(nb)
 {
   this->_map = new Bomberman::Map();
   for (int i = 0; i < this->_nb_players; ++i)
     {
-      this->_players.push_back(static_cast<Bomberman::Character*>(this->_map->createObj("./assets/ninja/ninja.b3d",
-											this->_players_conf[i].first,
-											this->_players_conf[i].second.first,
-											this->_players_conf[i].second.second,
-											Bomberman::CHARACTER)));
-      this->_players.back()->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
+      this->_players.push_back(static_cast<Bomberman::Character *>(this->_map->createObj("./assets/ninja/ninja.b3d",
+											 this->_players_conf[i].first,
+											 this->_players_conf[i].second
+													       .first,
+											 this->_players_conf[i].second
+													       .second,
+											 Bomberman::CHARACTER)));
+      this->_players.back()->add_bomb(static_cast<Bomberman::Bomb *>(this->_map->createObj("", "", 0, 0, BOMB)));
     }
   this->_map->createMap();
   for (int i = 0; i < 42; ++i)
@@ -61,11 +63,11 @@ Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
   for (int j = 0; j < 106; ++j)
     this->_map->createObjSomewhere(BOXOBJ, BOXTEXT, Bomberman::BOX);
   //for (int k = 0; k < this->_map->getObjs().size(); ++k)
-    //std::cout << "X = " << this->_map->getObjs()[k]->getX() << " & Y = " << this->_map->getObjs()[k]->getY() << std::endl;
+  //std::cout << "X = " << this->_map->getObjs()[k]->getX() << " & Y = " << this->_map->getObjs()[k]->getY() << std::endl;
 }
 
-
-Bomberman::Game::Game(const std::string &name) : _irr(Bomberman::Irrlicht::instance())
+Bomberman::Game::Game(/*size_t nb, */const std::string &name) : _irr(Bomberman::Irrlicht::instance())
+							    /*_nb_players(nb)*/
 {
   std::vector<std::string> data;
   std::ifstream file;
@@ -85,13 +87,29 @@ Bomberman::Game::Game(const std::string &name) : _irr(Bomberman::Irrlicht::insta
 	      data.push_back(word);
 	      std::cout << word << std::endl;
 	    }
-	  _map->createObj(data[3], data[4], std::stof(data[0].c_str()), std::stof(data[1].c_str()), (TYPE) std::stoi(data[2].c_str()));
+	  ss.clear();
+	  line.clear();
+	  if (atoi(data[2].c_str()) == 4)
+	    {
+	      this->_players.push_back(static_cast<Bomberman::Character *>(this->_map->createObj(data[3], data[4],
+												 (float) atof(
+													 data[0].c_str()),
+												 (float) atof(
+													 data[1].c_str()),
+												 (TYPE) atoi(
+													 data[2].c_str()))));
+	      this->_players.back()->add_bomb(static_cast<Bomberman::Bomb *>(this->_map->createObj("", "", 0, 0, BOMB)));
+	    }
+	  else if (atoi(data[2].c_str()) != 2)
+	    this->_map->createObj(data[3], data[4], (float) atof(data[0].c_str()), (float) atof(data[1].c_str()),
+				  (TYPE) atoi(data[2].c_str()));
+	  else
+	    this->_map->createMap();
 	  data.clear();
 	}
+      this->_nb_players = this->_players.size();
     }
 }
-
-
 
 Bomberman::Game::~Game()
 {
@@ -109,9 +127,9 @@ void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
   //std::cout << "BOMB x = " << x << " & y = " << y << std::endl;
   //std::cout << "------------" << std::endl;
   //for (int i = -200; i < 200; ++i)
-    //{
-      //std::cout << Bomberman::Map::getRoundPosition(i) << std::endl;
-    //}
+  //{
+  //std::cout << Bomberman::Map::getRoundPosition(i) << std::endl;
+  //}
   //std::cout << "------------" << std::endl;
   int start_x = x - (((bomb->getRange()) + 1) * 5);
   int start_y = y - (((bomb->getRange()) + 1) * 5);
@@ -124,17 +142,17 @@ void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
 	&& this->_map->getObjOnPlan(x, (start_y + i))->isDestructible())
       this->_map->getObjOnPlan(x, (start_y + i))->remove();
 
-    //{
-      //std::cout << "----" << std::endl;
-      //std::cout << "Real x = " << bomb->getX() << " & real y = " << bomb->getY() << std::endl;
-      //std::cout << "x = " << x << " & y = " << y << std::endl;
-      //std::cout << "start_x = " << start_x << " & start_y = " << start_y << std::endl;
-      //std::cout << "start_x + i = " << (start_x + i) << " & start_y + i = " << (start_y + i) << std::endl;
-      //std::cout << "----" << std::endl;
-      //if (this->_map->checkObjOnPlan((start_x + i), start_y + i)
-	//  && this->_map->getObjOnPlan((start_x + i), (start_y + i))->isDestructible())
-	//this->_map->getObjOnPlan((start_x + i), (start_y + i))->remove();
-    //}
+  //{
+  //std::cout << "----" << std::endl;
+  //std::cout << "Real x = " << bomb->getX() << " & real y = " << bomb->getY() << std::endl;
+  //std::cout << "x = " << x << " & y = " << y << std::endl;
+  //std::cout << "start_x = " << start_x << " & start_y = " << start_y << std::endl;
+  //std::cout << "start_x + i = " << (start_x + i) << " & start_y + i = " << (start_y + i) << std::endl;
+  //std::cout << "----" << std::endl;
+  //if (this->_map->checkObjOnPlan((start_x + i), start_y + i)
+  //  && this->_map->getObjOnPlan((start_x + i), (start_y + i))->isDestructible())
+  //this->_map->getObjOnPlan((start_x + i), (start_y + i))->remove();
+  //}
 /*  while (++i < this->_map->getObjs().size())
     if (this->_map->getObjs()[i]->isDestructible()
 	  && !this->_map->checkObjectPosition(this->_map->getObjs()[i], bomb->getX(), bomb->getY(), bomb->getRange()))
@@ -144,17 +162,18 @@ void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
 
 void Bomberman::Game::handleMovements()
 {
-  std::map<irr::EKEY_CODE, std::pair<int, Bomberman::Character::ACTION>>::const_iterator	it;
+  std::map<irr::EKEY_CODE, std::pair<int, Bomberman::Character::ACTION>>::const_iterator it;
   for (it = this->_events[0].begin(); it != _events[0].end(); ++it)
     if (this->_irr.event.getKeys()[it->first] && it->second.first < this->_players.size()
-      && this->_map->checkPosition(this->_players[it->second.first]->getX() + Bomberman::Game::positions[it->second.second][0],
-				   this->_players[it->second.first]->getY() + Bomberman::Game::positions[it->second.second][1], 4.5))
+	&& this->_map->checkPosition(
+	    this->_players[it->second.first]->getX() + Bomberman::Game::positions[it->second.second][0],
+	    this->_players[it->second.first]->getY() + Bomberman::Game::positions[it->second.second][1], 4.5))
       this->_players[it->second.first]->do_action(it->second.second);
 }
 
 void Bomberman::Game::handleActions()
 {
-  std::map<irr::EKEY_CODE, std::pair<int, Bomberman::Character::ACTION>>::const_iterator	it;
+  std::map<irr::EKEY_CODE, std::pair<int, Bomberman::Character::ACTION>>::const_iterator it;
   for (it = this->_events[1].begin(); it != _events[1].end(); ++it)
     if (this->_irr.event.getKeys()[it->first] && it->second.first < this->_players.size())
       this->_players[it->second.first]->do_action(it->second.second);
@@ -162,43 +181,43 @@ void Bomberman::Game::handleActions()
 
 void Bomberman::Game::handleTime()
 {
-  irr::u32 	now = this->_irr.getDevice()->getTimer()->getTime();
-  int		i = -1;
+  irr::u32 now = this->_irr.getDevice()->getTimer()->getTime();
+  int i = -1;
 
   while (++i < this->_map->getObjs().size())
     //{
-      if (this->_map->getObjs()[i]->getType() == Bomberman::BOMB
-	  && this->_map->getObjs()[i]->getExplosionTime()
-	  && now > this->_map->getObjs()[i]->getExplosionTime())
-	{
-	  this->explodeObjs(static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i]));
-	  static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->explode();
-	}
-	//{//  && (this->_map->getObjs()[i]->getExplosionTime() || this->_map->getObjs()[i]->getAnimation_time()))
-	//{
-	  //if (this->_map->getObjs()[i]->getAnimation_time())
-	    //std::cout << "ANIM TIME: " << this->_map->getObjs()[i]->getAnimation_time() << std::endl;
-	  //if (this->_map->getObjs()[i]->getExplosionTime() || this->_map->getObjs()[i]->getAnimation_time())
-	    //{
-	      //if (now > this->_map->getObjs()[i]->getAnimation_time())
-		//static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->clean();
-	      //if (now > this->_map->getObjs()[i]->getExplosionTime())
-		//{
-		  //this->explodeObjs(static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i]));
-		  //static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->explode();
-		//}
-	    //}
-	  //if (now > this->_map->getObjs()[i]->getAnimation_time())
-	    //static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->clean();
-	//}
-    //}
+    if (this->_map->getObjs()[i]->getType() == Bomberman::BOMB
+	&& this->_map->getObjs()[i]->getExplosionTime()
+	&& now > this->_map->getObjs()[i]->getExplosionTime())
+      {
+	this->explodeObjs(static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i]));
+	static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->explode();
+      }
+  //{//  && (this->_map->getObjs()[i]->getExplosionTime() || this->_map->getObjs()[i]->getAnimation_time()))
+  //{
+  //if (this->_map->getObjs()[i]->getAnimation_time())
+  //std::cout << "ANIM TIME: " << this->_map->getObjs()[i]->getAnimation_time() << std::endl;
+  //if (this->_map->getObjs()[i]->getExplosionTime() || this->_map->getObjs()[i]->getAnimation_time())
+  //{
+  //if (now > this->_map->getObjs()[i]->getAnimation_time())
+  //static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->clean();
+  //if (now > this->_map->getObjs()[i]->getExplosionTime())
+  //{
+  //this->explodeObjs(static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i]));
+  //static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->explode();
+  //}
+  //}
+  //if (now > this->_map->getObjs()[i]->getAnimation_time())
+  //static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->clean();
+  //}
+  //}
 //*/
 }
 
 int Bomberman::Game::handleEvents()
 {
-  std::vector<Bomberman::Character*>::const_iterator	it;
-  int 							players_alive = 0;
+  std::vector<Bomberman::Character *>::const_iterator it;
+  int players_alive = 0;
 
   this->_map->createPlan();
   handleTime();
@@ -213,41 +232,59 @@ int Bomberman::Game::handleEvents()
 Bomberman::Map *Bomberman::Game::run()
 {
   irr::scene::ICameraSceneNode *camera = this->_irr.getSmgr()->addCameraSceneNode(0, irr::core::vector3df(0, 60, -20),
-									   irr::core::vector3df(0, 0, 0));
+										  irr::core::vector3df(0, 0, 0));
   camera->setNearValue(10);
   irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
-  int 	lastFPS = -1;
+  int lastFPS = -1;
   //for (int i = 0; i != 3; ++i)
-      //this->_players[i]->add_bomb(reinterpret_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
+  //this->_players[i]->add_bomb(reinterpret_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
   //int i =  -1;
   //while (++i < this->_map->getObjs().size())
-    //if (this->_map->getObjs()[i]->getType() == Bomberman::CHARACTER)
-      //std::cout << "Everybody must die1" << std::endl;
+  //if (this->_map->getObjs()[i]->getType() == Bomberman::CHARACTER)
+  //std::cout << "Everybody must die1" << std::endl;
   //std::cout << this->_players[0]->isDestructible() << std::endl;
   //this->_players[0]->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
   //while (this->_irr.getDevice()->drop())
-  int pause = 0;
+
+  bool wasActive = true;
   while (this->_irr.getDevice()->run() && handleEvents())
     {
-      if (this->_irr.getDevice()->isWindowActive())
+      if (this->_irr.event.getKeys()[irr::KEY_ESCAPE])
+	return (this->_map);
+/*      if (!this->_irr.getDevice()->isWindowActive())
 	{
-	 this->_irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
-	 this->_irr.getDriver()->draw2DImage(background, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
-					     irr::core::rect<irr::s32>(0, 0, 1920, 1080));
-	  //if (this->_irr.event.getKeys()[irr::KEY_ESCAPE])
-	  this->_irr.getSmgr()->drawAll();
-	 this->_irr.getDriver()->endScene();
-	 int fps = this->_irr.getDriver()->getFPS();
-	 if (lastFPS != fps)
-	   {
-	     irr::core::stringw str = "Bomberman | driver [";
-	     str += this->_irr.getDriver()->getName();
-	     str += "] FPS :";
-	     str += fps;
-	     this->_irr.getDevice()->setWindowCaption(str.c_str());
-	     lastFPS = fps;
-	   }
-       }
-    }
-  return (this->_map);
+	  if (wasActive)
+	    {
+
+	    }
+	  Sleep(100);
+	  continue;
+	}
+      if (!wasActive)
+	{
+
+	}*/
+	  if (this->_irr.getDevice()->isWindowActive())
+	    {
+	      if (this->_irr.event.getKeys()[irr::KEY_KEY_P])
+		std::this_thread::sleep_for (std::chrono::seconds(9999999999));
+	      this->_irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
+	      this->_irr.getDriver()->draw2DImage(background, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
+						  irr::core::rect<irr::s32>(0, 0, 1920, 1080));
+	      //if (this->_irr.event.getKeys()[irr::KEY_ESCAPE])
+	      this->_irr.getSmgr()->drawAll();
+	      this->_irr.getDriver()->endScene();
+	      int fps = this->_irr.getDriver()->getFPS();
+	      if (lastFPS != fps)
+		{
+		  irr::core::stringw str = "Bomberman | driver [";
+		  str += this->_irr.getDriver()->getName();
+		  str += "] FPS :";
+		  str += fps;
+		  this->_irr.getDevice()->setWindowCaption(str.c_str());
+		  lastFPS = fps;
+		}
+	    }
+	}
+  return (NULL);
 }
