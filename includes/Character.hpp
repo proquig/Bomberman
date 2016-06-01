@@ -18,7 +18,7 @@
 
 # define						START_FRAME 5
 # define						START_WALK_FRAME 1
-# define						END_WALK_FRAME 13
+# define						END_WALK_FRAME 14
 
 namespace						Bomberman
 {

@@ -96,7 +96,7 @@ void							Bomberman::Character::jump(ACTION action)
 {
   if (this->_animated_node->getStartFrame() == START_FRAME)
     {
-      this->_animated_node->setFrameLoop(145, 157);
+      this->_animated_node->setFrameLoop(146, 158);
       this->afk();
     }
 }
