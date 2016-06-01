@@ -45,11 +45,11 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
   if (type == BRICK)
     {
       this->_mesh = this->_irr.getSmgr()->getMesh(mesh_path.c_str());
-      this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh, 0, -1, irr::core::vector3df(x, 12.5, y), irr::core::vector3df(0, 90, 0),
+      this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh, 0, -1, irr::core::vector3df(x, 12.5, y), irr::core::vector3df(0, 0, 0),
 							   irr::core::vector3df(2, 2, 2));
       this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
       this->_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path.c_str()));
-      this->_node->setPosition(irr::core::vector3df(x, 2.5, y));
+      this->_node->setPosition(irr::core::vector3df(x, 12.5, y));
       this->_is_blockable = true;
       this->_is_destructible = false;
     }
@@ -57,10 +57,10 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
   if (type == BOX)
     {
       this->_mesh = this->_irr.getSmgr()->getMesh(mesh_path.c_str());
-      this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh, 0, -1, irr::core::vector3df(x, 12.5, y), irr::core::vector3df(0, 0, 0),
+      this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh, 0, -1, irr::core::vector3df(x, 12.5, y), irr::core::vector3df(0, 90, 0),
 							   irr::core::vector3df(2, 2, 2));
       this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-      this->_node->setPosition(irr::core::vector3df(x, 2.5, y));
+      this->_node->setPosition(irr::core::vector3df(x, 12.5, y));
       this->_is_blockable = true;
     }
 
@@ -71,7 +71,7 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
 					  irr::core::dimension2df(1.f, 1.f));
       this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh);
       this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-      this->_irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(this->_mesh, 2.5);
+      this->_irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(this->_mesh, 0.1);
       this->_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path.c_str()));
     }
 }
