@@ -21,6 +21,7 @@ Bomberman::Irrlicht::Irrlicht()
   if (this->_device == NULL)
     throw (exception("Can't Load OpenGL"));
   this->_device->getVideoDriver()->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);
+  this->_device->setResizable(true);
   this->_device->setWindowCaption(L"Bomberman");
 }
 

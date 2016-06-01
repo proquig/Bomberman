@@ -28,12 +28,17 @@ namespace Bomberman
     bool 				_is_blockable;
     bool 				_is_destructible;
 
+    std::string				_mesh_name;
+    std::string				_texture_name;
+
    public:
     Obj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     virtual ~Obj();
     Bomberman::TYPE 			getType() const;
     float 				getX() const;
     float 				getY() const;
+    std::string				getMeshName() const;
+    std::string				getTextureName() const;
     irr::u32 				getExplosionTime() const;
     irr::u32 				getAnimation_time() const;
     bool				isBlockable() const;

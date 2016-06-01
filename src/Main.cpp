@@ -15,6 +15,7 @@ Bomberman::Main::Main() : _irrlicht(Irrlicht::instance())
     {
       Game G(1);
       G.run();
+
     }
   if (action == Bomberman::Menu::MULTIPLAYER_GAME)
     {

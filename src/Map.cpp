@@ -95,6 +95,7 @@ Bomberman::Obj *                Bomberman::Map::createObj(const std::string &mes
 	   {CHARACTER, &Map::create<Character>},
 	   {BOMB, &Map::create<Bomb>}
    };
+  std::cerr << mesh_path << "-" << texture_path << "-" << x << "-" << y << std::endl;
   for (std::map<Bomberman::TYPE, ObjPtr >::const_iterator it = objs.begin(); it != objs.end(); ++it)
     if (it->first == type)
       {

@@ -4,6 +4,9 @@
 
 #include <Bomb.hpp>
 #include <Menu.hpp>
+#include <fstream>
+#include <Exception.hpp>
+#include <sstream>
 #include "Game.hpp"
 #include "Character.hpp"
 #include "Map.hpp"
@@ -60,6 +63,40 @@ Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
   //for (int k = 0; k < this->_map->getObjs().size(); ++k)
     //std::cout << "X = " << this->_map->getObjs()[k]->getX() << " & Y = " << this->_map->getObjs()[k]->getY() << std::endl;
 }
+
+
+Bomberman::Game::Game(const std::string &name) : _irr(Bomberman::Irrlicht::instance())
+{
+  std::vector<std::string>::iterator it;
+  std::vector<std::string> data;
+
+  std::ifstream file;
+  std::string line;
+  std::string word;
+  std::stringstream ss;
+  //std::string line;
+  size_t pos;
+
+  file.open("save.txt");
+  this->_map = new Bomberman::Map();
+  if (file.is_open())
+    {
+      while (std::getline(file, line))
+	{
+	  ss << line;
+	  while (std::getline(ss, word, ';'))
+	    {
+	      data.push_back(word);
+	      std::cout << word << std::endl;
+	    }
+	  //std::cerr << "Data[0] = "<< data[0]<< "Data[1] = "<< data[1] << "Data[2] = "<< data[2] << "Data[3] = "<< data[3] << "Data[4] = "<< data[4] << std::endl;
+	  _map->createObj(data[3], data[4], std::stof(data[0]), std::stof(data[1]), (TYPE) std::stoi(data[2]));
+	  data.erase(data.begin(), data.end());
+	}
+    }
+}
+
+
 
 Bomberman::Game::~Game()
 {
@@ -178,7 +215,7 @@ int Bomberman::Game::handleEvents()
   return (players_alive == this->_nb_players);
 }
 
-void Bomberman::Game::run()
+Bomberman::Map *Bomberman::Game::run()
 {
   irr::scene::ICameraSceneNode *camera = this->_irr.getSmgr()->addCameraSceneNode(0, irr::core::vector3df(0, 60, -20),
 									   irr::core::vector3df(0, 0, 0));
@@ -217,4 +254,5 @@ void Bomberman::Game::run()
 	   }
        }
     }
+  return (this->_map);
 }

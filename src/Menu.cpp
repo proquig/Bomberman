@@ -6,6 +6,7 @@
 #include "Exception.hpp"
 #include "Menu.hpp"
 #include "sound/MusicManager.hpp"
+#include "Save.hpp"
 #include <IGUIButton.h>
 #include <Game.hpp>
 
@@ -108,14 +109,14 @@ while (_irr.getDevice()->run())
 void Bomberman::Menu::launchGame()
 {
   Game G(1);
-  G.run();
+  Bomberman::Save s(G.run());
   _irr.getSmgr()->clear();
 }
 
 void Bomberman::Menu::loadGame()
 {
-  Game G(1);
-  G.run();
+  Game G("save.txt");
+  //G.run();
 }
 
 void Bomberman::Menu::launchMulti()

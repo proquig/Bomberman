@@ -14,7 +14,9 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
 	_explosion_time(0),
 	_animation_time(0),
 	_is_blockable(false),
-	_is_destructible(true)
+	_is_destructible(true),
+	_mesh_name(mesh_path),
+	_texture_name(texture_path)
 {
   if (type == CHARACTER)
     {
@@ -30,7 +32,8 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
 
   if (type == BOMB)
     {
-      this->_animated_mesh = this->_irr.getSmgr()->getMesh("./assets/Bomb/model.dae");//mesh_path.c_str());
+      this->_mesh_name = "./assets/Bomb/model.dae";
+      this->_animated_mesh = this->_irr.getSmgr()->getMesh("./assets/Bomb/model.dae");
       this->_animated_node = this->_irr.getSmgr()
 				 ->addAnimatedMeshSceneNode(this->_animated_mesh, 0, -1, irr::core::vector3df(x, 0, y),
 							    irr::core::vector3df(0, 0, 0),irr::core::vector3df(0.03f, 0.03f, 0.03f));
@@ -167,5 +170,16 @@ irr::u32  Bomberman::Obj::getAnimation_time() const
 {
   return _animation_time;
 }
+
+std::string	Bomberman::Obj::getMeshName() const
+{
+  return this->_mesh_name;
+}
+
+std::string	Bomberman::Obj::getTextureName() const
+{
+  return this->_texture_name;
+}
+
 
 

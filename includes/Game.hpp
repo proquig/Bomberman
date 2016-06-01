@@ -26,8 +26,9 @@ namespace					Bomberman
 
    public:
     Game(size_t);
+    Game(const std::string &);
     ~Game();
-    void					run();
+    Bomberman::Map		*run();
 
     int handleEvents();
 
