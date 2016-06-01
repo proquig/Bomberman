@@ -110,7 +110,7 @@ void Bomberman::Menu::launchGame()
 {
   this->_nb_player = 1;
   Game G(1);
-  Bomberman::Save s(G.run());
+  Bomberman::Save(G.run());
   _irr.getSmgr()->clear();
 }
 

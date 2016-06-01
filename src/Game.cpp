@@ -5,6 +5,7 @@
 #include <Bomb.hpp>
 #include <Menu.hpp>
 #include <fstream>
+#include <sstream>
 #include <Exception.hpp>
 #include <zconf.h>
 #include "Game.hpp"
