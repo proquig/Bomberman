@@ -16,7 +16,8 @@ namespace Bomberman
       BRICK = 1,
       PLAN = 2,
       BOMB = 3,
-      CHARACTER = 4
+      CHARACTER = 4,
+    STAR	= 5
     };
   class IObj
   {

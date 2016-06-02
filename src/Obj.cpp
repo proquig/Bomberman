@@ -29,7 +29,15 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
       this->_animated_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path.c_str()));
       this->_animated_node->setAnimationSpeed(25.f);
     }
-
+  if (type == STAR)
+    {
+      this->_mesh_name = "./assets/BONUS/estrellica.obj";
+      this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_irr.getSmgr()->getMesh(this->_mesh_name.c_str()),
+									    0, -1, irr::core::vector3df(x, 0, y),
+									    irr::core::vector3df(0, 0, 0),
+									    irr::core::vector3df(0.15, 0.15, 0.15));
+      this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+    }
   if (type == BOMB)
     {
       this->_mesh_name = "./assets/Bomb/model.dae";
@@ -41,7 +49,6 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
       this->_animated_node->setAnimationSpeed(16.f);
       this->_animated_node->setVisible(false);
     }
-
   if (type == BRICK)
     {
       this->_mesh = this->_irr.getSmgr()->getMesh(mesh_path.c_str());
