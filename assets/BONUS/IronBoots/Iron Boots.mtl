@@ -4,7 +4,7 @@
 
 
 
-newmtl material-00D5A014
+newmtl material-00BCEDC3
 
 Ns -3.921569
 
@@ -19,11 +19,11 @@ d 1.000000
 
 illum 0
 
-map_Kd textures//i_ctex14b_2000.png
+map_Kd textures//i_ctex13b_2000.png
 
 
 
-newmtl material-00FB4AAC
+newmtl material-01DC1A6B
 
 Ns -3.921569
 
@@ -38,4 +38,4 @@ d 1.000000
 
 illum 0
 
-map_Kd textures//i_ctex14a_0.png
+map_Kd textures//i_ctex13a_0.png

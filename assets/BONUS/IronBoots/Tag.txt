@@ -1,5 +1,5 @@
 Game: The Legend of Zelda: Ocarina of Time 3D
-Subject: Hover Boots
+Subject: Iron Boots
 Copyright: Nintendo, GREZZO
 Model Ripper: Irastris
 
