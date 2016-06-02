@@ -37,6 +37,16 @@ void	Bomberman::Menu::intro()
   int 	i = 0;
   int 	y = 0;
   int 	j = 0;
+  Bomberman::MusicManager &s = Bomberman::MusicManager::instance();
+  s.setMusic("./assets/sound/game.mp3");
+  try
+    {
+      s.startMusic();
+    }
+  catch (exception e)
+    {
+      std::cerr << e.what() << std::endl;
+    }
   irr::video::ITexture *back = _irr.getDriver()->getTexture("./assets/Menu/intro.png");
   irr::video::ITexture *head = _irr.getDriver()->getTexture("./assets/Menu/head.png");
   irr::video::ITexture *titre = _irr.getDriver()->getTexture("./assets/Menu/Bomberman_Logo.png");
@@ -121,20 +131,8 @@ void Bomberman::Menu::setMenu()
 
 Bomberman::Menu::Action Bomberman::Menu::run()
 {
-  /*Bomberman::MusicManager &s = Bomberman::MusicManager::instance();
-  s.setMusic("./assets/sound/menusong.flac");
 
-  try
-    {
-      s.startMusic();
-    }
-  catch (exception e)
-    {
-      std::cerr << e.what() << std::endl;
-    }
-*/
-
-while (_irr.getDevice()->run())
+  while (_irr.getDevice()->run())
   {
     for (button::iterator it = _action.begin(); it != _action.end(); ++it)
       if (it->first->isPressed())

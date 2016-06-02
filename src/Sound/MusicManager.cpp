@@ -38,6 +38,12 @@ void Bomberman::MusicManager::setMusic(const std::string &path)
   this->_music = this->_engine->play3D(path.c_str(), irrklang::vec3df(0, 0, 0), true, true, true);
 }
 
+void Bomberman::MusicManager::setSong(const std::string &path)
+{
+  this->_music = this->_engine->play3D(path.c_str(), irrklang::vec3df(0, 0, 0), false, true, true);
+}
+
+
 void Bomberman::MusicManager::stopMusic()
 {
   this->_music->stop();

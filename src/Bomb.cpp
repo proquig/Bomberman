@@ -13,8 +13,7 @@
 #include "Map.hpp"
 
 Bomberman::Bomb::Bomb(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type) :
-	Bomberman::Obj::Obj(mesh_path, texture_path, x, y, BOMB)
-
+	Bomberman::Obj::Obj(mesh_path, texture_path, x, y, BOMB), _sound(Bomberman::MusicManager::instance())
 {
   this->_range = NULL;
   //this->_state = AWAITING;
@@ -70,6 +69,8 @@ void		Bomberman::Bomb::put(float x, float y)
 void		Bomberman::Bomb::explode()
 {
   this->reset();
+  _sound.setSong("./assets/sound/Boom.flac");
+  _sound.startMusic();
   //this->exp->getScene()->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
   //this->exp->getScene()->setVisible(true);
   //this->exp = new Explosion(this->_x, this->_y);

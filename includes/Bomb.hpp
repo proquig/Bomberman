@@ -5,6 +5,8 @@
 #ifndef					__BOMB_HPP__
 # define				__BOMB_HPP__
 
+#include <sound/MusicManager.hpp>
+#include <sound/SoundManager.hpp>
 # include				"Irrlicht.hpp"
 # include				"Obj.hpp"
 # include				"Explosion.hpp"
@@ -22,6 +24,7 @@ namespace				Bomberman
       */
   private:
     float 				*_range;
+    Bomberman::MusicManager		&_sound;
     //STATE				_state;
     //Bomberman::Explosion		*exp;
 

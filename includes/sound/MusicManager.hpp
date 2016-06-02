@@ -43,6 +43,8 @@ namespace Bomberman
    public:
     void setMusic(const std::string &path);
 
+    void setSong(const std::string &path);
+
     void stopMusic();
 
     bool isMusicPlayed();
