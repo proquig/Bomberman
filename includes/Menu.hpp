@@ -39,8 +39,10 @@ namespace Bomberman
 
     void intro();
     void setMenu();
+    void splash();
     Action run();
     ~Menu();
+
     void launchGame();
     void loadGame();
     void launchMulti();

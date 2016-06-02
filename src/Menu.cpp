@@ -22,6 +22,15 @@ Bomberman::Menu::Menu() : _irr(Bomberman::Irrlicht::instance())
 {
 }
 
+void 	Bomberman::Menu::splash()
+{
+  irr::video::ITexture *back = _irr.getDriver()->getTexture("./assets/Menu/splash.png");
+  _irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 0, 0, 0));
+  _irr.getDriver()->draw2DImage(back, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
+				irr::core::rect<irr::s32>(0, 0, 1920, 1080));
+  _irr.getDriver()->endScene();
+  sleep(1);
+}
 
 void	Bomberman::Menu::intro()
 {
@@ -44,7 +53,6 @@ void	Bomberman::Menu::intro()
 				    irr::core::rect<irr::s32>(0, 0, 247, 63), 0, 0, true);
 
       _irr.getDriver()->endScene();
-      _irr.getSmgr()->drawAll();
       j += 4;
       if (i / 500 != 1)
 	i += 4;
@@ -75,9 +83,13 @@ void Bomberman::Menu::setMenu()
   _strings.push_back("New Game");
   _strings.push_back("New Game");
 
-  irr::gui::IGUIButton *button;
 
-  for (std::vector<irr::core::stringw>::iterator i = _strings.begin(); i < _strings.end() ; ++i)
+  irr::gui::IGUIButton *button = _irr.getGui()->addButton(irr::core::rect<irr::s32>(WINDOWSIZE_X / 2 - 100,WINDOWSIZE_Y / 2,
+										    WINDOWSIZE_X / 2 + 100, WINDOWSIZE_Y / 2 + 32), 0, 0, L"Load Game", L"Opens a file");
+  button->setImage(_irr.getDriver()->getTexture("./assets/Menu/color.jpg"));
+  _action.insert(std::make_pair(button, &Menu::loadGame));
+
+ for (std::vector<irr::core::stringw>::iterator i = _strings.begin(); i < _strings.end() ; ++i)
     {
       button = _irr.getGui()->addButton(irr::core::rect<irr::s32>(WINDOWSIZE_X / 2 - 100, WINDOWSIZE_Y / 2 + 40,
 								  WINDOWSIZE_X/ 2 + 100, WINDOWSIZE_Y / 2  + 40 + 32), 0, 0, L"Play New Game", 0);
@@ -142,6 +154,7 @@ while (_irr.getDevice()->run())
 void Bomberman::Menu::launchGame()
 {
   this->_nb_player = 1;
+  this->splash();
   Game G(1);
   Bomberman::Save(G.run());
   _irr.getSmgr()->clear();
@@ -149,15 +162,21 @@ void Bomberman::Menu::launchGame()
 
 void Bomberman::Menu::loadGame()
 {
-  Game G("save.txt");
-  Bomberman::Save(G.run());
-  _irr.getSmgr()->clear();
+  this->splash();
+
+  try {
+    Game G("save.txt");
+    Bomberman::Save(G.run());
+    _irr.getSmgr()->clear();
+  }catch(exception &e) {
+    e.what();
+  }
 }
 
 void Bomberman::Menu::launchMulti()
 {
   this->_nb_player = 2;
-
+  this->splash();
   Game G(2);
   Bomberman::Save(G.run());
   _irr.getSmgr()->clear();
