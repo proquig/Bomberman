@@ -13,26 +13,69 @@
 # define WINDOWSIZE_X 1920
 # define WINDOWSIZE_Y 1080
 
+Bomberman::Menu::~Menu()
+{
+
+}
+
 Bomberman::Menu::Menu() : _irr(Bomberman::Irrlicht::instance())
 {
+}
+
+
+void	Bomberman::Menu::intro()
+{
+  int 	i = 0;
+  int 	y = 0;
+  int 	j = 0;
+  irr::video::ITexture *back = _irr.getDriver()->getTexture("./assets/Menu/intro.png");
+  irr::video::ITexture *head = _irr.getDriver()->getTexture("./assets/Menu/head.png");
+  irr::video::ITexture *titre = _irr.getDriver()->getTexture("./assets/Menu/Bomberman_Logo.png");
+
+  while (_irr.getDevice()->run() && i != 1000)
+    {
+      _irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 0, 0, 0));
+      _irr.getDriver()->draw2DImage(back, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
+				    irr::core::rect<irr::s32>(0, 0, 1920, 1080));
+      _irr.getDriver()->draw2DImage(head, irr::core::rect<irr::s32>(y, y, i, i),
+				    irr::core::rect<irr::s32>(y, y, i, i), 0, 0, true);
+      _irr.getDriver()->draw2DImage(titre, irr::core::rect<irr::s32>(1920 / 2, j / 2,
+								     1920 / 2 + 247, j / 2 + 63),
+				    irr::core::rect<irr::s32>(0, 0, 247, 63), 0, 0, true);
+
+      _irr.getDriver()->endScene();
+      _irr.getSmgr()->drawAll();
+      j += 4;
+      if (i / 500 != 1)
+	i += 4;
+      else
+	{
+	  y += 4;
+	  i += 4;
+	}
+      if (_irr.event.IsKeyDown(irr::KEY_SPACE))
+	i = 1000;
+    }
+}
+
+void Bomberman::Menu::setMenu()
+{
+
+/*u32 time = device->getTimer()->getTime();
+    driver->draw2DImage(ITEXTUREHERE, position2d<s32>((driver->getScreenSize().Width - ITEXTUREHERE->getOriginalSize().Width)/2,
+						      ((time/20)%(driver->getScreenSize().Height+ITEXTUREHERE->getOriginalSize().Height))
+						      -ITEXTUREHERE->getOriginalSize().Height));*/
+
   irr::gui::IGUISkin * skin = _irr.getGui()->getSkin();
   skin->setColor(irr::gui::EGDC_BUTTON_TEXT, irr::video::SColor(255,255,255,255));
   irr::gui::IGUIFont* font = _irr.getGui()->getFont("./assets/fonthaettenschweiler.bmp");
   if (font)
-      skin->setFont(font);
+    skin->setFont(font);
   skin->setFont(_irr.getGui()->getBuiltInFont(), irr::gui::EGDF_TOOLTIP);
   _strings.push_back("New Game");
   _strings.push_back("New Game");
 
-
-//TODO::Check si une save est la
-/* Add Condition pour lui*/
-  irr::gui::IGUIButton *button = _irr.getGui()->addButton(irr::core::rect<irr::s32>(WINDOWSIZE_X / 2 - 100,WINDOWSIZE_Y / 2,
-										    WINDOWSIZE_X / 2 + 100, WINDOWSIZE_Y / 2 + 32), 0, 0, L"Load Game", L"Opens a file");
-      button->setImage(_irr.getDriver()->getTexture("./assets/Menu/color.jpg"));
-  _action.insert(std::make_pair(button, &Menu::loadGame));
-/**********************************************************************/
-
+  irr::gui::IGUIButton *button;
 
   for (std::vector<irr::core::stringw>::iterator i = _strings.begin(); i < _strings.end() ; ++i)
     {
@@ -64,12 +107,6 @@ Bomberman::Menu::Menu() : _irr(Bomberman::Irrlicht::instance())
 
 }
 
-Bomberman::Menu::~Menu()
-{
-
-}
-
-
 Bomberman::Menu::Action Bomberman::Menu::run()
 {
   /*Bomberman::MusicManager &s = Bomberman::MusicManager::instance();
@@ -87,10 +124,6 @@ Bomberman::Menu::Action Bomberman::Menu::run()
 
 while (_irr.getDevice()->run())
   {
-/*u32 time = device->getTimer()->getTime();
-    driver->draw2DImage(ITEXTUREHERE, position2d<s32>((driver->getScreenSize().Width - ITEXTUREHERE->getOriginalSize().Width)/2,
-						      ((time/20)%(driver->getScreenSize().Height+ITEXTUREHERE->getOriginalSize().Height))
-						      -ITEXTUREHERE->getOriginalSize().Height));*/
     for (button::iterator it = _action.begin(); it != _action.end(); ++it)
       if (it->first->isPressed())
 	(this->*(it->second))();
