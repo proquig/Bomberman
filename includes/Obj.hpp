@@ -13,6 +13,7 @@ namespace Bomberman
   class Obj : public IObj
   {
    protected:
+    typedef void			(Obj::*ObjMemFn)();
     Bomberman::Irrlicht 		&_irr;
     irr::scene::IMesh 			*_mesh;
     irr::scene::IMeshSceneNode 		*_node;
@@ -25,11 +26,11 @@ namespace Bomberman
     float 				_y;
     irr::u32 				_explosion_time;
     irr::u32 				_animation_time;
-    bool 				_is_blockable;
+    bool 				_is_blocking;
     bool 				_is_destructible;
 
-    std::string				_mesh_name;
-    std::string				_texture_name;
+    std::string				_mesh_path;
+    std::string				_texture_path;
 
    public:
     Obj(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
@@ -41,11 +42,18 @@ namespace Bomberman
     std::string				getTextureName() const;
     irr::u32 				getExplosionTime() const;
     irr::u32 				getAnimation_time() const;
-    bool				isBlockable() const;
+    bool				isBlocking() const;
     bool 				isDestructible() const;
     void				remove();
     //void				reset();
 
+   private:
+    void				createBrick();
+    void				createBox();
+    void				createPlan();
+    void				createCharacter();
+    void				createBomb();
+    void				createBonus();
 
     virtual tinyxml2::XMLElement	*serialize(tinyxml2::XMLDocument *doc) override;
 

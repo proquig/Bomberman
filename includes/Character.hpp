@@ -16,9 +16,9 @@
 # include						"AnimationEndCallback.hpp"
 # include						"Bomb.hpp"
 
-# define						START_FRAME 5
+# define						START_FRAME 184
 # define						START_WALK_FRAME 1
-# define						END_WALK_FRAME 14
+# define						END_WALK_FRAME 15
 
 namespace						Bomberman
 {

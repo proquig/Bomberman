@@ -17,7 +17,10 @@ namespace Bomberman
       PLAN = 2,
       BOMB = 3,
       CHARACTER = 4,
-    STAR	= 5
+      BONUS = 5,
+      B_STAR = 6,
+      B_BOMB = 7,
+      B_BOOT = 8
     };
   class IObj
   {
@@ -27,7 +30,7 @@ namespace Bomberman
     virtual float 			getY() const = 0;
     virtual irr::u32 			getExplosionTime() const = 0;
     virtual Bomberman::TYPE		getType() const = 0;
-    virtual bool 			isBlockable() const = 0;
+    virtual bool 			isBlocking() const = 0;
     virtual bool 			isDestructible() const = 0;
     //virtual void			remove() const = 0;
     virtual tinyxml2::XMLElement	*serialize(tinyxml2::XMLDocument *doc) = 0;

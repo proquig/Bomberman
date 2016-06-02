@@ -24,8 +24,17 @@ bool 		Bomberman::Map::checkObjectPosition(Bomberman::Obj* obj, float x, float y
 
   resx = obj->getX() - x;
   resy = obj->getY() - y;
-  return (!((obj->isBlockable() || obj->getType() == Bomberman::CHARACTER) && (resx <= range && resx >= -range) && (resy <= range && resy >= -range)));
+  return (!((obj->isBlocking() || obj->getType() == Bomberman::CHARACTER) && (resx <= range && resx >= -range) && (resy <= range && resy >= -range)));
 }
+
+/*bool 		Bomberman::Map::checkBonus(Bomberman::Character)
+{
+  if ()
+    {
+
+    }
+  return (true);
+}*/
 
 bool		Bomberman::Map::checkPosition(float x, float y, float range, bool all)
 {
@@ -53,7 +62,7 @@ void		Bomberman::Map::createPlan()
 
   this->_plan.clear();
   for (it = this->_objs.begin(); it != this->_objs.end(); ++it)
-    if ((*it)->isBlockable() || (*it)->getType() == Bomberman::CHARACTER)
+    if ((*it)->isBlocking() || (*it)->getType() == Bomberman::CHARACTER)
       {
 	x = this->getRoundPosition((int)(*it)->getX());
 	y = this->getRoundPosition((int)(*it)->getY());
@@ -93,7 +102,11 @@ Bomberman::Obj *                Bomberman::Map::createObj(const std::string &mes
 	   {BOX, &Map::create<Obj>},
 	   {PLAN, &Map::create<Obj>},
 	   {CHARACTER, &Map::create<Character>},
-	   {BOMB, &Map::create<Bomb>}
+	   {BOMB, &Map::create<Bomb>}//,
+	   /*{BONUS, &Map::create<Obj>},
+	   {B_STAR, &Map::create<Obj>},
+	   {B_BOMB, &Map::create<Obj>},
+	   {B_BOOT, &Map::create<Obj>},*/
    };
   std::cerr << mesh_path << "-" << texture_path << "-" << x << "-" << y << std::endl;
   for (std::map<Bomberman::TYPE, ObjPtr >::const_iterator it = objs.begin(); it != objs.end(); ++it)

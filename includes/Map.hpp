@@ -26,8 +26,8 @@ namespace			Bomberman
   class				Map
   {
    private:
-    typedef Bomberman::Obj		*(Map::*ObjPtr)(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
-    std::vector<Bomberman::Obj *> _objs;
+    typedef Bomberman::Obj	*(Map::*ObjPtr)(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
+    std::vector<Bomberman::Obj*> _objs;
     Bomberman::Irrlicht		&_irr;
     irr::video::SMaterial	_material;
     irr::scene::ISceneNode	*_scene;

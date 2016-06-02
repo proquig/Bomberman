@@ -16,7 +16,7 @@ Bomberman::Save::Save(Bomberman::Map *map)
 	  std::ofstream file;
 	  file.open("save.txt");
 	  for (std::vector<Bomberman::Obj *>::iterator it = save.begin(); it < save.end(); ++it)
-	    if ((*it)->isDestructible() || (*it)->isBlockable())
+	    if ((*it)->isDestructible() || (*it)->isBlocking())
 	      file << (*it)->getX() << ";" << (*it)->getY() << ";" << (*it)->getType()
 	    << ";" << ((*it)->getMeshName() == "" ? " " : (*it)->getMeshName())
 	    << ";" << ((*it)->getTextureName() == "" ? " " : (*it)->getTextureName())

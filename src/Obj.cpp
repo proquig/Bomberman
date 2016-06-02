@@ -13,74 +13,24 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
 	_animated_node(NULL),
 	_explosion_time(0),
 	_animation_time(0),
-	_is_blockable(false),
+	_is_blocking(false),
 	_is_destructible(true),
-	_mesh_name(mesh_path),
-	_texture_name(texture_path)
+	_mesh_path(mesh_path),
+	_texture_path(texture_path)
 {
-  if (type == CHARACTER)
-    {
-      this->_animated_mesh = this->_irr.getSmgr()->getMesh(mesh_path.c_str());
-      this->_animated_node = this->_irr.getSmgr()
-				 ->addAnimatedMeshSceneNode(this->_animated_mesh, 0, -1, irr::core::vector3df(x, 0, y),
-							    irr::core::vector3df(0, 0, 0),irr::core::vector3df(5, 5, 5));
-      this->_animated_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-      this->_animated_node->setMD2Animation(irr::scene::EMAT_STAND);
-      this->_animated_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path.c_str()));
-      this->_animated_node->setAnimationSpeed(25.f);
-    }
-  if (type == STAR)
-    {
-      this->_mesh_name = "./assets/BONUS/estrellica.obj";
-      this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_irr.getSmgr()->getMesh(this->_mesh_name.c_str()),
-									    0, -1, irr::core::vector3df(x, 0, y),
-									    irr::core::vector3df(0, 0, 0),
-									    irr::core::vector3df(0.15, 0.15, 0.15));
-      this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-    }
-  if (type == BOMB)
-    {
-      this->_mesh_name = "./assets/Bomb/model.dae";
-      this->_animated_mesh = this->_irr.getSmgr()->getMesh("./assets/Bomb/model.dae");
-      this->_animated_node = this->_irr.getSmgr()
-				 ->addAnimatedMeshSceneNode(this->_animated_mesh, 0, -1, irr::core::vector3df(x, 0, y),
-							    irr::core::vector3df(0, 0, 0),irr::core::vector3df(0.15, 0.15, 0.15));
-      this->_animated_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-      this->_animated_node->setAnimationSpeed(16.f);
-      this->_animated_node->setVisible(false);
-    }
-  if (type == BRICK)
-    {
-      this->_mesh = this->_irr.getSmgr()->getMesh(mesh_path.c_str());
-      this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh, 0, -1, irr::core::vector3df(x, 12.5, y), irr::core::vector3df(0, 0, 0),
-							   irr::core::vector3df(1.7, 1.7, 1.7));
-      this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-      this->_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path.c_str()));
-      this->_node->setPosition(irr::core::vector3df(x, 12.5, y));
-      this->_is_blockable = true;
-      this->_is_destructible = false;
-    }
+  std::map<Bomberman::TYPE, ObjMemFn> objFn = {
+	  {Bomberman::CHARACTER, &Obj::createCharacter},
+	  {Bomberman::BOMB, &Obj::createBomb},
+	  {Bomberman::PLAN, &Obj::createPlan},
+	  {Bomberman::BRICK, &Obj::createBrick},
+	  {Bomberman::BOX, &Obj::createBox},
+	  {Bomberman::BONUS, &Obj::createBonus},
+	  {Bomberman::B_STAR, &Obj::createBonus},
+	  {Bomberman::B_BOMB, &Obj::createBonus},
+	  {Bomberman::B_BOOT, &Obj::createBonus}
+  };
 
-  if (type == BOX)
-    {
-      this->_mesh = this->_irr.getSmgr()->getMesh(mesh_path.c_str());
-      this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh, 0, -1, irr::core::vector3df(x, 12.5, y), irr::core::vector3df(0, 90, 0),
-							   irr::core::vector3df(1.7, 1.7, 1.7));
-      this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-      this->_node->setPosition(irr::core::vector3df(x, 12.5, y));
-      this->_is_blockable = true;
-    }
-
-  if (type == PLAN)
-    {
-      this->_mesh = this->_irr.getSmgr()->getGeometryCreator()
-			->createPlaneMesh(irr::core::dimension2df(x, y), irr::core::dimension2d<irr::u32>(1, 1), 0,
-					  irr::core::dimension2df(1, 1));
-      this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh);
-      this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-      this->_irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(this->_mesh, 0.1);
-      this->_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(texture_path.c_str()));
-    }
+  (this->*objFn[type])();
 }
 
 Bomberman::Obj::~Obj()
@@ -107,9 +57,9 @@ irr::u32 			Bomberman::Obj::getExplosionTime() const
   return (this->_explosion_time);
 }
 
-bool 				Bomberman::Obj::isBlockable() const
+bool 				Bomberman::Obj::isBlocking() const
 {
-  return (this->_is_blockable);
+  return (this->_is_blocking);
 }
 
 void				Bomberman::Obj::remove()
@@ -118,7 +68,7 @@ void				Bomberman::Obj::remove()
     this->_node->setVisible(false);
   if (this->_animated_node)
     this->_animated_node->setVisible(false);
-  this->_is_blockable = false;
+  this->_is_blocking = false;
   this->_is_destructible = false;
 }
 
@@ -132,7 +82,7 @@ tinyxml2::XMLElement *Bomberman::Obj::serialize(tinyxml2::XMLDocument *doc)
   element->SetAttribute("x", this->_x);
   element->SetAttribute("y", this->_y);
   element->SetAttribute("explosionDelay", (int) (this->_explosion_time - current_time));
-  element->SetAttribute("is_blockable", this->_is_blockable);
+  element->SetAttribute("is_blockable", this->_is_blocking);
   element->SetAttribute("is_destructible", this->_is_destructible);
   return nullptr;
 }
@@ -146,7 +96,7 @@ void Bomberman::Obj::deserialize(tinyxml2::XMLElement *element)
   this->_x = std::stof(element->Attribute("x"));
   this->_y = std::stof(element->Attribute("y"));
   this->_explosion_time = (irr::u32) (current_time + std::stoi(element->Attribute("explosionDelay")));
-  this->_is_blockable = element->Attribute("is_blockable") == "true";
+  this->_is_blocking = element->Attribute("is_blockable") == "true";
   this->_is_destructible = element->Attribute("is_destructible") == "true";
 }
 
@@ -168,7 +118,7 @@ void Bomberman::Obj::reset()
       this->_animated_node->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
       this->_animated_node->setVisible(true);
     }
-  this->_is_blockable = false;
+  this->_is_blocking = false;
   this->_is_destructible = false;
 }
 */
@@ -179,13 +129,86 @@ irr::u32  Bomberman::Obj::getAnimation_time() const
 
 std::string	Bomberman::Obj::getMeshName() const
 {
-  return this->_mesh_name;
+  return this->_mesh_path;
 }
 
 std::string	Bomberman::Obj::getTextureName() const
 {
-  return this->_texture_name;
+  return this->_texture_path;
 }
 
+void Bomberman::Obj::createBrick()
+{
+  this->_mesh = this->_irr.getSmgr()->getMesh(this->_mesh_path.c_str());
+  this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh, 0, -1, irr::core::vector3df(this->_x, 12.5, this->_y), irr::core::vector3df(0, 0, 0),
+						       irr::core::vector3df(1.7, 1.7, 1.7));
+  this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+  this->_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(this->_texture_path.c_str()));
+  this->_node->setPosition(irr::core::vector3df(this->_x, 12.5, this->_y));
+  this->_is_blocking = true;
+  this->_is_destructible = false;
+}
 
+void Bomberman::Obj::createBox()
+{
+  this->_mesh = this->_irr.getSmgr()->getMesh(this->_mesh_path.c_str());
+  this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh, 0, -1, irr::core::vector3df(this->_x, 12.5, this->_y), irr::core::vector3df(0, 90, 0),
+						       irr::core::vector3df(1.7, 1.7, 1.7));
+  this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+  //this->_node->setPosition(irr::core::vector3df(this->_x, 12.5, this->_y));
+  this->_is_blocking = true;
+}
+
+void Bomberman::Obj::createPlan()
+{
+  this->_mesh = this->_irr.getSmgr()->getGeometryCreator()
+		    ->createPlaneMesh(irr::core::dimension2df(this->_x, this->_y), irr::core::dimension2d<irr::u32>(1, 1), 0,
+				      irr::core::dimension2df(1, 1));
+  this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh);
+  this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+  this->_irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(this->_mesh, 0.04);
+  this->_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(this->_texture_path.c_str()));
+
+}
+
+void Bomberman::Obj::createCharacter()
+{
+  this->_animated_mesh = this->_irr.getSmgr()->getMesh(this->_mesh_path.c_str());
+  this->_animated_node = this->_irr.getSmgr()
+			     ->addAnimatedMeshSceneNode(this->_animated_mesh, 0, -1, irr::core::vector3df(this->_x, 0, this->_y),
+							irr::core::vector3df(0, 0, 0),irr::core::vector3df(5, 5, 5));
+  this->_animated_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+  this->_animated_node->setMD2Animation(irr::scene::EMAT_STAND);
+  this->_animated_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(this->_texture_path.c_str()));
+  this->_animated_node->setAnimationSpeed(25.f);
+}
+
+void Bomberman::Obj::createBomb()
+{
+  this->_mesh_path = "./assets/Bomb/model.dae";
+  this->_animated_mesh = this->_irr.getSmgr()->getMesh(this->_mesh_path.c_str());
+  this->_animated_node = this->_irr.getSmgr()
+			     ->addAnimatedMeshSceneNode(this->_animated_mesh, 0, -1, irr::core::vector3df(this->_x, 0, this->_y),
+							irr::core::vector3df(0, 0, 0),irr::core::vector3df(0.15, 0.15, 0.15));
+  this->_animated_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+  this->_animated_node->setAnimationSpeed(16.f);
+  this->_animated_node->setVisible(false);
+
+}
+
+void Bomberman::Obj::createBonus()
+{
+  // invinsible
+  // range
+  // speed
+  std::srand(std::time(0));
+  this->_type = static_cast<Bomberman::TYPE>(Bomberman::BONUS + (std::rand() % 5) + 1);
+  this->_mesh_path = "./assets/BONUS/estrellica.obj";
+  this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_irr.getSmgr()->getMesh(this->_mesh_path.c_str()),
+						       0, -1, irr::core::vector3df(this->_x, 0, this->_y),
+						       irr::core::vector3df(0, 0, 0),
+						       irr::core::vector3df(0.15, 0.15, 0.15));
+  this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+
+}
 
