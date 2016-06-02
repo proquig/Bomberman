@@ -198,12 +198,19 @@ void Bomberman::Obj::createBomb()
 
 void Bomberman::Obj::createBonus()
 {
+  std::vector<std::pair<TYPE, const std::string>> bonus = {
+	  {Bomberman::B_STAR, "./assets/BONUS/estrellica.obj"},
+	  {Bomberman::B_BOOT, "./assets/BONUS/IronBoots/IronBoots.obj"},
+	  {Bomberman::B_BOMB, "./assets/BONUS/AngryBirds/Red_ColladaMax.DAE"}
+  };
+
   // invinsible
   // range
   // speed
   std::srand(std::time(0));
-  this->_type = static_cast<Bomberman::TYPE>(Bomberman::BONUS + (std::rand() % 5) + 1);
-  this->_mesh_path = "./assets/BONUS/estrellica.obj";
+  unsigned int i = std::rand() % bonus.size();
+  this->_type = bonus[i].first;
+  this->_mesh_path = bonus[i].second;
   this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_irr.getSmgr()->getMesh(this->_mesh_path.c_str()),
 						       0, -1, irr::core::vector3df(this->_x, 0, this->_y),
 						       irr::core::vector3df(0, 0, 0),

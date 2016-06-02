@@ -121,18 +121,18 @@ Bomberman::Obj *                Bomberman::Map::createObj(const std::string &mes
 Bomberman::Obj *		Bomberman::Map::createObjSomewhere(const std::string &mesh_path, const std::string &texture_path, Bomberman::TYPE type)
 {
   static int r = 1;
-  srand((unsigned int) time(NULL));
   int x = 1;
   int y = 1;
 
+  std::srand(std::time(0));
   while (!(!(x % BLOCKSIZE) && !(y % BLOCKSIZE) && this->checkPosition(x, y, (BLOCKSIZE / 2), true)))
     {
       x = 1;
       y = 1;
       while (x % BLOCKSIZE)
-	x = (rand() - rand()) % (MAPSIZE_X / 2);
+	x = (std::rand() - std::rand()) % (MAPSIZE_X / 2);
       while (y % BLOCKSIZE)
-	y = (rand() - rand()) % (MAPSIZE_Y / 2);
+	y = (std::rand() - std::rand()) % (MAPSIZE_Y / 2);
     }
   return createObj(mesh_path, texture_path, float(x), float(y), type);
 }
