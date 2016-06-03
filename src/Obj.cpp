@@ -217,7 +217,7 @@ void Bomberman::Obj::createBonus()
 {
   std::vector<std::pair<TYPE, std::pair<const std::string, const std::string>>> bonus = {
 	  {Bomberman::B_STAR, {"./assets/BONUS/estrellica.obj", ""}},
-	  {Bomberman::B_BOOT, {"./assets/BONUS/IronBoots/IronBoots.obj", ""}},
+	  {Bomberman::B_BOOT, {"./assets/BONUS/IronBoots/SimpleBoot.dae", ""}},
 	  {Bomberman::B_BOMB_R, {"./assets/BONUS/AngryBirds/Red/Red_ColladaMax.DAE", ""}},
 	  {Bomberman::B_BOMB_N, {"./assets/BONUS/AngryBirds/Red/Red_ColladaMax.DAE", ""}}
   };
@@ -227,7 +227,7 @@ void Bomberman::Obj::createBonus()
   this->_type = bonus[i].first;
   this->_mesh_path = bonus[i].second.first;
   this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_irr.getSmgr()->getMesh(this->_mesh_path.c_str()),
-						       0, -1, irr::core::vector3df(this->_x, 0, this->_y),
+						       0, -1, irr::core::vector3df(this->_x, 1, this->_y),
 						       irr::core::vector3df(0, 0, 0),
 						       irr::core::vector3df(1, 1, 1));
   this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);

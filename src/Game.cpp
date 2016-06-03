@@ -305,7 +305,8 @@ Bomberman::Map *Bomberman::Game::run()
 	  this->_irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
 	  this->_irr.getDriver()->draw2DImage(background, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
 					      irr::core::rect<irr::s32>(0, 0, 1920, 1080));
-	  _pause == 0 ? this->_irr.getSmgr()->drawAll(): this->_irr.getGui()->drawAll();
+	  if (_pause == 0)
+	    this->_irr.getSmgr()->drawAll();
 	  this->_irr.getDriver()->endScene();
 	  int fps = this->_irr.getDriver()->getFPS();
 	  if (lastFPS != fps)

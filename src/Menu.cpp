@@ -78,12 +78,6 @@ void	Bomberman::Menu::intro()
 
 void Bomberman::Menu::setMenu()
 {
-
-/*u32 time = device->getTimer()->getTime();
-    driver->draw2DImage(ITEXTUREHERE, position2d<s32>((driver->getScreenSize().Width - ITEXTUREHERE->getOriginalSize().Width)/2,
-						      ((time/20)%(driver->getScreenSize().Height+ITEXTUREHERE->getOriginalSize().Height))
-						      -ITEXTUREHERE->getOriginalSize().Height));*/
-
   irr::gui::IGUISkin * skin = _irr.getGui()->getSkin();
   skin->setColor(irr::gui::EGDC_BUTTON_TEXT, irr::video::SColor(255,255,255,255));
   irr::gui::IGUIFont* font = _irr.getGui()->getFont("./assets/fonthaettenschweiler.bmp");
@@ -92,7 +86,6 @@ void Bomberman::Menu::setMenu()
   skin->setFont(_irr.getGui()->getBuiltInFont(), irr::gui::EGDF_TOOLTIP);
   _strings.push_back("New Game");
   _strings.push_back("New Game");
-
 
   irr::gui::IGUIButton *button = _irr.getGui()->addButton(irr::core::rect<irr::s32>(WINDOWSIZE_X / 2 - 100,WINDOWSIZE_Y / 2,
 										    WINDOWSIZE_X / 2 + 100, WINDOWSIZE_Y / 2 + 32), 0, 0, L"Load Game", L"Opens a file");
@@ -124,9 +117,7 @@ void Bomberman::Menu::setMenu()
 							      WINDOWSIZE_X / 2 + 100, WINDOWSIZE_Y / 2 + 160 + 32), 0, 0, L"Credits", 0);
   button->setImage(_irr.getDriver()->getTexture("./assets/Menu/color.jpg"));
   _action.insert(std::make_pair(button, &Menu::displayCredit));
-
   _background = _irr.getDriver()->getTexture("./assets/Menu/Menu.png");
-
 }
 
 Bomberman::Menu::Action Bomberman::Menu::run()
@@ -161,11 +152,10 @@ void Bomberman::Menu::launchGame()
 void Bomberman::Menu::loadGame()
 {
   this->splash();
-
   try {
-    Game G("save.txt");
-    Bomberman::Save(G.run());
-    _irr.getSmgr()->clear();
+      Game G("save.txt");
+      Bomberman::Save(G.run());
+      _irr.getSmgr()->clear();
   }catch(exception &e) {
     e.what();
   }
@@ -173,7 +163,6 @@ void Bomberman::Menu::loadGame()
 
 void Bomberman::Menu::launchMulti()
 {
-  this->_nb_player = 2;
   this->splash();
   Game G(2);
   Bomberman::Save(G.run());
