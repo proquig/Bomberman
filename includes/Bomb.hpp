@@ -24,7 +24,6 @@ namespace				Bomberman
       */
   private:
     float 				*_range;
-    Bomberman::MusicManager		&_sound;
     //STATE				_state;
     //Bomberman::Explosion		*exp;
 

@@ -234,12 +234,11 @@ int Bomberman::Game::handleEvents()
 {
   std::vector<Bomberman::Character *>::const_iterator it;
   int players_alive = 0;
-  static int pause = 0;
 
   this->_map->createPlan();
   if (this->_irr.event.getKeys()[irr::KEY_KEY_P])
-    pause == 0 ? pause = 1 : pause = 0;
-  if (pause == 0)
+    _pause == 0 ? _pause = 1 : _pause = 0;
+  if (_pause == 0)
     {
       handleTime();
       handleMovements();
@@ -254,22 +253,12 @@ int Bomberman::Game::handleEvents()
 
 Bomberman::Map *Bomberman::Game::run()
 {
-  irr::scene::ICameraSceneNode *camera = this->_irr.getSmgr()
-					     ->addCameraSceneNode(0, irr::core::vector3df(0, (12 * BLOCKSIZE), -40),
+  irr::scene::ICameraSceneNode *camera = this->_irr.getSmgr()->addCameraSceneNode(0, irr::core::vector3df(0, (12 * BLOCKSIZE), -40),
 								  irr::core::vector3df(0, 0, 0));
   camera->setNearValue(10);
   irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
   int lastFPS = -1;
-  //for (int i = 0; i != 3; ++i)
-  //this->_players[i]->add_bomb(reinterpret_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
-  //int i =  -1;
-  //while (++i < this->_map->getObjs().size())
-  //if (this->_map->getObjs()[i]->getType() == Bomberman::CHARACTER)
-  //std::cout << "Everybody must die1" << std::endl;
-  //std::cout << this->_players[0]->isDestructible() << std::endl;
-  //this->_players[0]->add_bomb(static_cast<Bomberman::Bomb*>(this->_map->createObj("", "", 0, 0, BOMB)));
-  //while (this->_irr.getDevice()->drop())
-  int pause = 0;
+  _pause = 0;
   while (this->_irr.getDevice()->run() && handleEvents())
     {
       if (this->_irr.event.getKeys()[irr::KEY_ESCAPE])
@@ -279,7 +268,7 @@ Bomberman::Map *Bomberman::Game::run()
 	  this->_irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
 	  this->_irr.getDriver()->draw2DImage(background, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
 					      irr::core::rect<irr::s32>(0, 0, 1920, 1080));
-	  this->_irr.getSmgr()->drawAll();
+	  _pause == 0 ? this->_irr.getSmgr()->drawAll(): this->_irr.getGui()->drawAll();
 	  this->_irr.getDriver()->endScene();
 	  int fps = this->_irr.getDriver()->getFPS();
 	  if (lastFPS != fps)

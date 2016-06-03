@@ -3,6 +3,7 @@
 //
 
 #include <Map.hpp>
+#include <Exception.hpp>
 
 Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_path, float x, float y, TYPE type):
 	_irr(Bomberman::Irrlicht::instance()),
@@ -16,7 +17,8 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
 	_is_blocking(false),
 	_is_destructible(true),
 	_mesh_path(mesh_path),
-	_texture_path(texture_path)
+	_texture_path(texture_path),
+	_sound(Bomberman::MusicManager::instance())
 {
   std::map<Bomberman::TYPE, ObjMemFn> objFn = {
 	  {Bomberman::CHARACTER, &Obj::createCharacter},
@@ -70,6 +72,15 @@ void				Bomberman::Obj::remove()
     this->_animated_node->setVisible(false);
   this->_is_blocking = false;
   this->_is_destructible = false;
+      try
+	{
+	  _sound.setSong("./assets/sound/Boom.flac");
+	  _sound.startMusic();
+	}catch (exception &e)
+	{
+	  std::cerr << e.what() << std::endl;
+	}
+
 }
 
 tinyxml2::XMLElement *Bomberman::Obj::serialize(tinyxml2::XMLDocument *doc)

@@ -23,6 +23,7 @@ namespace					Bomberman
     std::vector<Bomberman::Character*>		_players;
     static const std::map<irr::EKEY_CODE, std::pair<int, Bomberman::Character::ACTION>> _events[];
     static const std::vector<std::pair<std::string, std::pair<int, int>>> _players_conf;
+    int 					_pause;
 
    public:
     Game(size_t);

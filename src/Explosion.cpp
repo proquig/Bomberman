@@ -2,9 +2,17 @@
 // Created by joris_a
 //
 
+#include <zconf.h>
 #include "Explosion.hpp"
 
-Bomberman::Explosion::Explosion(float x, float y) : _irr(Bomberman::Irrlicht::instance())
+Bomberman::Explosion::Explosion(float x, float y) : _irr(Bomberman::Irrlicht::instance()),
+						    _x(x),
+						    _y(y)
+{
+}
+
+
+void 			Bomberman::Explosion::getScene()
 {
   this->_ps = this->_irr.getSmgr()->addParticleSystemSceneNode(false);
   this->_em = _ps->createBoxEmitter(irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7),
@@ -17,7 +25,7 @@ Bomberman::Explosion::Explosion(float x, float y) : _irr(Bomberman::Irrlicht::in
   _paf = _ps->createFadeOutParticleAffector();
   _ps->addAffector(_paf);
   _paf->drop();
-  _ps->setPosition(irr::core::vector3df(x, 0, y));
+  _ps->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
   _ps->setScale(irr::core::vector3df(0.5, 0.5, 0.5));
   _ps->setMaterialFlag(irr::video::EMF_LIGHTING, false);
   _ps->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
@@ -25,13 +33,6 @@ Bomberman::Explosion::Explosion(float x, float y) : _irr(Bomberman::Irrlicht::in
   _ps->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
 }
 
-
-irr::scene::IParticleSystemSceneNode	*Bomberman::Explosion::getScene()
-{
-  return (this->_ps);
-}
-
 Bomberman::Explosion::~Explosion()
 {
-
 }

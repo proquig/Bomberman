@@ -8,33 +8,20 @@
 // Last update Sun May 29 20:21:32 2016 Guillaume PROQUIN
 //
 
+#include <Exception.hpp>
 #include "Irrlicht.hpp"
 #include "Bomb.hpp"
 #include "Map.hpp"
 
 Bomberman::Bomb::Bomb(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type) :
-	Bomberman::Obj::Obj(mesh_path, texture_path, x, y, BOMB), _sound(Bomberman::MusicManager::instance())
+	Bomberman::Obj::Obj(mesh_path, texture_path, x, y, BOMB)
 {
   this->_range = NULL;
-  //this->_state = AWAITING;
   this->_animated_node->setVisible(false);
-  //this->exp = new Explosion(this->_x, this->_y);
-  //this->exp->getScene()->setVisible(false);
 }
 
-Bomberman::Bomb::~Bomb()
-{
-  //this->explosion();
-  //this->_state = EXPLODED;
-  //delete this->_animated_node;
-  //delete this->_scene;
-}
+Bomberman::Bomb::~Bomb() { }
 
-/*Bomberman::Obj*	Bomberman::Bomb::create(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type)
-{
-  return (new Bomb(mesh_path, texture_path, x, y));
-}
-*/
 
 float 		Bomberman::Bomb::getRange() const
 {
@@ -48,20 +35,16 @@ void		Bomberman::Bomb::setRange(float *range)
 
 void		Bomberman::Bomb::reset()
 {
-  //this->_state = AWAITING;
   this->_explosion_time = 0;
   this->_animated_node->setVisible(false);
 }
 
 void		Bomberman::Bomb::put(float x, float y)
 {
-  //std::cout << "BEFORE x = " << x << " & y = " << y << std::endl;
   this->_x = Bomberman::Map::getRoundPosition(x);
   this->_y = Bomberman::Map::getRoundPosition(y);
-  //std::cout << "AFTER x = " << this->_x << " & y = " << this->_y << std::endl;
   this->_animated_node->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
   this->_animated_node->setVisible(true);
-  //this->_state = POSED;
   this->_explosion_time = (this->_irr.getDevice()->getTimer()->getTime() + 2000);
   //this->_animation_time = (this->_irr.getDevice()->getTimer()->getTime() + 2500);
 }
@@ -69,18 +52,16 @@ void		Bomberman::Bomb::put(float x, float y)
 void		Bomberman::Bomb::explode()
 {
   this->reset();
-  _sound.setSong("./assets/sound/Boom.flac");
-  _sound.startMusic();
-  //this->exp->getScene()->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
-  //this->exp->getScene()->setVisible(true);
-  //this->exp = new Explosion(this->_x, this->_y);
+  try
+    {
+      _sound.setSong("./assets/sound/Boom.flac");
+      _sound.startMusic();
+    }catch (exception &e)
+    {
+      std::cerr << e.what() << std::endl;
+    }
 }
-/*
+
 void 		Bomberman::Bomb::clean()
 {
-  std::cout << "I PASS BITCH" << std::endl;
-  //this->_animation_time = 0;
-  //this->exp->getScene()->setVisible(false);
-  //this->exp->clear();
 }
-*/

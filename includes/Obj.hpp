@@ -6,6 +6,7 @@
 #define CPP_INDIE_STUDIO_OBJ_HPP
 
 #include <xml/tinyxml2.h>
+#include <sound/MusicManager.hpp>
 #include "IObj.hpp"
 
 namespace Bomberman
@@ -17,7 +18,7 @@ namespace Bomberman
     Bomberman::Irrlicht 		&_irr;
     irr::scene::IMesh 			*_mesh;
     irr::scene::IMeshSceneNode 		*_node;
-
+    Bomberman::MusicManager		&_sound;
     irr::scene::IAnimatedMesh 		*_animated_mesh;
     irr::scene::IAnimatedMeshSceneNode 	*_animated_node;
 
