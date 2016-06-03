@@ -33,7 +33,7 @@ namespace				Bomberman
     void				reset();
     void				put(float x, float y);
     void				explode();
-    float getRange()			const;
+    float				getRange() const;
     void				setRange(float *range);
     void				clean();
 
