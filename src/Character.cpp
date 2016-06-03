@@ -17,7 +17,7 @@ Bomberman::Character::Character(const std::string &mesh_path, const std::string 
 {
   this->_bombTime = 0;
   this->_godTime = 0;
-  this->_speedTime = 0;
+  this->_speedTime = 1;
   this->_range = 2;
   this->_animated_node->setLoopMode(false);
   this->_animated_node->setFrameLoop(START_FRAME, START_FRAME);
@@ -39,8 +39,8 @@ void							Bomberman::Character::set_pos(ACTION direction)
   //if (this->_irr.getDevice()->getTimer()->getTime() > this->_movTime)
     //{
       //this->_movTime = (this->_irr.getDevice()->getTimer()->getTime() + 15);
-      this->_x += Bomberman::Game::positions[direction][0];
-      this->_y += Bomberman::Game::positions[direction][1];
+      this->_x += (Bomberman::Game::positions[direction][0] * this->_speed);
+      this->_y += (Bomberman::Game::positions[direction][1] * this->_speed);
       this->set_orientation(direction);
       //this->_x = (round(this->_x * 100)) / 100;
       //std::cout << " new x = " << this->_x << " & new y = " << this->_y << std::endl;

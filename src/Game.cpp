@@ -57,7 +57,7 @@ Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
   this->_map = new Bomberman::Map();
   for (int i = 0; i < 84; ++i)
     this->_map->createObjSomewhere(WALLOBJ, WALLTEXT, Bomberman::BRICK);
-  for (int i = 0; i < 100; ++i)
+  for (int i = 0; i < 184; ++i)
     this->_map->createObjSomewhere(BOXOBJ, BOXTEXT, Bomberman::BOX);
   this->_map->createMap();
   this->_map->createPlan();
@@ -130,14 +130,14 @@ void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
 	  {
 	    this->_map->getPlan()[bomb->getX() + (i *j * BLOCKSIZE)][bomb->getY()]->remove();
 	    if (!(std::rand() % 2))
-	      this->_map->createObj("", "", bomb->getX(), bomb->getY(), Bomberman::BONUS);
+	      this->_map->createObj("", "", bomb->getX() + (i *j * BLOCKSIZE), bomb->getY(), Bomberman::BONUS);
 	  }
 	if (this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]
 	    && this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]->isDestructible())
 	  {
 	    this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]->remove();
 	    if (!(std::rand() % 2))
-	      this->_map->createObj("", "", bomb->getX(), bomb->getY(), Bomberman::BONUS);
+	      this->_map->createObj("", "", bomb->getX(), bomb->getY() + (i *j * BLOCKSIZE), Bomberman::BONUS);
 	  }
 	stop = ((this->_map->getPlan()[bomb->getX() + (i * j * BLOCKSIZE)][bomb->getY()]
 		  && this->_map->getPlan()[bomb->getX() + (i * j * BLOCKSIZE)][bomb->getY()]->isBlocking())
@@ -192,7 +192,6 @@ bool Bomberman::Game::getBonus(Bomberman::Character *player, Bomberman::Characte
   Bomberman::Obj *obj;
   Bomberman::Game::BonusMemFn fn;
 
-  //std::cout << "PASS BONUS" << std::endl;
   if ((obj = this->_map->getPlan()[Bomberman::Map::getRoundPosition(player->getX() + Bomberman::Game::positions[action][0])]
   [Bomberman::Map::getRoundPosition(player->getY() + Bomberman::Game::positions[action][0])])
     && (fn = this->_bonus.find(obj->getType())->second))
@@ -274,7 +273,7 @@ int Bomberman::Game::handleEvents()
 
   this->_map->createPlan();
   if (this->_irr.event.getKeys()[irr::KEY_KEY_P])
-    _pause = (_pause == 0);
+    _pause = !_pause;
   if (!_pause)
     {
       handleTime();
@@ -305,8 +304,9 @@ Bomberman::Map *Bomberman::Game::run()
 	  this->_irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
 	  this->_irr.getDriver()->draw2DImage(background, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
 					      irr::core::rect<irr::s32>(0, 0, 1920, 1080));
-	  if (_pause == 0)
+	  if (!_pause)
 	    this->_irr.getSmgr()->drawAll();
+	  !_pause ? this->_irr.getSmgr()->drawAll(): this->_irr.getGui()->drawAll();
 	  this->_irr.getDriver()->endScene();
 	  int fps = this->_irr.getDriver()->getFPS();
 	  if (lastFPS != fps)
