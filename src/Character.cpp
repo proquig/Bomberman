@@ -16,8 +16,9 @@ Bomberman::Character::Character(const std::string &mesh_path, const std::string 
   Bomberman::Obj::Obj(mesh_path, texture_path, x, y, Bomberman::CHARACTER)
 {
   this->_bombTime = 0;
-  //this->_movTime = 0;
-  this->_range = 10;
+  this->_godTime = 0;
+  this->_speedTime = 0;
+  this->_range = 2;
   this->_animated_node->setLoopMode(false);
   this->_animated_node->setFrameLoop(START_FRAME, START_FRAME);
 }
@@ -118,4 +119,31 @@ void							Bomberman::Character::do_action(ACTION action)
     &Character::jump,
   };
   (this->*actions[action])(action);
+}
+
+void							Bomberman::Character::setBombRange()
+{
+  this->_range++;
+}
+
+irr::u32						Bomberman::Character::getGodTime() const
+{
+  return (this->_godTime);
+}
+
+void 							Bomberman::Character::setGodTime(irr::u32 time)
+{
+  this->_is_destructible = (time == 0);
+  this->_godTime = time;
+}
+
+irr::u32						Bomberman::Character::getSpeedTime() const
+{
+  return (this->_speedTime);
+}
+
+void 							Bomberman::Character::setSpeedTime(irr::u32 time)
+{
+  this->_speed = time ? 2 : 1;
+  this->_speedTime = time;
 }

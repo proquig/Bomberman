@@ -18,6 +18,13 @@ const std::vector<std::pair<std::string, std::pair<int, int>>> Bomberman::Game::
 	{"./assets/ninja/nskinbl.jpg", {-((MAPSIZE_X / 2) - (4 * BLOCKSIZE)), (MAPSIZE_Y / 2) - (4 * BLOCKSIZE)}}
 };
 
+const std::map<Bomberman::TYPE, Bomberman::Game::BonusMemFn> Bomberman::Game::_bonus = {
+	{Bomberman::B_BOMB_R, &Bomberman::Game::bonus_bomb_range},
+	{Bomberman::B_BOMB_N, &Bomberman::Game::bonus_bomb_nb},
+	{Bomberman::B_STAR, &Bomberman::Game::bonus_god},
+	{Bomberman::B_BOOT, &Bomberman::Game::bonus_speed}
+};
+
 const float Bomberman::Game::positions[4][2] = {
 	{0,  1},
 	{0,  -1},
@@ -61,21 +68,16 @@ Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
 											 this->_players_conf[i].second.first,
 											 this->_players_conf[i].second.second,
 											 Bomberman::CHARACTER)));
-      //for (int z = 0; z < 5; z++)
       this->_players.back()->add_bomb(static_cast<Bomberman::Bomb *>(this->_map->createObj("", "", 0, 0, BOMB)));
       for (int j = -1; j < 2; ++j)
 	{
 	  if (this->_map->getPlan()[this->_players_conf[i].second.first + (j * BLOCKSIZE)][this->_players_conf[i].second.second])
-	    //std::cout << "PASS" << std::endl;
 	    this->_map->getPlan()[this->_players_conf[i].second.first + (j * BLOCKSIZE)][this->_players_conf[i].second.second]
 		    ->remove();
 	  if (this->_map->getPlan()[this->_players_conf[i].second.first][this->_players_conf[i].second.second + (j * BLOCKSIZE)])
 	    this->_map->getPlan()[this->_players_conf[i].second.first][this->_players_conf[i].second.second + (j * BLOCKSIZE)]->remove();
 	}
     }
-  //for (int k = -1; k < 2; ++k)
-  //for (int k = 0; k < this->_map->getObjs().size(); ++k)
-  //std::cout << "X = " << this->_map->getObjs()[k]->getX() << " & Y = " << this->_map->getObjs()[k]->getY() << std::endl;
 }
 
 Bomberman::Game::Game(/*size_t nb, */const std::string &name) : _irr(Bomberman::Irrlicht::instance())
@@ -118,15 +120,25 @@ void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
 {
   int stop = 0;
   int i = -1;
+  std::srand(std::time(0));
+
   while (!stop && ++i < bomb->getRange())
     for (int j = -1; j < 2; ++j)
       {
 	if (this->_map->getPlan()[bomb->getX() + (i * j * BLOCKSIZE)][bomb->getY()]
 	    && this->_map->getPlan()[bomb->getX() + (i * j * BLOCKSIZE)][bomb->getY()]->isDestructible())
-	  this->_map->getPlan()[bomb->getX() + (i *j * BLOCKSIZE)][bomb->getY()]->remove();
+	  {
+	    this->_map->getPlan()[bomb->getX() + (i *j * BLOCKSIZE)][bomb->getY()]->remove();
+	    if (!(std::rand() % 2))
+	      this->_map->createObj("", "", bomb->getX(), bomb->getY(), Bomberman::BONUS);
+	  }
 	if (this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]
 	    && this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]->isDestructible())
-	  this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]->remove();
+	  {
+	    this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]->remove();
+	    if (!(std::rand() % 2))
+	      this->_map->createObj("", "", bomb->getX(), bomb->getY(), Bomberman::BONUS);
+	  }
 	stop = ((this->_map->getPlan()[bomb->getX() + (i * j * BLOCKSIZE)][bomb->getY()]
 		  && this->_map->getPlan()[bomb->getX() + (i * j * BLOCKSIZE)][bomb->getY()]->isBlocking())
 		|| (this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]
@@ -175,11 +187,36 @@ void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
  */
 }
 
+bool Bomberman::Game::getBonus(Bomberman::Character *player, Bomberman::Character::ACTION action)
+{
+  Bomberman::Obj *obj;
+  Bomberman::Game::BonusMemFn fn;
+
+  //std::cout << "PASS BONUS" << std::endl;
+  if ((obj = this->_map->getPlan()[Bomberman::Map::getRoundPosition(player->getX() + Bomberman::Game::positions[action][0])]
+  [Bomberman::Map::getRoundPosition(player->getY() + Bomberman::Game::positions[action][0])])
+    && (fn = this->_bonus.find(obj->getType())->second))
+      (this->*fn)(player, obj);
+  return (true);
+}
+
+void Bomberman::Game::handleBonus()
+{
+  for (int i = 0; i < this->_players.size(); ++i)
+    {
+      if (this->_players[i]->getGodTime() && this->_irr.getDevice()->getTimer()->getTime() > this->_players[i]->getGodTime())
+	this->_players[i]->setGodTime(0);
+      if (this->_players[i]->getSpeedTime() && this->_irr.getDevice()->getTimer()->getTime() > this->_players[i]->getSpeedTime())
+	this->_players[i]->setSpeedTime(0);
+    }
+}
+
 void Bomberman::Game::handleMovements()
 {
   std::map<irr::EKEY_CODE, std::pair<int, Bomberman::Character::ACTION>>::const_iterator it;
   for (it = this->_events[0].begin(); it != _events[0].end(); ++it)
     if (this->_irr.event.getKeys()[it->first] && it->second.first < this->_players.size()
+	&& this->getBonus(this->_players[it->second.first], it->second.second)
 	&& this->_map->checkPosition(
 	    this->_players[it->second.first]->getX() + Bomberman::Game::positions[it->second.second][0],
 	    this->_players[it->second.first]->getY() + Bomberman::Game::positions[it->second.second][1],
@@ -237,18 +274,18 @@ int Bomberman::Game::handleEvents()
 
   this->_map->createPlan();
   if (this->_irr.event.getKeys()[irr::KEY_KEY_P])
-    _pause == 0 ? _pause = 1 : _pause = 0;
-  if (_pause == 0)
+    _pause = (_pause == 0);
+  if (!_pause)
     {
       handleTime();
+      handleBonus();
       handleMovements();
       handleActions();
     }
   for (it = this->_players.begin(); it != this->_players.end(); ++it)
-    if ((*it)->isDestructible())
+    if ((*it)->isDestructible() || (!(*it)->isDestructible() && (*it)->getGodTime()))
       players_alive++;
   return (players_alive == this->_nb_players);
-  return (1);
 }
 
 Bomberman::Map *Bomberman::Game::run()
@@ -283,4 +320,32 @@ Bomberman::Map *Bomberman::Game::run()
 	}
     }
   return (NULL);
+}
+
+void Bomberman::Game::bonus_bomb_range(Bomberman::Character *player, Bomberman::Obj *obj)
+{
+  std::cout << "BOMB RANGE" << std::endl;
+  obj->remove();
+  player->add_bomb(static_cast<Bomberman::Bomb *>(this->_map->createObj("", "", 0, 0, BOMB)));
+}
+
+void Bomberman::Game::bonus_bomb_nb(Bomberman::Character *player, Bomberman::Obj *obj)
+{
+  std::cout << "BOMB NB" << std::endl;
+  obj->remove();
+  player->setBombRange();
+}
+
+void Bomberman::Game::bonus_god(Bomberman::Character *player, Bomberman::Obj *obj)
+{
+  std::cout << "BONUS GOD" << std::endl;
+  obj->remove();
+  player->setGodTime(this->_irr.getDevice()->getTimer()->getTime() + 10000);
+}
+
+void Bomberman::Game::bonus_speed(Bomberman::Character *player, Bomberman::Obj *obj)
+{
+  std::cout << "BONUS SPEED" << std::endl;
+  obj->remove();
+  player->setSpeedTime(this->_irr.getDevice()->getTimer()->getTime() + 10000);
 }

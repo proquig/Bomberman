@@ -3,6 +3,7 @@
 //
 
 #include <Map.hpp>
+#include <Game.hpp>
 #include <Exception.hpp>
 
 Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_path, float x, float y, TYPE type):
@@ -28,7 +29,8 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
 	  {Bomberman::BOX, &Obj::createBox},
 	  {Bomberman::BONUS, &Obj::createBonus},
 	  {Bomberman::B_STAR, &Obj::createBonus},
-	  {Bomberman::B_BOMB, &Obj::createBonus},
+	  {Bomberman::B_BOMB_R, &Obj::createBonus},
+	  {Bomberman::B_BOMB_N, &Obj::createBonus},
 	  {Bomberman::B_BOOT, &Obj::createBonus}
   };
 
@@ -72,6 +74,10 @@ void				Bomberman::Obj::remove()
     this->_animated_node->setVisible(false);
   this->_is_blocking = false;
   this->_is_destructible = false;
+  if (Bomberman::Game::_bonus.find(this->getType()) != Bomberman::Game::_bonus.end())
+    this->_type = BONUS;
+  this->_x = -(BLOCKSIZE / 2);
+  this->_y = -(BLOCKSIZE / 2);
       try
 	{
 	  _sound.setSong("./assets/sound/Boom.flac");
@@ -209,23 +215,21 @@ void Bomberman::Obj::createBomb()
 
 void Bomberman::Obj::createBonus()
 {
-  std::vector<std::pair<TYPE, const std::string>> bonus = {
-	  {Bomberman::B_STAR, "./assets/BONUS/estrellica.obj"},
-	  {Bomberman::B_BOOT, "./assets/BONUS/IronBoots/IronBoots.obj"},
-	  {Bomberman::B_BOMB, "./assets/BONUS/AngryBirds/Red_ColladaMax.DAE"}
+  std::vector<std::pair<TYPE, std::pair<const std::string, const std::string>>> bonus = {
+	  {Bomberman::B_STAR, {"./assets/BONUS/estrellica.obj", ""}},
+	  {Bomberman::B_BOOT, {"./assets/BONUS/IronBoots/IronBoots.obj", ""}},
+	  {Bomberman::B_BOMB_R, {"./assets/BONUS/AngryBirds/Red/Red_ColladaMax.DAE", ""}},
+	  {Bomberman::B_BOMB_N, {"./assets/BONUS/AngryBirds/Red/Red_ColladaMax.DAE", ""}}
   };
 
-  // invinsible
-  // range
-  // speed
   std::srand(std::time(0));
   unsigned int i = std::rand() % bonus.size();
   this->_type = bonus[i].first;
-  this->_mesh_path = bonus[i].second;
+  this->_mesh_path = bonus[i].second.first;
   this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_irr.getSmgr()->getMesh(this->_mesh_path.c_str()),
 						       0, -1, irr::core::vector3df(this->_x, 0, this->_y),
 						       irr::core::vector3df(0, 0, 0),
-						       irr::core::vector3df(0.15, 0.15, 0.15));
+						       irr::core::vector3df(1, 1, 1));
   this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 
 }

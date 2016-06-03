@@ -38,8 +38,10 @@ namespace						Bomberman
     typedef						void (Character::*CharMemFn)(Character::ACTION);
     std::vector<Bomberman::Bomb*>			_bombs;
     float 						_range;
+    int 						_speed;
     irr::u32						_bombTime;
-    //irr::u32						_movTime;
+    irr::u32						_godTime;
+    irr::u32						_speedTime;
   public:
     Character(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     ~Character();
@@ -51,6 +53,12 @@ namespace						Bomberman
     void						do_action(ACTION action);
     void						jump(ACTION action);
     void						afk();
+
+    void						setBombRange();
+    irr::u32						getGodTime() const;
+    irr::u32						getSpeedTime() const;
+    void						setGodTime(irr::u32 time);
+    void						setSpeedTime(irr::u32 time);
 
     //void remove();
   };

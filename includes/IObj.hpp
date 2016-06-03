@@ -19,8 +19,9 @@ namespace Bomberman
       CHARACTER = 4,
       BONUS = 5,
       B_STAR = 6,
-      B_BOMB = 7,
-      B_BOOT = 8
+      B_BOMB_R = 7,
+      B_BOMB_N = 8,
+      B_BOOT = 9
     };
   class IObj
   {

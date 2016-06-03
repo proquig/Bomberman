@@ -5,6 +5,7 @@
 #include <list>
 #include <stdlib.h>
 #include <zconf.h>
+#include <Game.hpp>
 #include "Map.hpp"
 
 std::map<int, std::map<int, Bomberman::Obj*>>	_plan;
@@ -26,15 +27,6 @@ bool 		Bomberman::Map::checkObjectPosition(Bomberman::Obj* obj, float x, float y
   resy = obj->getY() - y;
   return (!((obj->isBlocking() || obj->getType() == Bomberman::CHARACTER) && (resx <= range && resx >= -range) && (resy <= range && resy >= -range)));
 }
-
-/*bool 		Bomberman::Map::checkBonus(Bomberman::Character)
-{
-  if ()
-    {
-
-    }
-  return (true);
-}*/
 
 bool		Bomberman::Map::checkPosition(float x, float y, float range, bool all)
 {
@@ -62,15 +54,14 @@ void		Bomberman::Map::createPlan()
 
   this->_plan.clear();
   for (it = this->_objs.begin(); it != this->_objs.end(); ++it)
-    if ((*it)->isBlocking() || (*it)->getType() == Bomberman::CHARACTER)
+    if ((*it)->isBlocking()
+	|| (*it)->getType() == Bomberman::CHARACTER
+	|| Bomberman::Game::_bonus.find((*it)->getType()) != Bomberman::Game::_bonus.end())
       {
 	x = this->getRoundPosition((int)(*it)->getX());
 	y = this->getRoundPosition((int)(*it)->getY());
 	this->_plan[x][y] = (*it);
-	//if ((*it)->getType() == Bomberman::CHARACTER)
-	  //std::cout << "getX = " << (int)(*it)->getX() << " & getY = " << (int)(*it)->getY() << " x = " << x << " & y = " << y << " type = " << this->_plan[x][y]->getType() << std::endl;
       }
-
 }
 
 void		Bomberman::Map::createMap()
@@ -102,13 +93,13 @@ Bomberman::Obj *                Bomberman::Map::createObj(const std::string &mes
 	   {BOX, &Map::create<Obj>},
 	   {PLAN, &Map::create<Obj>},
 	   {CHARACTER, &Map::create<Character>},
-	   {BOMB, &Map::create<Bomb>}//,
-	   /*{BONUS, &Map::create<Obj>},
+	   {BOMB, &Map::create<Bomb>},
+	   {BONUS, &Map::create<Obj>},
 	   {B_STAR, &Map::create<Obj>},
-	   {B_BOMB, &Map::create<Obj>},
-	   {B_BOOT, &Map::create<Obj>},*/
+	   {B_BOMB_R, &Map::create<Obj>},
+	   {B_BOMB_N, &Map::create<Obj>},
+	   {B_BOOT, &Map::create<Obj>}
    };
-  std::cerr << mesh_path << "-" << texture_path << "-" << x << "-" << y << std::endl;
   for (std::map<Bomberman::TYPE, ObjPtr >::const_iterator it = objs.begin(); it != objs.end(); ++it)
     if (it->first == type)
       {
@@ -149,27 +140,5 @@ Bomberman::Obj *Bomberman::Map::getObjOnPlan(int x, int y)
 
 int Bomberman::Map::getRoundPosition(float axis)
 {
-
-  //if ((int)axis % 5 < (5/ 2))
     return (((((int)axis + (int)(axis > 0) * (BLOCKSIZE - 1)) / BLOCKSIZE) * BLOCKSIZE));
-  //return (((((int)axis + (5 - 1)) / 5) * 5));
-  /*
-  if (axis < 0)
-    return (axis - ((int)axis % 5));
-  return (axis + (5 - (int)axis % 5));
-   */
-  //if (axis > 0)
-  //return (((((int)axis + (int)(axis > 0) * (5 - 1)) / 5) * 5));
-  //return (((((int)axis) / 5) * 5));
-  //return ((((axis + /*(int)(axis > 0) **/ (5 - 1)) / 5) * 5));
-  /*if (axis < 0)
-    return ((int)axis - ((int)axis % 5));
-  else
-    return ((int)axis - ((int)axis % 5));
-    */
-  //return ((((int)axis + 5 / 2) / 5) * 5);
-  //std::cout << "x = " << axis << " & new x = " << (((axis + (int)(axis > 0) * (5 - 1)) / 5) * 5) << std::endl;
-  //return ((((axis + /*(int)(axis > 0) **/ (5 - 1)) / 5) * 5));
-  //return (((((int)axis + (int)(axis > 0) * (5 - ((int)axis % 5))) / 5) * 5));
-
 }

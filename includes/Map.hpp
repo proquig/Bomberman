@@ -53,6 +53,7 @@ namespace			Bomberman
     bool 			checkObjOnPlan(int x, int y);
     Bomberman::Obj*		getObjOnPlan(int x, int y);
     void			createPlan();
+    //void			checkBonus(Bomberman::Character *player, Bomberman::Character::ACTION action);
   };
 }
 #endif //CPP_INDIE_STUDIO_MAP_HPP

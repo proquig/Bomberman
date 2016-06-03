@@ -16,6 +16,8 @@ namespace					Bomberman
   {
    public:
     static const float				positions[][2];
+    typedef					void (Game::*BonusMemFn)(Bomberman::Character *player, Bomberman::Obj *obj);
+    static const std::map<Bomberman::TYPE, Bomberman::Game::BonusMemFn> _bonus;
    private:
     Bomberman::Irrlicht				&_irr;
     Bomberman::Map				*_map;
@@ -40,6 +42,18 @@ namespace					Bomberman
     void handleTime();
 
     void explodeObjs(Bomb *bomb);
+
+    bool getBonus(Bomberman::Character *player, Bomberman::Character::ACTION action);
+
+    void handleBonus();
+
+    void						bonus_bomb_range(Bomberman::Character *player, Bomberman::Obj *obj);
+
+    void						bonus_bomb_nb(Bomberman::Character *player, Bomberman::Obj *obj);
+
+    void						bonus_god(Bomberman::Character *player, Bomberman::Obj *obj);
+
+    void						bonus_speed(Bomberman::Character *player, Bomberman::Obj *obj);
   };
 }
 
