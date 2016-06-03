@@ -78,60 +78,34 @@ void	Bomberman::Menu::intro()
 
 void Bomberman::Menu::setMenu()
 {
-  irr::gui::IGUISkin * skin = _irr.getGui()->getSkin();
-  skin->setColor(irr::gui::EGDC_BUTTON_TEXT, irr::video::SColor(255,255,255,255));
-  irr::gui::IGUIFont* font = _irr.getGui()->getFont("./assets/fonthaettenschweiler.bmp");
-  if (font)
-    skin->setFont(font);
-  skin->setFont(_irr.getGui()->getBuiltInFont(), irr::gui::EGDF_TOOLTIP);
-  _strings.push_back("New Game");
-  _strings.push_back("New Game");
+  _button.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/NewMenu.png"), &Menu::launchGame));
 
-  irr::gui::IGUIButton *button = _irr.getGui()->addButton(irr::core::rect<irr::s32>(WINDOWSIZE_X / 2 - 100,WINDOWSIZE_Y / 2,
-										    WINDOWSIZE_X / 2 + 100, WINDOWSIZE_Y / 2 + 32), 0, 0, L"Load Game", L"Opens a file");
-  button->setImage(_irr.getDriver()->getTexture("./assets/Menu/color.jpg"));
-  _action.insert(std::make_pair(button, &Menu::loadGame));
+  _button.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/MultiMenu.png"), &Menu::launchMulti));
 
- for (std::vector<irr::core::stringw>::iterator i = _strings.begin(); i < _strings.end() ; ++i)
-    {
-      button = _irr.getGui()->addButton(irr::core::rect<irr::s32>(WINDOWSIZE_X / 2 - 100, WINDOWSIZE_Y / 2 + 40,
-								  WINDOWSIZE_X/ 2 + 100, WINDOWSIZE_Y / 2  + 40 + 32), 0, 0, L"Play New Game", 0);
-      button->setImage(_irr.getDriver()->getTexture("./assets/Menu/color.jpg"));
+  _button.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/LoadMenu.png"), &Menu::loadGame));
 
-    }
-  _action.insert(std::make_pair(button, &Menu::launchGame));
-  button = _irr.getGui()->addButton(irr::core::rect<irr::s32>(WINDOWSIZE_X / 2 - 100,WINDOWSIZE_Y / 2 + 80,
-							      WINDOWSIZE_X / 2 + 100, WINDOWSIZE_Y / 2 + 80 + 32), 0, 0, L"2 Players",0);
-  button->setImage(_irr.getDriver()->getTexture("./assets/Menu/color.jpg"));
-  _action.insert(std::make_pair(button, &Menu::launchMulti));
-  button = _irr.getGui()->addButton(irr::core::rect<irr::s32>(WINDOWSIZE_X / 2 - 100, WINDOWSIZE_Y / 2 + 120,
-							      WINDOWSIZE_X/ 2 + 100, WINDOWSIZE_Y / 2  + 120 + 32), 0, 0, L"Options", 0);
-  button->setImage(_irr.getDriver()->getTexture("./assets/Menu/color.jpg"));
-  _action.insert(std::make_pair(button, &Menu::launchOption));
-  button = _irr.getGui()->addButton(irr::core::rect<irr::s32>(WINDOWSIZE_X / 2 - 100,WINDOWSIZE_Y / 2 + 160,
-							      WINDOWSIZE_X / 2 + 100, WINDOWSIZE_Y / 2 + 160 + 32), 0, 0, L"Exit", 0);
-  button->setImage(_irr.getDriver()->getTexture("./assets/Menu/color.jpg"));
-  _action.insert(std::make_pair(button, &Menu::quit));
+  _button.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/OptionsMenu.png"), &Menu::launchOption));
 
-  button = _irr.getGui()->addButton(irr::core::rect<irr::s32>(WINDOWSIZE_X / 2 - 100,WINDOWSIZE_Y / 2 + 160,
-							      WINDOWSIZE_X / 2 + 100, WINDOWSIZE_Y / 2 + 160 + 32), 0, 0, L"Credits", 0);
-  button->setImage(_irr.getDriver()->getTexture("./assets/Menu/color.jpg"));
-  _action.insert(std::make_pair(button, &Menu::displayCredit));
-  _background = _irr.getDriver()->getTexture("./assets/Menu/Menu.png");
+  _button.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/ExitMenu.png"), &Menu::quit));
 }
 
 Bomberman::Menu::Action Bomberman::Menu::run()
 {
+  int i = 0;
 
   while (_irr.getDevice()->run())
-  {
-    for (button::iterator it = _action.begin(); it != _action.end(); ++it)
-      if (it->first->isPressed())
-	(this->*(it->second))();
-    if (_irr.getDevice()->isWindowActive())
+    {
+      usleep(90000);
+      if (_irr.getDevice()->isWindowActive())
       {
-	_irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 120, 102, 136));
-	_irr.getDriver()->draw2DImage(_background, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
+	  _irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 120, 102, 136));
+	  if (_irr.event.IsKeyDown(irr::KEY_DOWN))
+	    i = (i + 1) % (int)_button.size();
+	  else if (_irr.event.IsKeyDown(irr::KEY_UP))
+	    i = (int) ((((i - 1) < 0) ? (_button.size() - 1) : (i - 1)) % (int)_button.size());
+	  if (_irr.event.IsKeyDown(irr::KEY_RETURN))
+	    (this->*_button[i].second)();
+	  _irr.getDriver()->draw2DImage(_button[i].first, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
 				      irr::core::rect<irr::s32>(0, 0, 1920, 1080));
 	_irr.getGui()->drawAll();
 	_irr.getDriver()->endScene();

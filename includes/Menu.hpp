@@ -27,12 +27,12 @@ namespace Bomberman
     typedef std::map<irr::gui::IGUIButton *, ptr> button;
 
 
-    Bomberman::Irrlicht &_irr;
-    button		_button;
-    irr::video::ITexture *_background;
-    std::map<irr::gui::IGUIButton *, ptr> _action;
-    std::vector<irr::core::stringw>  _strings;
-    int 				_nb_player;
+    Bomberman::Irrlicht &					_irr;
+    std::vector<std::pair<irr::video::ITexture *, ptr> >	_button;
+    irr::video::ITexture 					*_background;
+    std::map<irr::gui::IGUIButton *, ptr> 			_action;
+    std::vector<irr::core::stringw>  				_strings;
+    int 							_nb_player;
 
    public:
     Menu();
