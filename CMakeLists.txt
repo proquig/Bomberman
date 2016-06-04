@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 PROJECT(cpp_indie_studio)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Llib")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Llib -pthread")
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 find_package(Irrlicht)
@@ -24,12 +24,21 @@ file(
         includes/*.hpp
 )
 
+set(
+        GLOB_RECURSE
+        SELENE_INCLUDE
+        includes/Selene/
+        includes/Selene/selene
+)
+
 add_subdirectory(lib/tinyxml2)
 add_executable(Bomberman ${SOURCES} ${HEADERS})
 
-target_include_directories(Bomberman PRIVATE includes PRIVATE includes/sound PRIATE includes/xml PRIVATE includes/Selene)
+target_include_directories(Bomberman PRIVATE includes PRIVATE includes/sound PRIATE includes/xml)
+target_include_directories(Bomberman PUBLIC includes/Selene PUBLIC includes/Selene/selene)
 target_link_libraries(Bomberman ${IRRLICHT_LIBRARY})
 target_link_libraries(Bomberman IrrKlang)
+target_link_libraries(Bomberman lua)
 target_link_libraries(Bomberman tinyxml2)
 
 add_custom_command(
@@ -37,6 +46,13 @@ add_custom_command(
         COMMAND ${CMAKE_COMMAND} -E copy_directory
             ${CMAKE_HOME_DIRECTORY}/assets
             $<TARGET_FILE_DIR:Bomberman>/assets
+)
+
+add_custom_command(
+        TARGET Bomberman POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_HOME_DIRECTORY}/lua
+        $<TARGET_FILE_DIR:Bomberman>/lua
 )
 
 add_custom_command(

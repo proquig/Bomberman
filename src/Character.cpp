@@ -10,7 +10,7 @@
 
 #include <Map.hpp>
 #include <Game.hpp>
-#include "Character.hpp"
+#include "IA.hpp"
 
 Bomberman::Character::Character(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type) :
   Bomberman::Obj::Obj(mesh_path, texture_path, x, y, Bomberman::CHARACTER)
@@ -25,6 +25,7 @@ Bomberman::Character::Character(const std::string &mesh_path, const std::string 
 
 Bomberman::Character::~Character()
 {
+  delete this->_ia;
 }
 
 /*
@@ -146,4 +147,14 @@ void 							Bomberman::Character::setSpeedTime(irr::u32 time)
 {
   this->_speed = time ? 2 : 1;
   this->_speedTime = time;
+}
+
+void Bomberman::Character::setIa(Bomberman::IA *ia)
+{
+  this->_ia = ia;
+}
+
+void Bomberman::Character::die()
+{
+  this->_ia->die();
 }

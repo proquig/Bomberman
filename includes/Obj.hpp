@@ -47,6 +47,7 @@ namespace Bomberman
     bool 				isDestructible() const;
     void				remove();
     //void				reset();
+    virtual void die()			override;
 
    private:
     void				createBrick();

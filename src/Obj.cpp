@@ -237,3 +237,7 @@ void Bomberman::Obj::createBonus()
 
 }
 
+void Bomberman::Obj::die()
+{
+
+}
