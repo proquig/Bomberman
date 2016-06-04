@@ -52,6 +52,7 @@ namespace Bomberman
     void quit();
 
     void setSound();
+    void nothing(){};
 
     void displayCredit();
   };

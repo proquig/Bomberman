@@ -14,7 +14,8 @@ Bomberman::MusicManager &Bomberman::MusicManager::instance()
 
 Bomberman::MusicManager::MusicManager() : _irr(Bomberman::Irrlicht::instance()),
 					  _engine(irrklang::createIrrKlangDevice()),
-					  _music(nullptr)
+					  _music(nullptr),
+					  _play(1)
 {}
 
 Bomberman::MusicManager::MusicManager(const Bomberman::MusicManager &sound) : _irr(sound._irr)
@@ -62,8 +63,18 @@ void Bomberman::MusicManager::pauseMusic()
 
 void Bomberman::MusicManager::startMusic()
 {
-  if (this->_music)
-    this->_music->setIsPaused(false);
-  else
-    throw exception("Music cannot be loaded");
+     if (this->_music)
+       this->_music->setIsPaused(false);
+     else
+       throw exception("Music cannot be loaded");
+}
+
+int Bomberman::MusicManager::getPlay() const
+{
+  return _play;
+}
+
+void Bomberman::MusicManager::setPlay(int play)
+{
+  _play = play;
 }

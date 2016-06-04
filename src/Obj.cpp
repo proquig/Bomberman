@@ -80,8 +80,11 @@ void				Bomberman::Obj::remove()
   this->_y = -(BLOCKSIZE / 2);
       try
 	{
-	  _sound.setSong("./assets/sound/Boom.flac");
-	  _sound.startMusic();
+	  if (_sound.getPlay() == 0)
+	    {
+	      _sound.setSong("./assets/sound/Boom.flac");
+	      _sound.startMusic();
+	    }
 	}catch (exception &e)
 	{
 	  std::cerr << e.what() << std::endl;

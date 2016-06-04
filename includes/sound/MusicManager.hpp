@@ -27,6 +27,7 @@ namespace Bomberman
     Bomberman::Irrlicht &_irr;
     irrklang::ISoundEngine *_engine;
     irrklang::ISound *_music;
+    int 		_play;
 
    public:
     static MusicManager &instance();
@@ -52,6 +53,11 @@ namespace Bomberman
     void pauseMusic();
 
     void startMusic();
+
+    int getPlay() const;
+
+    void setPlay(int play);
+
   };
 }
 

@@ -41,11 +41,10 @@ void	Bomberman::Menu::intro()
   int 	i = 0;
   int 	y = 0;
   int 	j = 0;
-  Bomberman::MusicManager &s = Bomberman::MusicManager::instance();
-  s.setMusic("./assets/sound/game.mp3");
+  _music.setMusic("./assets/sound/game.mp3");
   try
     {
-      s.startMusic();
+      _music.startMusic();
     }
   catch (exception e)
     {
@@ -90,7 +89,7 @@ void Bomberman::Menu::setMenu()
 
   _options.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/Options1.png"), &Menu::setSound));
   _options.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/Options2.png"), &Menu::setSound));
-  _options.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/Options4.png"), &Menu::quit));
+  _options.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/Options4.png"), &Menu::nothing));
   _options.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/Options 3.png"), &Menu::quit));
 }
 
@@ -166,7 +165,9 @@ void Bomberman::Menu::launchOption()
 	    this->_size_map = (this->_size_map - 1) < 0 ? 200 : this->_size_map - 1;
 
 	  if (this->_irr.event.IsKeyDown(irr::KEY_DOWN))
-	    i = (i + 1) % (int)this->_options.size();
+	    {
+	      i = (i + 1) % (int) this->_options.size();
+	    }
 	  else if (this->_irr.event.IsKeyDown(irr::KEY_UP))
 	    i = (int) ((((i - 1) < 0) ? (this->_options.size() - 1) : (i - 1)) % (int)this->_options.size());
 	  if (this->_irr.event.IsKeyDown(irr::KEY_RETURN))
@@ -192,6 +193,7 @@ void Bomberman::Menu::setSound()
 {
   _sound = !_sound;
   _sound ? _music.startMusic() : _music.pauseMusic();
+  _sound ? _music.setPlay(0) : _music.setPlay(1);
 }
 
 void Bomberman::Menu::displayCredit()
