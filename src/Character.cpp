@@ -82,7 +82,7 @@ void							Bomberman::Character::put_bomb(ACTION action)
       while (++i < this->_bombs.size() && this->_bombs[i]->getExplosionTime());
       if (i < this->_bombs.size())
 	{
-	  this->_bombTime = (this->_irr.getDevice()->getTimer()->getTime() + 100);
+	  this->_bombTime = (this->_irr.getDevice()->getTimer()->getTime() + 250);
 	  this->_bombs[i]->put(this->_x, this->_y);
 	}
     }
@@ -134,7 +134,7 @@ irr::u32						Bomberman::Character::getGodTime() const
 
 void 							Bomberman::Character::setGodTime(irr::u32 time)
 {
-  this->_is_destructible = (time == 0);
+  this->_is_destructible = (!time);
   this->_godTime = time;
 }
 
@@ -148,6 +148,12 @@ void 							Bomberman::Character::setSpeedTime(irr::u32 time)
   this->_speed = time ? 2 : 1;
   this->_speedTime = time;
 }
+
+int Bomberman::Character::getSpeed() const
+{
+  return (this->_speed);
+}
+
 
 void Bomberman::Character::setIa(Bomberman::IA *ia)
 {

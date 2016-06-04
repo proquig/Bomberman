@@ -1,9 +1,9 @@
 //
 // Character.hpp for indie_studio in /home/proqui_g/rendu/cpp_indie_studio/includes
-//
+// 
 // Made by Guillaume PROQUIN
 // Login   <proqui_g@epitech.net>
-//
+// 
 // Started on  Fri May 27 18:46:24 2016 Guillaume PROQUIN
 // Last update Sun May 29 20:32:35 2016 Guillaume PROQUIN
 //
@@ -66,6 +66,7 @@ namespace						Bomberman
     void						setGodTime(irr::u32 time);
     void						setSpeedTime(irr::u32 time);
     void						setIa(IA *ia);
+    int 						getSpeed() const;
 
     virtual void die() override;
 

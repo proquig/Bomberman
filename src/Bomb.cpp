@@ -17,6 +17,7 @@ Bomberman::Bomb::Bomb(const std::string &mesh_path, const std::string &texture_p
 	Bomberman::Obj::Obj(mesh_path, texture_path, x, y, BOMB)
 {
   this->_range = NULL;
+  this->_is_destructible = true;
   this->_animated_node->setVisible(false);
 }
 
@@ -36,6 +37,7 @@ void		Bomberman::Bomb::setRange(float *range)
 void		Bomberman::Bomb::reset()
 {
   this->_explosion_time = 0;
+  this->_is_destructible = false;
   this->_animated_node->setVisible(false);
 }
 
@@ -47,6 +49,7 @@ void		Bomberman::Bomb::put(float x, float y)
   this->_animated_node->setVisible(true);
   this->_explosion_time = (this->_irr.getDevice()->getTimer()->getTime() + 2000);
   //this->_animation_time = (this->_irr.getDevice()->getTimer()->getTime() + 2500);
+  this->_is_destructible = true;
 }
 
 void		Bomberman::Bomb::explode()

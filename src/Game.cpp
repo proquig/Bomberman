@@ -68,6 +68,7 @@ Bomberman::Game::Game(size_t nb, int size_map) : _irr(Bomberman::Irrlicht::insta
       // TODO : Define if IA
       this->_players.back()->setIa(new IA(this->_map, this->_players.back()));
       this->_players.back()->add_bomb(static_cast<Bomberman::Bomb *>(this->_map->createObj("", "", 0, 0, BOMB)));
+      this->_players.back()->add_bomb(static_cast<Bomberman::Bomb *>(this->_map->createObj("", "", 0, 0, BOMB)));
       for (int j = -1; j < 2; ++j)
 	{
 	  if (this->_map->getPlan()[this->_players_conf[i].second.first + (j * BLOCKSIZE)][this->_players_conf[i].second.second])
@@ -114,6 +115,16 @@ Bomberman::Game::Game(/*size_t nb, */const std::string &name) : _irr(Bomberman::
 Bomberman::Game::~Game()
 {
 }
+/*
+void Bomberman::Game::explodeObj()
+{
+
+}
+void Bomberman::Game::explodeObjsDir()
+{
+
+}
+*/
 
 void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
 {
@@ -124,6 +135,25 @@ void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
   while (!stop && ++i < bomb->getRange())
     for (int j = -1; j < 2; ++j)
       {
+	if (j && this->_map->getPlan()[bomb->getX() + (i * j * BLOCKSIZE)][bomb->getY()]
+	    && this->_map->getPlan()[bomb->getX() + (i * j * BLOCKSIZE)][bomb->getY()]->getType() == Bomberman::BOMB
+	    && this->_map->getPlan()[bomb->getX() + (i * j * BLOCKSIZE)][bomb->getY()]->isDestructible())
+	  {
+	    bomb->explode();
+	    this->explodeObjs(static_cast<Bomberman::Bomb*>(this->_map->getPlan()[bomb->getX() + (i * j * BLOCKSIZE)][bomb->getY()]));
+	  }
+	if (j && this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]
+	    && this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]->getType() == Bomberman::BOMB
+	    && this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]->isDestructible())
+	  {
+	    bomb->explode();
+	    this->explodeObjs(static_cast<Bomberman::Bomb*>(this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]));
+	  }
+/*	if (j && this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]
+	    && this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]->getType() == Bomberman::BOMB)
+	  this->explodeObjs(static_cast<Bomberman::Bomb*>(this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)])
+	  );
+	  */
 	if (this->_map->getPlan()[bomb->getX() + (i * j * BLOCKSIZE)][bomb->getY()]
 	    && this->_map->getPlan()[bomb->getX() + (i * j * BLOCKSIZE)][bomb->getY()]->isDestructible())
 	  {
@@ -143,47 +173,6 @@ void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
 		|| (this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]
 		  && this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]->isBlocking()));
       }
-  //int i = -1;
-
-  //std::cout << (int)this->getX() << std::endl;
-  //std::cout << (int)this->getX() - ((int)this->getX() % 5) << std::endl;
-  //std::cout << ">" << ((((int)this->getX() + (int)(this->getX() > 0) * (5 - 1)) / 5) * 5) << std::endl;
-  /*int x = Bomberman::Map::getRoundPosition(bomb->getX());
-  int y = Bomberman::Map::getRoundPosition(bomb->getY());
-  //std::cout << "BOMB x = " << x << " & y = " << y << std::endl;
-  //std::cout << "------------" << std::endl;
-  //for (int i = -200; i < 200; ++i)
-    //{
-      //std::cout << Bomberman::Map::getRoundPosition(i) << std::endl;
-    //}
-  //std::cout << "------------" << std::endl;
-  int start_x = x - (((bomb->getRange()) + 1) * 5);
-  int start_y = y - (((bomb->getRange()) + 1) * 5);
-  for (int i = 0; (i < (((bomb->getRange() * 2) + 1)) * 5); ++i)
-    if (this->_map->checkObjOnPlan((start_x + i), y)
-	&& this->_map->getObjOnPlan((start_x + i), y)->isDestructible())
-      this->_map->getObjOnPlan((start_x + i), y)->remove();
-  for (int i = 0; (i < (((bomb->getRange() * 2) + 1)) * 5); ++i)
-    if (this->_map->checkObjOnPlan(x, (start_y + i))
-	&& this->_map->getObjOnPlan(x, (start_y + i))->isDestructible())
-      this->_map->getObjOnPlan(x, (start_y + i))->remove();
-*/
-    //{
-      //std::cout << "----" << std::endl;
-      //std::cout << "Real x = " << bomb->getX() << " & real y = " << bomb->getY() << std::endl;
-      //std::cout << "x = " << x << " & y = " << y << std::endl;
-      //std::cout << "start_x = " << start_x << " & start_y = " << start_y << std::endl;
-      //std::cout << "start_x + i = " << (start_x + i) << " & start_y + i = " << (start_y + i) << std::endl;
-      //std::cout << "----" << std::endl;
-      //if (this->_map->checkObjOnPlan((start_x + i), start_y + i)
-	//  && this->_map->getObjOnPlan((start_x + i), (start_y + i))->isDestructible())
-	//this->_map->getObjOnPlan((start_x + i), (start_y + i))->remove();
-    //}
-/*  while (++i < this->_map->getObjs().size())
-    if (this->_map->getObjs()[i]->isDestructible()
-	  && !this->_map->checkObjectPosition(this->_map->getObjs()[i], bomb->getX(), bomb->getY(), bomb->getRange()))
-	this->_map->getObjs()[i]->remove();
- */
 }
 
 bool Bomberman::Game::getBonus(Bomberman::Character *player, Bomberman::Character::ACTION action)
@@ -213,13 +202,14 @@ void Bomberman::Game::handleMovements()
 {
   std::map<irr::EKEY_CODE, std::pair<int, Bomberman::Character::ACTION>>::const_iterator it;
   for (it = this->_events[0].begin(); it != _events[0].end(); ++it)
-    if (this->_irr.event.getKeys()[it->first] && it->second.first < this->_players.size()
+    //    for (int i = 0; i < this->_players[it->second.first]->getSpeed(); ++i)
+      if (this->_irr.event.getKeys()[it->first] && it->second.first < this->_players.size()
 	&& this->getBonus(this->_players[it->second.first], it->second.second)
 	&& this->_map->checkPosition(
 	    this->_players[it->second.first]->getX() + Bomberman::Game::positions[it->second.second][0],
 	    this->_players[it->second.first]->getY() + Bomberman::Game::positions[it->second.second][1],
 	    float(BLOCKSIZE - 0.1)))
-      this->_players[it->second.first]->do_action(it->second.second);
+	this->_players[it->second.first]->do_action(it->second.second);
 }
 
 void Bomberman::Game::handleActions()

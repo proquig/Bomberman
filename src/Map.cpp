@@ -56,10 +56,12 @@ void		Bomberman::Map::createPlan()
   for (it = this->_objs.begin(); it != this->_objs.end(); ++it)
     if ((*it)->isBlocking()
 	|| (*it)->getType() == Bomberman::CHARACTER
+	|| ((*it)->getType() == Bomberman::BOMB && (*it)->isDestructible())
 	|| Bomberman::Game::_bonus.find((*it)->getType()) != Bomberman::Game::_bonus.end())
+    //if ((*it)->isDestructible())
       {
-	x = this->getRoundPosition((int)(*it)->getX());
-	y = this->getRoundPosition((int)(*it)->getY());
+	x = this->getRoundPosition((*it)->getX());
+	y = this->getRoundPosition((*it)->getY());
 	this->_plan[x][y] = (*it);
       }
 }
