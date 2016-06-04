@@ -151,6 +151,7 @@ void Bomberman::Menu::launchOption()
   std::ostringstream str;
   irr::gui::IGUIFont *font = this->_irr.getGui()->getFont("./assets/myfont.xml");
   this->_irr.getGui()->getSkin()->setFont(font);
+
   while (this->_irr.getDevice()->run())
     {
       usleep(90000);
@@ -163,25 +164,18 @@ void Bomberman::Menu::launchOption()
 	    this->_size_map = (this->_size_map + 1) > 200 ? 0 : this->_size_map + 1;
 	  if (this->_irr.event.IsKeyDown(irr::KEY_LEFT) && i == 2)
 	    this->_size_map = (this->_size_map - 1) < 0 ? 200 : this->_size_map - 1;
-
 	  if (this->_irr.event.IsKeyDown(irr::KEY_DOWN))
-	    {
 	      i = (i + 1) % (int) this->_options.size();
-	    }
 	  else if (this->_irr.event.IsKeyDown(irr::KEY_UP))
 	    i = (int) ((((i - 1) < 0) ? (this->_options.size() - 1) : (i - 1)) % (int)this->_options.size());
 	  if (this->_irr.event.IsKeyDown(irr::KEY_RETURN))
 	    (this->*_options[i].second)();
 	  if (this->_irr.event.IsKeyDown(irr::KEY_ESCAPE))
 	    return;
-	  this->_irr.getDriver()->draw2DImage(this->_options[i].first,
-					      irr::core::rect<irr::s32>(0, 0, 1920, 1080),
-					irr::core::rect<irr::s32>(0, 0, 1920, 1080));
-	  font->draw(str.str().c_str(), irr::core::rect<irr::s32>(1920 / 2 + 900,
-								  1080 / 2 + 300,
-								  1920 / 2, 1080 / 2),
-								  irr::video::SColor(255, 255, 255, 255),
-								  true, true);
+	  this->_irr.getDriver()->draw2DImage(this->_options[i].first, irr::core::rect<irr::s32>(0, 0, 1920, 1080), irr::core::rect<irr::s32>(0, 0, 1920, 1080));
+
+	  font->draw(str.str().c_str(), irr::core::rect<irr::s32>(1920 / 2 + 1000, 1080 / 2 + 250, 1920 / 2, 1080 / 2),
+		     irr::video::SColor(255, this->_size_map, 153, 51), true, true);
 	  this->_irr.getGui()->drawAll();
 	  this->_irr.getDriver()->endScene();
 	}
@@ -199,8 +193,13 @@ void Bomberman::Menu::setSound()
 void Bomberman::Menu::displayCredit()
 {
   std::vector<irr::core::stringw> v ={
+	  {"REALISATEURS:"},
 	  {"proqui_g"},
-	  {"cloque_b"}
+	  {"cloque_b"},
+	  {"pogam_-g"},
+	  {"joris_a"},
+	  {"Avec la participation de :"},
+	  {"donosc_r"},
   };
 
   int x = 100;
