@@ -94,6 +94,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/xml/Score.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/xml/ScoreManager.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cmake/Modules/FindLua.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake/Modules/FindIrrlicht.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake/Modules/FindLua.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake/Modules/FindIrrKlang.cmake" isTestSource="false" />

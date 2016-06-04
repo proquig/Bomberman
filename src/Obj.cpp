@@ -2,6 +2,7 @@
 // Created by cloquet on 28/05/16.
 //
 
+#include <Obj.hpp>
 #include <Map.hpp>
 #include <Game.hpp>
 #include <Exception.hpp>

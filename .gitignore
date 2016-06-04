@@ -87,3 +87,5 @@ fabric.properties
 
 
 /build/*
+/lua/.idea
+/lua/*.iml

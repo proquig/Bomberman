@@ -7,11 +7,17 @@
 --
 
 function main()
-    if ia.dead() == true then
-        io.write("IA already dead ? D:\n")
-    end
     while ia.dead() == false do
-        ia.move("LEFT")
-        ia.put_bomb()
+        local x = ia.get_x()
+        local y = ia.get_y()
+
+        if ia.get_case_content(x - ia.get_block_size(), y) == "BOX" then
+            ia.put_bomb()
+            while ia.get_x() ~= x + 50 do
+                ia.move_right()
+            end
+        else
+            ia.move_left()
+        end
     end
 end
