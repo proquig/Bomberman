@@ -9,6 +9,7 @@
 #include "Save.hpp"
 #include <IGUIButton.h>
 #include <Game.hpp>
+#include <sstream>
 
 # define WINDOWSIZE_X 1920
 # define WINDOWSIZE_Y 1080
@@ -18,8 +19,10 @@ Bomberman::Menu::~Menu()
 
 }
 
-Bomberman::Menu::Menu() : _irr(Bomberman::Irrlicht::instance())
+Bomberman::Menu::Menu() : _irr(Bomberman::Irrlicht::instance()),
+			  _music(Bomberman::MusicManager::instance())
 {
+  this->_sound = 1;
 }
 
 void 	Bomberman::Menu::splash()
@@ -79,20 +82,20 @@ void	Bomberman::Menu::intro()
 void Bomberman::Menu::setMenu()
 {
   _button.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/NewMenu.png"), &Menu::launchGame));
-
   _button.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/MultiMenu.png"), &Menu::launchMulti));
-
   _button.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/LoadMenu.png"), &Menu::loadGame));
-
   _button.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/OptionsMenu.png"), &Menu::launchOption));
-
   _button.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/ExitMenu.png"), &Menu::quit));
+
+  _options.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/Options1.png"), &Menu::setSound));
+  _options.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/Options2.png"), &Menu::setSound));
+  _options.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/Options4.png"), &Menu::quit));
+  _options.push_back(std::make_pair(_irr.getDriver()->getTexture("./assets/Menu/Options 3.png"), &Menu::quit));
 }
 
 Bomberman::Menu::Action Bomberman::Menu::run()
 {
   int i = 0;
-
   while (_irr.getDevice()->run())
     {
       usleep(90000);
@@ -105,9 +108,9 @@ Bomberman::Menu::Action Bomberman::Menu::run()
 	    i = (int) ((((i - 1) < 0) ? (_button.size() - 1) : (i - 1)) % (int)_button.size());
 	  if (_irr.event.IsKeyDown(irr::KEY_RETURN))
 	    (this->*_button[i].second)();
+
 	  _irr.getDriver()->draw2DImage(_button[i].first, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
 				      irr::core::rect<irr::s32>(0, 0, 1920, 1080));
-	_irr.getGui()->drawAll();
 	_irr.getDriver()->endScene();
       }
   }
@@ -145,7 +148,52 @@ void Bomberman::Menu::launchMulti()
 
 void Bomberman::Menu::launchOption()
 {
-  //_irr.getGui()->addComboBox(irr::core::rect<irr::s32>(WINDOWSIZE_X / 2 - 100, WINDOWSIZE_Y / 2 + 40, WINDOWSIZE_X/ 2 + 100, WINDOWSIZE_Y / 2  + 40 + 32));
+  int i = 0;
+  int x = 184;
+  std::ostringstream str;
+
+  irr::gui::IGUIFont *font = _irr.getGui()->getFont("./assets/myfont.xml");
+  _irr.getGui()->getSkin()->setFont(font);
+
+  while (_irr.getDevice()->run())
+    {
+      usleep(90000);
+      str.str("");
+      str << "<" << x << ">";
+      if (_irr.getDevice()->isWindowActive())
+	{
+	  _irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 120, 102, 136));
+	  if (_irr.event.IsKeyDown(irr::KEY_RIGHT) && i == 2)
+	    x = (x + 1) > 200 ? 0 : x + 1;
+	  if (_irr.event.IsKeyDown(irr::KEY_LEFT) && i == 2)
+	    x = (x - 1) < 0 ? 200 : x - 1;
+
+	  if (_irr.event.IsKeyDown(irr::KEY_DOWN))
+	    i = (i + 1) % (int)_options.size();
+	  else if (_irr.event.IsKeyDown(irr::KEY_UP))
+	    i = (int) ((((i - 1) < 0) ? (_options.size() - 1) : (i - 1)) % (int)_options.size());
+
+	  if (_irr.event.IsKeyDown(irr::KEY_RETURN))
+	    (this->*_options[i].second)();
+	  if (_irr.event.IsKeyDown(irr::KEY_ESCAPE))
+	    return;
+	  _irr.getDriver()->draw2DImage(_options[i].first, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
+					irr::core::rect<irr::s32>(0, 0, 1920, 1080));
+	  font->draw(str.str().c_str(), irr::core::rect<irr::s32>(1920 / 2 + 900, 1080 / 2 + 300,
+								  1920 / 2, 1080 / 2),
+		     irr::video::SColor(255, 255, 255, 255),
+		     true, true);
+	  _irr.getGui()->drawAll();
+	  _irr.getDriver()->endScene();
+	}
+    }
+}
+
+
+void Bomberman::Menu::setSound()
+{
+  _sound = !_sound;
+  _sound ? _music.startMusic() : _music.pauseMusic();
 }
 
 void Bomberman::Menu::displayCredit()

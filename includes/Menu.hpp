@@ -8,6 +8,7 @@
 #include "Irrlicht.hpp"
 
 #include <list>
+#include <sound/MusicManager.hpp>
 
 namespace Bomberman
 {
@@ -29,10 +30,12 @@ namespace Bomberman
 
     Bomberman::Irrlicht &					_irr;
     std::vector<std::pair<irr::video::ITexture *, ptr> >	_button;
-    irr::video::ITexture 					*_background;
-    std::map<irr::gui::IGUIButton *, ptr> 			_action;
-    std::vector<irr::core::stringw>  				_strings;
+    std::vector<std::pair<irr::video::ITexture *, ptr> > 	_options;
+
+    Bomberman::MusicManager					&_music;
+
     int 							_nb_player;
+    int 							_sound;
 
    public:
     Menu();
@@ -48,6 +51,9 @@ namespace Bomberman
     void launchMulti();
     void launchOption();
     void quit();
+
+    void setSound();
+
     void displayCredit();
   };
 }
