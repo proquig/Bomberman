@@ -6,12 +6,9 @@
 #include <Menu.hpp>
 #include <fstream>
 #include <sstream>
-#include <Exception.hpp>
-#include <zconf.h>
-#include <stdlib.h>
+#include <unistd.h>
+#include <IA.hpp>
 #include "Game.hpp"
-#include "Character.hpp"
-#include "Map.hpp"
 
 const std::vector<std::pair<std::string, std::pair<int, int>>> Bomberman::Game::_players_conf = {
 	{"./assets/ninja/nskinwh.jpg", {(MAPSIZE_X / 2) - (4 * BLOCKSIZE), -((MAPSIZE_Y / 2) - (4 * BLOCKSIZE))}},
@@ -68,6 +65,8 @@ Bomberman::Game::Game(size_t nb, int size_map) : _irr(Bomberman::Irrlicht::insta
 											 this->_players_conf[i].second.first,
 											 this->_players_conf[i].second.second,
 											 Bomberman::CHARACTER)));
+      // TODO : Define if IA
+      this->_players.back()->setIa(new IA(this->_map, this->_players.back()));
       this->_players.back()->add_bomb(static_cast<Bomberman::Bomb *>(this->_map->createObj("", "", 0, 0, BOMB)));
       for (int j = -1; j < 2; ++j)
 	{
@@ -282,8 +281,12 @@ int Bomberman::Game::handleEvents()
       handleActions();
     }
   for (it = this->_players.begin(); it != this->_players.end(); ++it)
-    if ((*it)->isDestructible() || (!(*it)->isDestructible() && (*it)->getGodTime()))
-      players_alive++;
+    {
+      if ((*it)->isDestructible() || (!(*it)->isDestructible() && (*it)->getGodTime()))
+	players_alive++;
+      else
+	(*it)->die();
+    }
   return (players_alive == this->_nb_players);
 }
 
