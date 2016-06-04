@@ -33,9 +33,8 @@ namespace Bomberman
     std::vector<std::pair<irr::video::ITexture *, ptr> > 	_options;
 
     Bomberman::MusicManager					&_music;
-
-    int 							_nb_player;
     int 							_sound;
+    int 							_size_map;
 
    public:
     Menu();

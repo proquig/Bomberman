@@ -23,6 +23,7 @@ Bomberman::Menu::Menu() : _irr(Bomberman::Irrlicht::instance()),
 			  _music(Bomberman::MusicManager::instance())
 {
   this->_sound = 1;
+  this->_size_map = 184;
 }
 
 void 	Bomberman::Menu::splash()
@@ -119,11 +120,10 @@ Bomberman::Menu::Action Bomberman::Menu::run()
 
 void Bomberman::Menu::launchGame()
 {
-  this->_nb_player = 1;
   this->splash();
-  Game G(1);
+  Game G(1, this->_size_map);
   Bomberman::Save(G.run());
-  _irr.getSmgr()->clear();
+  this->_irr.getSmgr()->clear();
 }
 
 void Bomberman::Menu::loadGame()
@@ -132,7 +132,7 @@ void Bomberman::Menu::loadGame()
   try {
       Game G("save.txt");
       Bomberman::Save(G.run());
-      _irr.getSmgr()->clear();
+      this->_irr.getSmgr()->clear();
   }catch(exception &e) {
     e.what();
   }
@@ -141,50 +141,48 @@ void Bomberman::Menu::loadGame()
 void Bomberman::Menu::launchMulti()
 {
   this->splash();
-  Game G(2);
+  Game G(2, this->_size_map);
   Bomberman::Save(G.run());
-  _irr.getSmgr()->clear();
+  this->_irr.getSmgr()->clear();
 }
 
 void Bomberman::Menu::launchOption()
 {
   int i = 0;
-  int x = 184;
   std::ostringstream str;
-
-  irr::gui::IGUIFont *font = _irr.getGui()->getFont("./assets/myfont.xml");
-  _irr.getGui()->getSkin()->setFont(font);
-
-  while (_irr.getDevice()->run())
+  irr::gui::IGUIFont *font = this->_irr.getGui()->getFont("./assets/myfont.xml");
+  this->_irr.getGui()->getSkin()->setFont(font);
+  while (this->_irr.getDevice()->run())
     {
       usleep(90000);
       str.str("");
-      str << "<" << x << ">";
-      if (_irr.getDevice()->isWindowActive())
+      str << "<" << this->_size_map << ">";
+      if (this->_irr.getDevice()->isWindowActive())
 	{
-	  _irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 120, 102, 136));
-	  if (_irr.event.IsKeyDown(irr::KEY_RIGHT) && i == 2)
-	    x = (x + 1) > 200 ? 0 : x + 1;
-	  if (_irr.event.IsKeyDown(irr::KEY_LEFT) && i == 2)
-	    x = (x - 1) < 0 ? 200 : x - 1;
+	  this->_irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 120, 102, 136));
+	  if (this->_irr.event.IsKeyDown(irr::KEY_RIGHT) && i == 2)
+	    this->_size_map = (this->_size_map + 1) > 200 ? 0 : this->_size_map + 1;
+	  if (this->_irr.event.IsKeyDown(irr::KEY_LEFT) && i == 2)
+	    this->_size_map = (this->_size_map - 1) < 0 ? 200 : this->_size_map - 1;
 
-	  if (_irr.event.IsKeyDown(irr::KEY_DOWN))
-	    i = (i + 1) % (int)_options.size();
-	  else if (_irr.event.IsKeyDown(irr::KEY_UP))
-	    i = (int) ((((i - 1) < 0) ? (_options.size() - 1) : (i - 1)) % (int)_options.size());
-
-	  if (_irr.event.IsKeyDown(irr::KEY_RETURN))
+	  if (this->_irr.event.IsKeyDown(irr::KEY_DOWN))
+	    i = (i + 1) % (int)this->_options.size();
+	  else if (this->_irr.event.IsKeyDown(irr::KEY_UP))
+	    i = (int) ((((i - 1) < 0) ? (this->_options.size() - 1) : (i - 1)) % (int)this->_options.size());
+	  if (this->_irr.event.IsKeyDown(irr::KEY_RETURN))
 	    (this->*_options[i].second)();
-	  if (_irr.event.IsKeyDown(irr::KEY_ESCAPE))
+	  if (this->_irr.event.IsKeyDown(irr::KEY_ESCAPE))
 	    return;
-	  _irr.getDriver()->draw2DImage(_options[i].first, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
+	  this->_irr.getDriver()->draw2DImage(this->_options[i].first,
+					      irr::core::rect<irr::s32>(0, 0, 1920, 1080),
 					irr::core::rect<irr::s32>(0, 0, 1920, 1080));
-	  font->draw(str.str().c_str(), irr::core::rect<irr::s32>(1920 / 2 + 900, 1080 / 2 + 300,
+	  font->draw(str.str().c_str(), irr::core::rect<irr::s32>(1920 / 2 + 900,
+								  1080 / 2 + 300,
 								  1920 / 2, 1080 / 2),
-		     irr::video::SColor(255, 255, 255, 255),
-		     true, true);
-	  _irr.getGui()->drawAll();
-	  _irr.getDriver()->endScene();
+								  irr::video::SColor(255, 255, 255, 255),
+								  true, true);
+	  this->_irr.getGui()->drawAll();
+	  this->_irr.getDriver()->endScene();
 	}
     }
 }

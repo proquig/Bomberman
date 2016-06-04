@@ -51,13 +51,13 @@ const std::map<irr::EKEY_CODE, std::pair<int, Bomberman::Character::ACTION>> Bom
 	}
 };
 
-Bomberman::Game::Game(size_t nb) : _irr(Bomberman::Irrlicht::instance()),
+Bomberman::Game::Game(size_t nb, int size_map) : _irr(Bomberman::Irrlicht::instance()),
 				   _nb_players(nb)
 {
   this->_map = new Bomberman::Map();
   for (int i = 0; i < 84; ++i)
     this->_map->createObjSomewhere(WALLOBJ, WALLTEXT, Bomberman::BRICK);
-  for (int i = 0; i < 184; ++i)
+  for (int i = 0; i < size_map; ++i)
     this->_map->createObjSomewhere(BOXOBJ, BOXTEXT, Bomberman::BOX);
   this->_map->createMap();
   this->_map->createPlan();

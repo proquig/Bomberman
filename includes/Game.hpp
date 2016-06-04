@@ -28,7 +28,7 @@ namespace					Bomberman
     int 					_pause;
 
    public:
-    Game(size_t);
+    Game(size_t, int);
     Game(const std::string &);
     ~Game();
     Bomberman::Map		*run();
