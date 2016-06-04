@@ -159,7 +159,8 @@ std::string	Bomberman::Obj::getTextureName() const
 
 void Bomberman::Obj::createBrick()
 {
-  this->_mesh = this->_irr.getSmgr()->getMesh(this->_mesh_path.c_str());
+  if ((this->_mesh = this->_irr.getSmgr()->getMesh(this->_mesh_path.c_str())) == NULL)
+    throw (exception("Where is our assets ?"));
   this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh, 0, -1, irr::core::vector3df(this->_x, 12.5, this->_y), irr::core::vector3df(0, 0, 0),
 						       irr::core::vector3df(1.7, 1.7, 1.7));
   this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
@@ -171,32 +172,37 @@ void Bomberman::Obj::createBrick()
 
 void Bomberman::Obj::createBox()
 {
-  this->_mesh = this->_irr.getSmgr()->getMesh(this->_mesh_path.c_str());
-  this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh, 0, -1, irr::core::vector3df(this->_x, 12.5, this->_y), irr::core::vector3df(0, 90, 0),
+  if ((this->_mesh = this->_irr.getSmgr()->getMesh(this->_mesh_path.c_str())) == NULL)
+    throw (exception("Where is our assets ?"));
+  this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh, 0, -1,
+						       irr::core::vector3df(this->_x, 12.5, this->_y),
+						       irr::core::vector3df(0, 90, 0),
 						       irr::core::vector3df(1.7, 1.7, 1.7));
   this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-  //this->_node->setPosition(irr::core::vector3df(this->_x, 12.5, this->_y));
   this->_is_blocking = true;
 }
 
 void Bomberman::Obj::createPlan()
 {
   this->_mesh = this->_irr.getSmgr()->getGeometryCreator()
-		    ->createPlaneMesh(irr::core::dimension2df(this->_x, this->_y), irr::core::dimension2d<irr::u32>(1, 1), 0,
+		    ->createPlaneMesh(irr::core::dimension2df(this->_x, this->_y),
+				      irr::core::dimension2d<irr::u32>(1, 1), 0,
 				      irr::core::dimension2df(1, 1));
   this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_mesh);
   this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
   this->_irr.getSmgr()->getMeshManipulator()->makePlanarTextureMapping(this->_mesh, 0.04);
   this->_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(this->_texture_path.c_str()));
-
 }
 
 void Bomberman::Obj::createCharacter()
 {
-  this->_animated_mesh = this->_irr.getSmgr()->getMesh(this->_mesh_path.c_str());
+  if ((this->_animated_mesh = this->_irr.getSmgr()->getMesh(this->_mesh_path.c_str())) == NULL)
+    throw (exception("Where is our assets ?"));
   this->_animated_node = this->_irr.getSmgr()
-			     ->addAnimatedMeshSceneNode(this->_animated_mesh, 0, -1, irr::core::vector3df(this->_x, 0, this->_y),
-							irr::core::vector3df(0, 0, 0),irr::core::vector3df(5, 5, 5));
+			     ->addAnimatedMeshSceneNode(this->_animated_mesh, 0, -1,
+							irr::core::vector3df(this->_x, 0, this->_y),
+							irr::core::vector3df(0, 0, 0),
+							irr::core::vector3df(5, 5, 5));
   this->_animated_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
   this->_animated_node->setMD2Animation(irr::scene::EMAT_STAND);
   this->_animated_node->setMaterialTexture(0, this->_irr.getDriver()->getTexture(this->_texture_path.c_str()));
@@ -206,7 +212,8 @@ void Bomberman::Obj::createCharacter()
 void Bomberman::Obj::createBomb()
 {
   this->_mesh_path = "./assets/Bomb/model.dae";
-  this->_animated_mesh = this->_irr.getSmgr()->getMesh(this->_mesh_path.c_str());
+  if ((this->_animated_mesh = this->_irr.getSmgr()->getMesh(this->_mesh_path.c_str())) == NULL)
+    throw (exception("Where is our assets ?"));
   this->_animated_node = this->_irr.getSmgr()
 			     ->addAnimatedMeshSceneNode(this->_animated_mesh, 0, -1, irr::core::vector3df(this->_x, 0, this->_y),
 							irr::core::vector3df(0, 0, 0),irr::core::vector3df(0.15, 0.15, 0.15));
@@ -234,7 +241,6 @@ void Bomberman::Obj::createBonus()
 						       irr::core::vector3df(0, 0, 0),
 						       irr::core::vector3df(1, 1, 1));
   this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-
 }
 
 void Bomberman::Obj::die()

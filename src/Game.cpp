@@ -8,6 +8,7 @@
 #include <sstream>
 #include <unistd.h>
 #include <IA.hpp>
+#include <Exception.hpp>
 #include "Game.hpp"
 
 const std::vector<std::pair<std::string, std::pair<int, int>>> Bomberman::Game::_players_conf = {
@@ -79,8 +80,7 @@ Bomberman::Game::Game(size_t nb, int size_map) : _irr(Bomberman::Irrlicht::insta
     }
 }
 
-Bomberman::Game::Game(/*size_t nb, */const std::string &name) : _irr(Bomberman::Irrlicht::instance())
-/*_nb_players(nb)*/
+Bomberman::Game::Game(const std::string &name) : _irr(Bomberman::Irrlicht::instance())
 {
   std::vector<std::string> data;
   std::ifstream file("save.txt");
@@ -90,8 +90,8 @@ Bomberman::Game::Game(/*size_t nb, */const std::string &name) : _irr(Bomberman::
 
   this->_map = new Bomberman::Map();
   if (!file)
-    throw std::runtime_error("Invalid file");
-  while (std::getline(file, line))
+    throw (exception("Invalid file"));
+    while (std::getline(file, line))
     {
       ss << line;
       while (std::getline(ss, word, ';'))
