@@ -281,9 +281,10 @@ int Bomberman::Game::handleEvents()
       handleMovements();
       handleActions();
     }
-  for (it = this->_players.begin(); it != this->_players.end(); ++it)
+  for (it = this->_players.begin(); it != this->_players.end(); ++it) {
     if ((*it)->isDestructible() || (!(*it)->isDestructible() && (*it)->getGodTime()))
       players_alive++;
+  }
   return (players_alive == this->_nb_players);
 }
 
@@ -321,6 +322,38 @@ Bomberman::Map *Bomberman::Game::run()
 	}
     }
   return (NULL);
+}
+
+void		Bomberman::Game::printWin() {
+  irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
+
+  if (this->_irr.getDevice()->isWindowActive()) {
+    irr::video::ITexture *logo = this->_irr.getDriver()->getTexture("./assets/YouWon.png");
+    _irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 0, 0, 0));
+    this->_irr.getDriver()->draw2DImage(background, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
+					irr::core::rect<irr::s32>(0, 0, 1920, 1080));
+    this->_irr.getSmgr()->drawAll();
+    this->_irr.getDriver()->draw2DImage(logo, irr::core::rect<irr::s32>((1920 / 2) - (380 / 2), 1080 / 2 - (84 / 2), (1920 / 2) + (380 / 2) + 10, 1080 / 2 + (84 / 2) + 10),
+					irr::core::rect<irr::s32>(0, 0, 380, 84), 0, 0, true);
+    _irr.getDriver()->endScene();
+    sleep(3);
+  }
+}
+
+void		Bomberman::Game::printLose() {
+  irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
+  
+  if (this->_irr.getDevice()->isWindowActive()) {
+    irr::video::ITexture *logo = this->_irr.getDriver()->getTexture("./assets/YouWon.png");
+    _irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 0, 0, 0));
+    this->_irr.getDriver()->draw2DImage(background, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
+					irr::core::rect<irr::s32>(0, 0, 1920, 1080));
+    this->_irr.getSmgr()->drawAll();
+    this->_irr.getDriver()->draw2DImage(logo, irr::core::rect<irr::s32>((1920 / 2) - (380 / 2), 1080 / 2 - (84 / 2), (1920 / 2) + (380 / 2) + 10, 1080 / 2 + (84 / 2) + 10),
+					irr::core::rect<irr::s32>(0, 0, 380, 84), 0, 0, true);
+    _irr.getDriver()->endScene();
+    sleep(3);
+  }
 }
 
 void Bomberman::Game::bonus_bomb_range(Bomberman::Character *player, Bomberman::Obj *obj)

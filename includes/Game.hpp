@@ -33,6 +33,9 @@ namespace					Bomberman
     ~Game();
     Bomberman::Map		*run();
 
+    void			printWin();
+    void			printLose();
+    
     int handleEvents();
 
     void handleMovements();

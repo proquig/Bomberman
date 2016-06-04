@@ -25,8 +25,8 @@ namespace				Bomberman
   private:
     float 				*_range;
     //STATE				_state;
-    //Bomberman::Explosion		*exp;
-
+    Bomberman::Explosion		*exp;
+    
   public:
      Bomb(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     ~Bomb();
@@ -36,7 +36,6 @@ namespace				Bomberman
     float				getRange() const;
     void				setRange(float *range);
     void				clean();
-
   };
 }
 
