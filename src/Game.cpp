@@ -250,7 +250,7 @@ int Bomberman::Game::handleEvents()
       players_alive++;
     else
       (*it)->die();
-  return (players_alive);
+  return (players_alive > 1 && !this->_players[0]->_dead);
 }
 
 Bomberman::Map *Bomberman::Game::run()
@@ -284,8 +284,6 @@ Bomberman::Map *Bomberman::Game::run()
 	      lastFPS = fps;
 	    }
 	}
-      if (_players[0]->_dead)
-	break;
     }
   _players[0]->_dead ? this->printLose() : this->printWin();
   return (NULL);
