@@ -5,7 +5,7 @@
 #ifndef CPP_INDIE_STUDIO_IA_HPP
 #define CPP_INDIE_STUDIO_IA_HPP
 
-#include <lua.hpp>
+#include "lua.hpp"
 #include <Selene/selene.h>
 #include "Character.hpp"
 #include "Map.hpp"
@@ -34,7 +34,16 @@ namespace Bomberman
 
     static int getMapYSize();
 
-    void move(std::string direction = "LEFT");
+    int getBlockSize();
+
+    bool move(const std::string &direction);
+    bool move_top();
+    bool move_bottom();
+    bool move_left();
+    bool move_right();
+
+    int getX();
+    int getY();
 
     void putBomb();
   };

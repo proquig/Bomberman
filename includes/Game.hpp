@@ -31,32 +31,20 @@ namespace					Bomberman
     Game(size_t, int);
     Game(const std::string &);
     ~Game();
-    Bomberman::Map		*run();
-
-    void			printWin();
-    void			printLose();
-    
-    int handleEvents();
-
-    void handleMovements();
-
-    void handleActions();
-
-    void handleTime();
-
-    void explodeObjs(Bomb *bomb);
-
-    bool getBonus(Bomberman::Character *player, Bomberman::Character::ACTION action);
-
-    void handleBonus();
-
+    Bomberman::Map					*run();
+    int							handleEvents();
+    void						handleMovements();
+    void						handleActions();
+    void						handleTime();
+    void						explodeObjs(Bomb *bomb);
+    bool 						getBonus(Bomberman::Character *player, Bomberman::Character::ACTION action);
+    void						handleBonus();
     void						bonus_bomb_range(Bomberman::Character *player, Bomberman::Obj *obj);
-
     void						bonus_bomb_nb(Bomberman::Character *player, Bomberman::Obj *obj);
-
     void						bonus_god(Bomberman::Character *player, Bomberman::Obj *obj);
-
     void						bonus_speed(Bomberman::Character *player, Bomberman::Obj *obj);
+    void						printWin();
+    void						printLose();
   };
 }
 

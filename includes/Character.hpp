@@ -31,10 +31,10 @@ namespace						Bomberman
   public:
     enum						ACTION
       {
-	GO_UP,
-	GO_DOWN,
-	GO_LEFT,
-	GO_RIGHT,
+	GO_UP = 0,
+	GO_DOWN = 1,
+	GO_LEFT = 2,
+	GO_RIGHT = 3,
 	PUT_BOMB,
 	JUMP
       };

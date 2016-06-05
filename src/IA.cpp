@@ -20,13 +20,19 @@ void Bomberman::IA::initIA()
 {
   sleep(5);
   sel::State state{true};
-  state.Load("./lua/main.lua");
+  state.Load("/home/pogam-_g/ClionProjects/cpp_indie_studio/lua/main.lua");
 
   state["ia"].SetObj(*this,
 		     "get_case_content", &IA::getCaseContent,
 		     "dead", &IA::_dead,
-		     "move", &IA::move,
-		     "put_bomb", &IA::putBomb
+		     "move_top", &IA::move_top,
+		     "move_bottom", &IA::move_bottom,
+		     "move_left", &IA::move_left,
+		     "move_right", &IA::move_right,
+		     "put_bomb", &IA::putBomb,
+		     "get_x", &IA::getX,
+		     "get_y", &IA::getY,
+		     "get_block_size", &IA::getBlockSize
   );
 
   state["get_map_x_size"] = &getMapXSize;
@@ -48,7 +54,12 @@ std::string Bomberman::IA::getCaseContent(int x, int y)
 		  {BOX, "BOX"},
 		  {BRICK, "BRICK"},
 		  {CHARACTER, "CHARACTER"},
-		  {PLAN, "PLAN"}
+		  {PLAN, "PLAN"},
+		  {BONUS, "BONUS"},
+		  {B_STAR, "B_STAR"},
+		  {B_BOMB_R, "B_BOMB_R"},
+		  {B_BOMB_N, "B_BOMB_N"},
+		  {B_BOOT, "B_BOOT"}
 	  };
 
   Obj *obj = this->_map->getObjOnPlan(x, y);
@@ -69,24 +80,37 @@ int Bomberman::IA::getMapYSize()
   return MAPSIZE_Y / 5;
 }
 
-void Bomberman::IA::move(std::string direction)
+int Bomberman::IA::getBlockSize()
+{
+  return BLOCKSIZE;
+}
+
+bool Bomberman::IA::move(const std::string &direction)
 {
   if (this->_dead)
-    return;
+    return false;
 
-  const std::map<std::string, int> dirs = {
-	  {"TOP", 0},
-	  {"BOTTOM", 1},
-	  {"LEFT", 2},
-	  {"RIGHT", 3}
+  const std::map<std::string, Character::ACTION> dirs = {
+	  {"TOP", Character::GO_UP},
+	  {"BOTTOM", Character::GO_DOWN},
+	  {"LEFT", Character::GO_LEFT},
+	  {"RIGHT", Character::GO_RIGHT}
   };
 
+  bool moved;
   if (this->_map->checkPosition(
 	  this->_character->getX() + Bomberman::Game::positions[dirs.at(direction)][0],
 	  this->_character->getY() + Bomberman::Game::positions[dirs.at(direction)][1],
 	  float(BLOCKSIZE - 0.1)))
-    this->_character->do_action(Character::GO_LEFT);
-  usleep(35000);
+    {
+      this->_character->do_action(dirs.at(direction));
+      moved = true;
+    }
+  else
+    moved = false;
+
+  usleep(30000);
+  return (moved);
 }
 
 void Bomberman::IA::putBomb()
@@ -94,4 +118,34 @@ void Bomberman::IA::putBomb()
   if (this->_dead)
     return;
   this->_character->put_bomb(Character::PUT_BOMB);
+}
+
+bool Bomberman::IA::move_top()
+{
+  return move("TOP");
+}
+
+bool Bomberman::IA::move_bottom()
+{
+  return move("BOTTOM");
+}
+
+bool Bomberman::IA::move_left()
+{
+  return move("LEFT");
+}
+
+bool Bomberman::IA::move_right()
+{
+  return move("RIGHT");
+}
+
+int Bomberman::IA::getX()
+{
+  return (int) this->_character->getX();
+}
+
+int Bomberman::IA::getY()
+{
+  return (int) this->_character->getY();
 }

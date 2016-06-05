@@ -13,7 +13,7 @@
 #include "IA.hpp"
 
 Bomberman::Character::Character(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type) :
-  Bomberman::Obj::Obj(mesh_path, texture_path, x, y, Bomberman::CHARACTER)
+  Bomberman::Obj::Obj(mesh_path, texture_path, x, y, Bomberman::CHARACTER), _ia(nullptr)
 {
   this->_bombTime = 0;
   this->_godTime = 0;
@@ -28,31 +28,17 @@ Bomberman::Character::~Character()
   delete this->_ia;
 }
 
-/*
-float							Bomberman::Character::getRange() const
-{
-  return (this->_range);
-}
-*/
-
 void							Bomberman::Character::set_pos(ACTION direction)
 {
-  //if (this->_irr.getDevice()->getTimer()->getTime() > this->_movTime)
-    //{
-      //this->_movTime = (this->_irr.getDevice()->getTimer()->getTime() + 15);
       this->_x += (Bomberman::Game::positions[direction][0] * this->_speed);
       this->_y += (Bomberman::Game::positions[direction][1] * this->_speed);
       this->set_orientation(direction);
-      //this->_x = (round(this->_x * 100)) / 100;
-      //std::cout << " new x = " << this->_x << " & new y = " << this->_y << std::endl;
       this->_animated_node->setPosition(irr::core::vector3df(this->_x, 0, this->_y));
-      //this->_animated_node->setPosition(irr::core::vector3df(, 0, (float)Bomberman::Map::getRoundPosition(this->_y)));
       if (this->_animated_node->getStartFrame() == START_FRAME)
 	{
 	  this->_animated_node->setFrameLoop(START_WALK_FRAME, END_WALK_FRAME);
 	  this->afk();
 	}
-    //}
 }
 
 void							Bomberman::Character::set_orientation(ACTION direction)
@@ -102,12 +88,6 @@ void							Bomberman::Character::jump(ACTION action)
       this->afk();
     }
 }
-
-/*
- * void 							Bomberman::Character::remove()
-{
-}
- */
 
 void							Bomberman::Character::do_action(ACTION action)
 {
@@ -162,5 +142,6 @@ void Bomberman::Character::setIa(Bomberman::IA *ia)
 
 void Bomberman::Character::die()
 {
-  this->_ia->die();
+  if (this->_ia != nullptr)
+    this->_ia->die();
 }

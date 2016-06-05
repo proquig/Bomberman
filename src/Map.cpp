@@ -142,5 +142,5 @@ Bomberman::Obj *Bomberman::Map::getObjOnPlan(int x, int y)
 
 int Bomberman::Map::getRoundPosition(float axis)
 {
-    return (((((int)axis + (int)(axis > 0) * (BLOCKSIZE - 1)) / BLOCKSIZE) * BLOCKSIZE));
+  return (((((int)axis + (int)(axis > 0) * (BLOCKSIZE - 1)) / BLOCKSIZE) * BLOCKSIZE));
 }
