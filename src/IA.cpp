@@ -20,7 +20,7 @@ void Bomberman::IA::initIA()
 {
   sleep(3);
   sel::State state{true};
-  state.Load("/home/pogam-_g/ClionProjects/cpp_indie_studio/lua/main.lua");
+  state.Load("./lua/main.lua");
 
   state["ia"].SetObj(*this,
 		     "get_case_content", &IA::getCaseContent,
