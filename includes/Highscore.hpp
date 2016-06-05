@@ -17,11 +17,8 @@ namespace Bomberman
 
    public:
     Highscore();
-
     ~Highscore();
-
     void			writeScore(size_t);
-
     std::vector <std::string> 	getScore() const;
   };
 }

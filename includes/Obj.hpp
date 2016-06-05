@@ -20,7 +20,6 @@ namespace Bomberman
     Bomberman::MusicManager		&_sound;
     irr::scene::IAnimatedMesh 		*_animated_mesh;
     irr::scene::IAnimatedMeshSceneNode 	*_animated_node;
-
     Bomberman::TYPE 			_type;
     float				_x;
     float 				_y;
@@ -49,7 +48,6 @@ namespace Bomberman
     int 				_dead;
 
    private:
-
     void				createBrick();
     void				createBox();
     void				createPlan();

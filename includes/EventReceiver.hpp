@@ -18,7 +18,8 @@ public:
   virtual bool		IsKeyDown(irr::EKEY_CODE keyCode) const;
   void			MyEventReceiver();
   std::vector<bool>	getKeys();
-private:
+
+ private:
   bool			KeyIsDown[irr::KEY_KEY_CODES_COUNT];
 };
 

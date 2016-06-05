@@ -22,6 +22,7 @@ namespace Bomberman
       B_BOMB_N = 8,
       B_BOOT = 9
     };
+
   class IObj
   {
    public:

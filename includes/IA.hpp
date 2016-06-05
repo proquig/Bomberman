@@ -14,10 +14,10 @@ namespace Bomberman
 {
   class IA
   {
-    Character *_character;
-    Map *_map;
-    std::thread *_thread;
-    bool _dead;
+    Character	*_character;
+    Map		*_map;
+    std::thread	*_thread;
+    bool	_dead;
 
    public:
     IA(Map *map, Character *character);
@@ -37,13 +37,19 @@ namespace Bomberman
     int getBlockSize();
 
     bool move(const std::string &direction);
+
     bool move_top();
+
     bool move_bottom();
+
     bool move_left();
+
     bool move_right();
 
     int getX();
+
     int getY();
+
     int getRoundPosition(int i);
 
     void putBomb();
