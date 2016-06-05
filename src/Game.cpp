@@ -70,8 +70,8 @@ Bomberman::Game::Game(size_t nb, int size_map) : _irr(Bomberman::Irrlicht::insta
 											 Bomberman::CHARACTER)));
       if (i > _nb_players - 1)
 	  this->_players.back()->setIa(new IA(this->_map, this->_players.back()));
-      this->_players.back()->add_bomb(static_cast<Bomberman::Bomb *>(this->_map->createObj("", "", 0, 0, BOMB)));
-      this->_players.back()->add_bomb(static_cast<Bomberman::Bomb *>(this->_map->createObj("", "", 0, 0, BOMB)));
+      for (int z = 0; z < 10; ++z)
+	this->_players.back()->add_bomb(static_cast<Bomberman::Bomb *>(this->_map->createObj("", "", 0, 0, BOMB)));
       for (int j = -1; j < 2; ++j)
 	{
 	  if (this->_map->getPlan()[this->_players_conf[i].second.first + (j * BLOCKSIZE)][this->_players_conf[i].second.second])
@@ -131,6 +131,7 @@ void Bomberman::Game::explodeObj(Bomberman::Obj *obj)
 {
   if (obj->isDestructible())
     {
+      std::cout << ">>> X = " << obj->getX() << " & Y = " << obj->getY() << std::endl;
       if (obj->getType() == Bomberman::BOMB)
 	this->explodeObjs(static_cast<Bomberman::Bomb *>(obj));
       else  if (obj->getType() == Bomberman::BOX && !(std::rand() % 2))
@@ -144,10 +145,11 @@ void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
   std::srand(std::time(0));
 
   bomb->explode();
+  std::cout << "BOMB X = " << bomb->getX() << " & Y = " << bomb->getY() << std::endl;
   for (int i = -1; i < 2; ++i)
     {
-      int j = 0;
-      while (i && (++j < bomb->getRange())
+      int j = -1;
+      while ((i || j) && (++j < bomb->getRange())
 	     && (!this->_map->getPlan()[bomb->getX() + (i * j * BLOCKSIZE)][bomb->getY()]
 		 || !(this->_map->getPlan()[bomb->getX() + (i * j * BLOCKSIZE)][bomb->getY()]->isBlocking()
 		      || this->_map->getPlan()[bomb->getX() + (i * j * BLOCKSIZE)][bomb->getY()]->isDestructible())));
@@ -156,8 +158,8 @@ void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
     }
   for (int i = -1; i < 2; ++i)
     {
-      int j = 0;
-      while (i && (++j < bomb->getRange())
+      int j = -1;
+      while ((i || j) && (++j < bomb->getRange())
 	     && (!this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]
 		 || !(this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]->isBlocking()
 		      || this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]->isDestructible())));
@@ -250,7 +252,7 @@ int Bomberman::Game::handleEvents()
       players_alive++;
     else
       (*it)->die();
-  return (players_alive > 1 && !this->_players[0]->_dead);
+  return (players_alive);//   > 1 && !this->_players[0]->_dead);
 }
 
 Bomberman::Map *Bomberman::Game::run()
