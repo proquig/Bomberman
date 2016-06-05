@@ -283,6 +283,8 @@ Bomberman::Map *Bomberman::Game::run()
 	      lastFPS = fps;
 	    }
 	}
+      if (_players[0]->_dead)
+	break;
     }
   _players[0]->_dead ? this->printLose() : this->printWin();
   return (NULL);
@@ -315,7 +317,7 @@ void                Bomberman::Game::printLose()
 
   if (this->_irr.getDevice()->isWindowActive())
     {
-      irr::video::ITexture *logo = this->_irr.getDriver()->getTexture("./assets/YouWon.png");
+      irr::video::ITexture *logo = this->_irr.getDriver()->getTexture("./assets/YouLose.png");
       _irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 0, 0, 0));
       this->_irr.getDriver()->draw2DImage(background, irr::core::rect<irr::s32>(0, 0, 1920, 1080),
 					  irr::core::rect<irr::s32>(0, 0, 1920, 1080));
