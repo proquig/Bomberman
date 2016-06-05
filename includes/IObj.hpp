@@ -35,8 +35,6 @@ namespace Bomberman
     virtual bool 			isDestructible() const = 0;
     //virtual void			remove() const = 0;
     virtual void			die() = 0;
-    virtual tinyxml2::XMLElement	*serialize(tinyxml2::XMLDocument *doc) = 0;
-    virtual void deserialize(tinyxml2::XMLElement *element) = 0;
   };
 };
 

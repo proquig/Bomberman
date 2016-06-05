@@ -57,10 +57,6 @@ namespace Bomberman
     void				createCharacter();
     void				createBomb();
     void				createBonus();
-
-    virtual tinyxml2::XMLElement	*serialize(tinyxml2::XMLDocument *doc) override;
-
-    virtual void deserialize(tinyxml2::XMLElement *element) override;
   };
 };
 

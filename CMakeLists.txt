@@ -36,14 +36,12 @@ set(
         includes/Selene/selene
 )
 
-add_subdirectory(lib/tinyxml2)
 add_executable(Bomberman ${SOURCES} ${HEADERS})
 
 target_include_directories(Bomberman PRIVATE includes PRIVATE includes/sound PRIATE includes/xml)
 target_include_directories(Bomberman PUBLIC includes/Selene PUBLIC includes/Selene/selene)
 target_link_libraries(Bomberman ${IRRLICHT_LIBRARY})
 target_link_libraries(Bomberman ${IRRKLANG_LIBRARY})
-target_link_libraries(Bomberman tinyxml2)
 target_link_libraries(Bomberman ${LUA_LIBRARIES})
 target_link_libraries(Bomberman ${CMAKE_THREAD_LIBS_INIT})
 
