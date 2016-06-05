@@ -50,6 +50,9 @@ void Bomberman::IA::die()
 
 std::string Bomberman::IA::getCaseContent(int x, int y)
 {
+  if (this->_dead)
+    return "";
+
   const std::map<Bomberman::TYPE, std::string> types =
 	  {
 		  {BOMB, "BOMB"},
@@ -119,6 +122,7 @@ void Bomberman::IA::putBomb()
 {
   if (this->_dead)
     return;
+
   this->_character->put_bomb(Character::PUT_BOMB);
 }
 
@@ -144,21 +148,34 @@ bool Bomberman::IA::move_right()
 
 int Bomberman::IA::getX()
 {
+  if (this->_dead)
+    return 0;
+
   return this->_map->getRoundPosition(this->_character->getX());
 }
 
 int Bomberman::IA::getY()
 {
+  if (this->_dead)
+    return 0;
+
   return this->_map->getRoundPosition(this->_character->getY());
 }
 
 int Bomberman::IA::getRoundPosition(int i)
 {
+  if (this->_dead)
+    return i;
+
   return this->_map->getRoundPosition(i);
 }
 
 bool Bomberman::IA::isBlocked(int x, int y)
 {
+
+  if (this->_dead)
+    return false;
+
   static int last_x = 0;
   static int last_y = 0;
   static time_t last_time = 0;
