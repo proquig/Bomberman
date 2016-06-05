@@ -20,7 +20,8 @@ Bomberman::Obj::Obj(const std::string &mesh_path, const std::string &texture_pat
 	_is_destructible(true),
 	_mesh_path(mesh_path),
 	_texture_path(texture_path),
-	_sound(Bomberman::MusicManager::instance())
+	_sound(Bomberman::MusicManager::instance()),
+	_dead(0)
 {
   std::map<Bomberman::TYPE, ObjMemFn> objFn = {
 	  {Bomberman::CHARACTER, &Obj::createCharacter},
@@ -69,6 +70,7 @@ bool 				Bomberman::Obj::isBlocking() const
 
 void				Bomberman::Obj::remove()
 {
+  this->_dead = 1;
   if (this->_node)
     this->_node->setVisible(false);
   if (this->_animated_node)

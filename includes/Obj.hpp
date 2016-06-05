@@ -29,7 +29,6 @@ namespace Bomberman
     irr::u32 				_animation_time;
     bool 				_is_blocking;
     bool 				_is_destructible;
-
     std::string				_mesh_path;
     std::string				_texture_path;
 
@@ -48,8 +47,10 @@ namespace Bomberman
     void				remove();
     //void				reset();
     virtual void die()			override;
+    int 				_dead;
 
    private:
+
     void				createBrick();
     void				createBox();
     void				createPlan();

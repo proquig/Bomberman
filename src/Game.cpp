@@ -13,7 +13,9 @@
 
 const std::vector<std::pair<std::string, std::pair<int, int>>> Bomberman::Game::_players_conf = {
 	{"./assets/ninja/nskinwh.jpg", {(MAPSIZE_X / 2) - (4 * BLOCKSIZE), -((MAPSIZE_Y / 2) - (4 * BLOCKSIZE))}},
-	{"./assets/ninja/nskinbl.jpg", {-((MAPSIZE_X / 2) - (4 * BLOCKSIZE)), (MAPSIZE_Y / 2) - (4 * BLOCKSIZE)}}
+	{"./assets/ninja/nskinbl.jpg", {-((MAPSIZE_X / 2) - (4 * BLOCKSIZE)), (MAPSIZE_Y / 2) - (4 * BLOCKSIZE)}},
+	{"./assets/ninja/nskinbr.jpg", {-((MAPSIZE_X / 2) + (-2 * BLOCKSIZE)), -(MAPSIZE_Y / 2) + (2 * BLOCKSIZE)}},
+	{"./assets/ninja/nskinrd.jpg", {((MAPSIZE_X / 2) - (4 * BLOCKSIZE)), (MAPSIZE_Y / 2) - (4 * BLOCKSIZE)}},
 };
 
 const std::map<Bomberman::TYPE, Bomberman::Game::BonusMemFn> Bomberman::Game::_bonus = {
@@ -67,7 +69,7 @@ Bomberman::Game::Game(size_t nb, int size_map) : _irr(Bomberman::Irrlicht::insta
 											 this->_players_conf[i].second.second,
 											 Bomberman::CHARACTER)));
       // TODO : Define if IA
-      this->_players.back()->setIa(new IA(this->_map, this->_players.back()));
+      //this->_players.back()->setIa(new IA(this->_map, this->_players.back()));
       this->_players.back()->add_bomb(static_cast<Bomberman::Bomb *>(this->_map->createObj("", "", 0, 0, BOMB)));
       for (int j = -1; j < 2; ++j)
 	{
@@ -143,47 +145,6 @@ void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
 		|| (this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]
 		  && this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]->isBlocking()));
       }
-  //int i = -1;
-
-  //std::cout << (int)this->getX() << std::endl;
-  //std::cout << (int)this->getX() - ((int)this->getX() % 5) << std::endl;
-  //std::cout << ">" << ((((int)this->getX() + (int)(this->getX() > 0) * (5 - 1)) / 5) * 5) << std::endl;
-  /*int x = Bomberman::Map::getRoundPosition(bomb->getX());
-  int y = Bomberman::Map::getRoundPosition(bomb->getY());
-  //std::cout << "BOMB x = " << x << " & y = " << y << std::endl;
-  //std::cout << "------------" << std::endl;
-  //for (int i = -200; i < 200; ++i)
-    //{
-      //std::cout << Bomberman::Map::getRoundPosition(i) << std::endl;
-    //}
-  //std::cout << "------------" << std::endl;
-  int start_x = x - (((bomb->getRange()) + 1) * 5);
-  int start_y = y - (((bomb->getRange()) + 1) * 5);
-  for (int i = 0; (i < (((bomb->getRange() * 2) + 1)) * 5); ++i)
-    if (this->_map->checkObjOnPlan((start_x + i), y)
-	&& this->_map->getObjOnPlan((start_x + i), y)->isDestructible())
-      this->_map->getObjOnPlan((start_x + i), y)->remove();
-  for (int i = 0; (i < (((bomb->getRange() * 2) + 1)) * 5); ++i)
-    if (this->_map->checkObjOnPlan(x, (start_y + i))
-	&& this->_map->getObjOnPlan(x, (start_y + i))->isDestructible())
-      this->_map->getObjOnPlan(x, (start_y + i))->remove();
-*/
-    //{
-      //std::cout << "----" << std::endl;
-      //std::cout << "Real x = " << bomb->getX() << " & real y = " << bomb->getY() << std::endl;
-      //std::cout << "x = " << x << " & y = " << y << std::endl;
-      //std::cout << "start_x = " << start_x << " & start_y = " << start_y << std::endl;
-      //std::cout << "start_x + i = " << (start_x + i) << " & start_y + i = " << (start_y + i) << std::endl;
-      //std::cout << "----" << std::endl;
-      //if (this->_map->checkObjOnPlan((start_x + i), start_y + i)
-	//  && this->_map->getObjOnPlan((start_x + i), (start_y + i))->isDestructible())
-	//this->_map->getObjOnPlan((start_x + i), (start_y + i))->remove();
-    //}
-/*  while (++i < this->_map->getObjs().size())
-    if (this->_map->getObjs()[i]->isDestructible()
-	  && !this->_map->checkObjectPosition(this->_map->getObjs()[i], bomb->getX(), bomb->getY(), bomb->getRange()))
-	this->_map->getObjs()[i]->remove();
- */
 }
 
 bool Bomberman::Game::getBonus(Bomberman::Character *player, Bomberman::Character::ACTION action)
@@ -244,25 +205,6 @@ void Bomberman::Game::handleTime()
 	this->explodeObjs(static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i]));
 	static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->explode();
       }
-  //{//  && (this->_map->getObjs()[i]->getExplosionTime() || this->_map->getObjs()[i]->getAnimation_time()))
-  //{
-  //if (this->_map->getObjs()[i]->getAnimation_time())
-  //std::cout << "ANIM TIME: " << this->_map->getObjs()[i]->getAnimation_time() << std::endl;
-  //if (this->_map->getObjs()[i]->getExplosionTime() || this->_map->getObjs()[i]->getAnimation_time())
-  //{
-  //if (now > this->_map->getObjs()[i]->getAnimation_time())
-  //static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->clean();
-  //if (now > this->_map->getObjs()[i]->getExplosionTime())
-  //{
-  //this->explodeObjs(static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i]));
-  //static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->explode();
-  //}
-  //}
-  //if (now > this->_map->getObjs()[i]->getAnimation_time())
-  //static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->clean();
-  //}
-  //}
-//*/
 }
 
 int Bomberman::Game::handleEvents()
@@ -280,14 +222,14 @@ int Bomberman::Game::handleEvents()
       handleMovements();
       handleActions();
     }
-  for (it = this->_players.begin(); it != this->_players.end(); ++it)
+    for (it = this->_players.begin(); it != this->_players.end(); ++it)
     {
       if ((*it)->isDestructible() || (!(*it)->isDestructible() && (*it)->getGodTime()))
 	players_alive++;
       else
 	(*it)->die();
     }
-  return (players_alive == this->_nb_players);
+  return (players_alive);
 }
 
 Bomberman::Map *Bomberman::Game::run()
@@ -298,9 +240,9 @@ Bomberman::Map *Bomberman::Game::run()
   irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
   int lastFPS = -1;
   _pause = 0;
-  while (this->_irr.getDevice()->run() && handleEvents())
+  while (this->_irr.getDevice()->run() && handleEvents() > 2)
     {
-      if (this->_irr.event.getKeys()[irr::KEY_ESCAPE])
+     if (this->_irr.event.getKeys()[irr::KEY_ESCAPE])
 	return (this->_map);
       if (this->_irr.getDevice()->isWindowActive())
 	{
@@ -323,6 +265,7 @@ Bomberman::Map *Bomberman::Game::run()
 	    }
 	}
     }
+  _players[0]->_dead== 1 ? this->printLose() : this->printWin();
   return (NULL);
 }
 

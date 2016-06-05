@@ -19,7 +19,7 @@ Bomberman::Menu::Menu() : _irr(Bomberman::Irrlicht::instance()),
 			  _music(Bomberman::MusicManager::instance())
 {
   this->_sound = 1;
-  this->_size_map = 184;
+  this->_size_map = 100;
 }
 
 void 	Bomberman::Menu::splash()
@@ -163,9 +163,9 @@ void Bomberman::Menu::launchOption()
       if (this->_irr.getDevice()->isWindowActive())
 	{
 	  if (this->_irr.event.IsKeyDown(irr::KEY_RIGHT) && i == 2)
-	    this->_size_map = (this->_size_map + 1) > 200 ? 0 : this->_size_map + 1;
+	    this->_size_map = (this->_size_map + 1) > 150 ? 0 : this->_size_map + 1;
 	  if (this->_irr.event.IsKeyDown(irr::KEY_LEFT) && i == 2)
-	    this->_size_map = (this->_size_map - 1) < 0 ? 200 : this->_size_map - 1;
+	    this->_size_map = (this->_size_map - 1) < 0 ? 150 : this->_size_map - 1;
 	  if (this->_irr.event.IsKeyDown(irr::KEY_DOWN))
 	    i = (i + 1) % (int) this->_options.size();
 	  else if (this->_irr.event.IsKeyDown(irr::KEY_UP))
