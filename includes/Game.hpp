@@ -36,6 +36,7 @@ namespace					Bomberman
     void						handleMovements();
     void						handleActions();
     void						handleTime();
+    void						explodeObj(Obj *obj);
     void						explodeObjs(Bomb *bomb);
     bool 						getBonus(Bomberman::Character *player, Bomberman::Character::ACTION action);
     void						handleBonus();

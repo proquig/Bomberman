@@ -8,7 +8,7 @@
 
 Bomberman::Save::Save(Bomberman::Map *map)
 {
-  if (map != NULL)
+  if (map)
     {
       std::vector<Bomberman::Obj *> save = map->getObjs();
       try

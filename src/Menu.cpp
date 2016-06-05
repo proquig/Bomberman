@@ -52,7 +52,8 @@ void	Bomberman::Menu::intro()
       _irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 0, 0, 0));
       _irr.getDriver()->draw2DImage(back, irr::core::rect<irr::s32>(0, 0, 1920, 1080), irr::core::rect<irr::s32>(0, 0, 1920, 1080));
       _irr.getDriver()->draw2DImage(head, irr::core::rect<irr::s32>(y, y, i, i), irr::core::rect<irr::s32>(y, y, i, i), 0, 0, true);
-      _irr.getDriver()->draw2DImage(titre, irr::core::rect<irr::s32>(1920 / 2, j / 2, 1920 / 2 + 247, j / 2 + 63), irr::core::rect<irr::s32>(0, 0, 247, 63), 0, 0, true);
+      _irr.getDriver()->draw2DImage(titre, irr::core::rect<irr::s32>(1920 / 2, j / 2, 1920 / 2 + 247, j / 2 + 63),
+				    irr::core::rect<irr::s32>(0, 0, 247, 63), 0, 0, true);
       _irr.getDriver()->endScene();
 
       j += 4;
@@ -191,7 +192,7 @@ void Bomberman::Menu::setSound()
 {
   _sound = !_sound;
   _sound ? _music.startMusic() : _music.pauseMusic();
-  _sound ? _music.setPlay(0) : _music.setPlay(1);
+  _music.setPlay(_sound);
 }
 
 void Bomberman::Menu::displayCredit()
