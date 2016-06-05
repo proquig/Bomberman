@@ -268,7 +268,13 @@ Bomberman::Map *Bomberman::Game::run()
   while (this->_irr.getDevice()->run() && handleEvents() > 1)
     {
       if (this->_irr.event.getKeys()[irr::KEY_ESCAPE])
-	return (this->_map);
+	{
+	  for (auto &&item : this->_players)
+	    {
+	      item->die();
+	    }
+	  return (this->_map);
+	}
       if (this->_irr.getDevice()->isWindowActive())
 	{
 	  this->_irr.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
