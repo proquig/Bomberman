@@ -214,7 +214,7 @@ void Bomberman::Obj::createBonus()
   this->_mesh_path = bonus[i].second.first;
   this->_node = this->_irr.getSmgr()->addMeshSceneNode(this->_irr.getSmgr()->getMesh(this->_mesh_path.c_str()),
 						       0, -1, irr::core::vector3df(this->_x, 1, this->_y),
-						       irr::core::vector3df(0, 0, 0),
+						       irr::core::vector3df(90, 0 , 0),
 						       irr::core::vector3df(1, 1, 1));
   this->_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 }

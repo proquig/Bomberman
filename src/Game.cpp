@@ -262,7 +262,7 @@ Bomberman::Map *Bomberman::Game::run()
   irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
   int lastFPS = -1;
   _pause = 0;
-  while (this->_irr.getDevice()->run() && handleEvents())
+  while (this->_irr.getDevice()->run() && handleEvents() > 1)
     {
       if (this->_irr.event.getKeys()[irr::KEY_ESCAPE])
 	return (this->_map);
