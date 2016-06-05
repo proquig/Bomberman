@@ -292,6 +292,8 @@ Bomberman::Map *Bomberman::Game::run()
 	    }
 	}
     }
+  for (auto &&item : this->_players)
+    item->die();
   _players[0]->_dead ? this->printLose() : this->printWin();
   return (NULL);
 }
