@@ -164,6 +164,10 @@ void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
       if (i && this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)])
 	this->explodeObj(this->_map->getPlan()[bomb->getX()][bomb->getY() + (i * j * BLOCKSIZE)]);
     }
+  for (int i = 0; i < this->_players.size(); ++i)
+    if (this->_players[i]->getX() == bomb->getX()
+	    && this->_players[i]->getY() == bomb->getY())
+      this->_players[i]->remove();
 }
 
 bool Bomberman::Game::getBonus(Bomberman::Character *player, Bomberman::Character::ACTION action)
@@ -223,10 +227,7 @@ void Bomberman::Game::handleTime()
     if (this->_map->getObjs()[i]->getType() == Bomberman::BOMB
 	&& this->_map->getObjs()[i]->getExplosionTime()
 	&& now > this->_map->getObjs()[i]->getExplosionTime())
-      {
-	this->explodeObjs(static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i]));
-	static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i])->explode();
-      }
+      this->explodeObjs(static_cast<Bomberman::Bomb *>(this->_map->getObjs()[i]));
 }
 
 int Bomberman::Game::handleEvents()
