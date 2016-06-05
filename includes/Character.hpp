@@ -48,9 +48,6 @@ namespace						Bomberman
     irr::u32						_speedTime;
     IA							*_ia;
 
-   private:
-    int 						_score;
-
   public:
     Character(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type);
     ~Character();
@@ -70,8 +67,6 @@ namespace						Bomberman
     void						setSpeedTime(irr::u32 time);
     void						setIa(IA *ia);
     int 						getSpeed() const;
-    int							getScore() const;
-    void						setScore(int score);
     virtual void die() override;
 
     //void remove();

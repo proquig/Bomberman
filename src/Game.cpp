@@ -71,7 +71,7 @@ Bomberman::Game::Game(size_t nb, int size_map) : _irr(Bomberman::Irrlicht::insta
 											 Bomberman::CHARACTER)));
       if (i > _nb_players - 1)
 	  this->_players.back()->setIa(new IA(this->_map, this->_players.back()));
-      for (int z = 0; z < 10; ++z)
+      //for (int z = 0; z < 10; ++z)
 	this->_players.back()->add_bomb(static_cast<Bomberman::Bomb *>(this->_map->createObj("", "", 0, 0, BOMB)));
       for (int j = -1; j < 2; ++j)
 	{
@@ -132,7 +132,7 @@ void Bomberman::Game::explodeObj(Bomberman::Obj *obj)
 {
   if (obj->isDestructible())
     {
-      std::cout << ">>> X = " << obj->getX() << " & Y = " << obj->getY() << std::endl;
+      //std::cout << ">>> X = " << obj->getX() << " & Y = " << obj->getY() << std::endl;
       if (obj->getType() == Bomberman::BOMB)
 	this->explodeObjs(static_cast<Bomberman::Bomb *>(obj));
       else  if (obj->getType() == Bomberman::BOX && !(std::rand() % 2))
@@ -146,7 +146,7 @@ void Bomberman::Game::explodeObjs(Bomberman::Bomb *bomb)
   std::srand(std::time(0));
 
   bomb->explode();
-  std::cout << "BOMB X = " << bomb->getX() << " & Y = " << bomb->getY() << std::endl;
+  //std::cout << "BOMB X = " << bomb->getX() << " & Y = " << bomb->getY() << std::endl;
   for (int i = -1; i < 2; ++i)
     {
       int j = -1;
@@ -253,7 +253,7 @@ int Bomberman::Game::handleEvents()
       players_alive++;
     else
       (*it)->die();
-  return (players_alive);//   > 1 && !this->_players[0]->_dead);
+  return (!this->_players[0]->_dead);
 }
 
 Bomberman::Map *Bomberman::Game::run()
@@ -265,7 +265,7 @@ Bomberman::Map *Bomberman::Game::run()
   irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
   int lastFPS = -1;
   _pause = 0;
-  while (this->_irr.getDevice()->run() && handleEvents() > 1)
+  while (this->_irr.getDevice()->run() && handleEvents())
     {
       if (this->_irr.event.getKeys()[irr::KEY_ESCAPE])
 	return (this->_map);
@@ -294,7 +294,7 @@ Bomberman::Map *Bomberman::Game::run()
 
 void                Bomberman::Game::printWin()
 {
-  irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
+   irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
 
   if (this->_irr.getDevice()->isWindowActive())
     {
