@@ -61,15 +61,15 @@ Bomberman::Game::Game(size_t nb, int size_map) : _irr(Bomberman::Irrlicht::insta
     this->_map->createObjSomewhere(BOXOBJ, BOXTEXT, Bomberman::BOX);
   this->_map->createMap();
   this->_map->createPlan();
-  for (int i = 0; i < this->_nb_players; ++i)
+  for (int i = 0; i < 4; ++i)
     {
       this->_players.push_back(static_cast<Bomberman::Character *>(this->_map->createObj("./assets/ninja/ninja.b3d",
 											 this->_players_conf[i].first,
 											 this->_players_conf[i].second.first,
 											 this->_players_conf[i].second.second,
 											 Bomberman::CHARACTER)));
-      // TODO : Define if IA
-      //this->_players.back()->setIa(new IA(this->_map, this->_players.back()));
+      if (i > _nb_players - 1)
+	  this->_players.back()->setIa(new IA(this->_map, this->_players.back()));
       this->_players.back()->add_bomb(static_cast<Bomberman::Bomb *>(this->_map->createObj("", "", 0, 0, BOMB)));
       for (int j = -1; j < 2; ++j)
 	{
@@ -281,7 +281,7 @@ void		Bomberman::Game::printWin() {
     this->_irr.getDriver()->draw2DImage(logo, irr::core::rect<irr::s32>((1920 / 2) - (380 / 2), 1080 / 2 - (84 / 2), (1920 / 2) + (380 / 2) + 10, 1080 / 2 + (84 / 2) + 10),
 					irr::core::rect<irr::s32>(0, 0, 380, 84), 0, 0, true);
     _irr.getDriver()->endScene();
-    sleep(3);
+    sleep(1);
   }
 }
 
@@ -297,7 +297,7 @@ void		Bomberman::Game::printLose() {
     this->_irr.getDriver()->draw2DImage(logo, irr::core::rect<irr::s32>((1920 / 2) - (380 / 2), 1080 / 2 - (84 / 2), (1920 / 2) + (380 / 2) + 10, 1080 / 2 + (84 / 2) + 10),
 					irr::core::rect<irr::s32>(0, 0, 380, 84), 0, 0, true);
     _irr.getDriver()->endScene();
-    sleep(3);
+    sleep(1);
   }
 }
 
