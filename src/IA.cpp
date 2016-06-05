@@ -33,7 +33,8 @@ void Bomberman::IA::initIA()
 		     "get_x", &IA::getX,
 		     "get_y", &IA::getY,
 		     "get_block_size", &IA::getBlockSize,
-		     "get_round_position", &IA::getRoundPosition
+		     "get_round_position", &IA::getRoundPosition,
+		     "is_blocked", &IA::isBlocked
   );
 
   state["get_map_x_size"] = &getMapXSize;
@@ -154,4 +155,27 @@ int Bomberman::IA::getY()
 int Bomberman::IA::getRoundPosition(int i)
 {
   return this->_map->getRoundPosition(i);
+}
+
+bool Bomberman::IA::isBlocked(int x, int y)
+{
+  static int last_x = 0;
+  static int last_y = 0;
+  static time_t last_time = 0;
+  static bool inited = false;
+  time_t now;
+
+  if (!inited)
+    {
+      last_x = this->getX();
+      last_y = this->getY();
+      time(&last_time);
+      inited = true;
+      return (false);
+    }
+  else
+    {
+      time(&now);
+      return (last_x == x && last_y == y && now - last_time >= 2);
+    }
 }

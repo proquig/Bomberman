@@ -47,6 +47,8 @@ namespace Bomberman
     int getRoundPosition(int i);
 
     void putBomb();
+
+    bool isBlocked(int x, int y);
   };
 }
 

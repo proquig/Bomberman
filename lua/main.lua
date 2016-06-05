@@ -6,21 +6,6 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-last_x = 0
-last_y = 0
-last_xy_update = os.date("*t")
-
-function isBlocked(x, y, init)
-    if x == last_x and y == last_y and (os.date("*t").sec - last_xy_update.sec) >= 1 and init == nil then
-        return true
-    else
-        last_x = ia.get_x()
-        last_y = ia.get_y()
-        last_xy_update = os.date("*t")
-        return false
-    end
-end
-
 function top()
     while 1 and ia.dead() == false do
         local x = ia.get_x()
@@ -36,7 +21,7 @@ function top()
                 ia.move_bottom()
             end
             return
-        elseif object == "BRICK" or isBlocked(x, y) then
+        elseif object == "BRICK" then
             return
         else
             ia.move_top()
@@ -59,7 +44,7 @@ function bottom()
                 ia.move_top()
             end
             return
-        elseif object == "BRICK" or isBlocked(x, y) then
+        elseif object == "BRICK" then
             return
         else
             ia.move_bottom()
@@ -82,7 +67,7 @@ function left()
                 ia.move_right()
             end
             return
-        elseif object == "BRICK" or isBlocked(x, y) then
+        elseif object == "BRICK" then
             return
         else
             ia.move_left()
@@ -105,7 +90,7 @@ function right()
                 ia.move_left()
             end
             return
-        elseif object == "BRICK" or isBlocked(x, y) then
+        elseif object == "BRICK" then
             return
         else
             ia.move_right()
@@ -116,7 +101,6 @@ end
 function main()
     local r = 0
     local prev = 0
-    isBlocked(0, 0, false)
 
     while ia.dead() == false do
         local r = math.random(4)
