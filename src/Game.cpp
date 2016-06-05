@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <IA.hpp>
 #include <Exception.hpp>
+#include <Highscore.hpp>
 #include "Game.hpp"
 
 const std::vector<std::pair<std::string, std::pair<int, int>>> Bomberman::Game::_players_conf = {
