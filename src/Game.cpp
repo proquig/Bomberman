@@ -270,9 +270,7 @@ Bomberman::Map *Bomberman::Game::run()
       if (this->_irr.event.getKeys()[irr::KEY_ESCAPE])
 	{
 	  for (auto &&item : this->_players)
-	    {
-	      item->die();
-	    }
+	    item->die();
 	  return (this->_map);
 	}
       if (this->_irr.getDevice()->isWindowActive())
@@ -300,7 +298,7 @@ Bomberman::Map *Bomberman::Game::run()
 
 void                Bomberman::Game::printWin()
 {
-   irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
+    irr::video::ITexture *background = this->_irr.getDriver()->getTexture("./assets/Te/sky-clouds.jpg");
 
   if (this->_irr.getDevice()->isWindowActive())
     {

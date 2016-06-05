@@ -25,7 +25,9 @@ bool 		Bomberman::Map::checkObjectPosition(Bomberman::Obj* obj, float x, float y
 
   resx = obj->getX() - x;
   resy = obj->getY() - y;
-  return (!((obj->isBlocking() || obj->getType() == Bomberman::CHARACTER) && (resx <= range && resx >= -range) && (resy <= range && resy >= -range)));
+  return (!((obj->isBlocking() || obj->getType() == Bomberman::CHARACTER)
+	    && (resx <= range && resx >= -range)
+	    && (resy <= range && resy >= -range)));
 }
 
 bool		Bomberman::Map::checkPosition(float x, float y, float range, bool all)

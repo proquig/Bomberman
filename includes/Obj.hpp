@@ -5,7 +5,6 @@
 #ifndef CPP_INDIE_STUDIO_OBJ_HPP
 #define CPP_INDIE_STUDIO_OBJ_HPP
 
-#include <xml/tinyxml2.h>
 #include <sound/MusicManager.hpp>
 #include "IObj.hpp"
 

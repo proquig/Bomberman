@@ -19,7 +19,7 @@ AnimationEndCallback::~AnimationEndCallback()
 {
 }
 
-void	AnimationEndCallback::OnAnimationEnd(irr::scene::IAnimatedMeshSceneNode *node)
+void        AnimationEndCallback::OnAnimationEnd(irr::scene::IAnimatedMeshSceneNode *node)
 {
   node->setLoopMode(false);
   node->setFrameLoop(START_FRAME, START_FRAME);

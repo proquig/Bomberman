@@ -13,7 +13,8 @@
 #include "Bomb.hpp"
 #include "Map.hpp"
 
-Bomberman::Bomb::Bomb(const std::string &mesh_path, const std::string &texture_path, float x, float y, Bomberman::TYPE type) :
+Bomberman::Bomb::Bomb(const std::string &mesh_path, const std::string &texture_path, float x, float y,
+		      Bomberman::TYPE type) :
 	Bomberman::Obj::Obj(mesh_path, texture_path, x, y, BOMB)
 {
   this->_range = NULL;
@@ -21,27 +22,28 @@ Bomberman::Bomb::Bomb(const std::string &mesh_path, const std::string &texture_p
   this->_animated_node->setVisible(false);
 }
 
-Bomberman::Bomb::~Bomb() { }
+Bomberman::Bomb::~Bomb()
+{
+}
 
-
-float 		Bomberman::Bomb::getRange() const
+float                Bomberman::Bomb::getRange() const
 {
   return (*this->_range);
 }
 
-void		Bomberman::Bomb::setRange(float *range)
+void                Bomberman::Bomb::setRange(float *range)
 {
   this->_range = range;
 }
 
-void		Bomberman::Bomb::reset()
+void                Bomberman::Bomb::reset()
 {
   this->_explosion_time = 0;
   this->_is_destructible = false;
   this->_animated_node->setVisible(false);
 }
 
-void		Bomberman::Bomb::put(float x, float y)
+void                Bomberman::Bomb::put(float x, float y)
 {
   this->_x = Bomberman::Map::getRoundPosition(x);
   this->_y = Bomberman::Map::getRoundPosition(y);
@@ -52,7 +54,7 @@ void		Bomberman::Bomb::put(float x, float y)
   this->_is_destructible = true;
 }
 
-void		Bomberman::Bomb::explode()
+void                Bomberman::Bomb::explode()
 {
   this->reset();
   try
@@ -62,12 +64,13 @@ void		Bomberman::Bomb::explode()
 	  _sound.setSong("./assets/sound/Boom.flac");
 	  _sound.startMusic();
 	}
-    }catch (exception &e)
+    }
+  catch (exception &e)
     {
       std::cerr << e.what() << std::endl;
     }
 }
 
-void 		Bomberman::Bomb::clean()
+void                Bomberman::Bomb::clean()
 {
 }

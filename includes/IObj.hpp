@@ -6,7 +6,6 @@
 #define CPP_INDIE_STUDIO_IOBJ_HPP
 
 #include "Irrlicht.hpp"
-#include "xml/tinyxml2.h"
 
 namespace Bomberman
 {
