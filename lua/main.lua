@@ -11,13 +11,13 @@ function top()
         local x = ia.get_x()
         local y = ia.get_y()
 
-        local object = ia.get_case_content(x, ia.get_round_position(y))
+        local object = ia.get_case_content(x, ia.get_round_position(y + ia.get_block_size()))
 
         if object == "BOX" then
             ia.put_bomb()
             local t = os.date("*t")
 
-            while ia.get_y() ~= y + 50 and os.date("*t").sec < ((t.sec) + 3) do
+            while os.date("*t").sec < ((t.sec) + 3) do
                 ia.move_bottom()
             end
             return
@@ -34,7 +34,7 @@ function bottom()
         local x = ia.get_x()
         local y = ia.get_y()
 
-        local object = ia.get_case_content(x, ia.get_round_position(y))
+        local object = ia.get_case_content(x, ia.get_round_position(y - ia.get_block_size()))
 
         if object == "BOX" then
             ia.put_bomb()
@@ -102,11 +102,15 @@ function main()
     local r = 0
 
     while ia.dead() == false do
-        local r = math.random(2)
-        if r == 0 then
+        local r = math.random(4)
+        if r == 1 then
             left()
-        elseif r == 1 then
-            right
+        elseif r == 2 then
+            right()
+        elseif r == 3 then
+            bottom()
+        else
+            top()
         end
     end
 end
