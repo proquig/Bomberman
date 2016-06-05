@@ -195,7 +195,7 @@ void Bomberman::Game::handleBonus()
 void Bomberman::Game::handleMovements()
 {
   std::map<irr::EKEY_CODE, std::pair<int, Bomberman::Character::ACTION>>::const_iterator it;
-  for (it = this->_events[0].begin(); it != _events[0].end(); ++it)
+   for (it = this->_events[0].begin(); it != _events[0].end(); ++it)
     //    for (int i = 0; i < this->_players[it->second.first]->getSpeed(); ++i)
     if (this->_irr.event.getKeys()[it->first] && it->second.first < this->_players.size()
 	&& this->getBonus(this->_players[it->second.first], it->second.second)
