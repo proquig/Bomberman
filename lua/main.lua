@@ -100,17 +100,21 @@ end
 
 function main()
     local r = 0
+    local prev = 0
 
     while ia.dead() == false do
         local r = math.random(4)
-        if r == 1 then
-            left()
-        elseif r == 2 then
-            right()
-        elseif r == 3 then
-            bottom()
-        else
-            top()
+        if prev == 0 or (prev ~= 0 and r ~= prev) then
+            if r == 1 then
+                left()
+            elseif r == 2 then
+                right()
+            elseif r == 3 then
+                bottom()
+            else
+                top()
+            end
+            prev = r
         end
     end
 end
