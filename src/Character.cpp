@@ -19,6 +19,7 @@ Bomberman::Character::Character(const std::string &mesh_path, const std::string 
   this->_godTime = 0;
   this->_speedTime = 1;
   this->_range = 2;
+  this->_score = 0;
   this->_animated_node->setLoopMode(false);
   this->_animated_node->setFrameLoop(START_FRAME, START_FRAME);
 }
@@ -144,4 +145,14 @@ void Bomberman::Character::die()
 {
   if (this->_ia != nullptr)
     this->_ia->die();
+}
+
+int Bomberman::Character::getScore() const
+{
+  return (this->_score);
+}
+
+void Bomberman::Character::setScore(int score)
+{
+  this->_score = score;
 }
