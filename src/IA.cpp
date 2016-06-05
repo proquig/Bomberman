@@ -18,7 +18,7 @@ Bomberman::IA::~IA()
 
 void Bomberman::IA::initIA()
 {
-  sleep(5);
+  sleep(3);
   sel::State state{true};
   state.Load("/home/pogam-_g/ClionProjects/cpp_indie_studio/lua/main.lua");
 
@@ -32,7 +32,8 @@ void Bomberman::IA::initIA()
 		     "put_bomb", &IA::putBomb,
 		     "get_x", &IA::getX,
 		     "get_y", &IA::getY,
-		     "get_block_size", &IA::getBlockSize
+		     "get_block_size", &IA::getBlockSize,
+		     "get_round_position", &IA::getRoundPosition
   );
 
   state["get_map_x_size"] = &getMapXSize;
@@ -142,10 +143,15 @@ bool Bomberman::IA::move_right()
 
 int Bomberman::IA::getX()
 {
-  return (int) this->_character->getX();
+  return this->_map->getRoundPosition(this->_character->getX());
 }
 
 int Bomberman::IA::getY()
 {
-  return (int) this->_character->getY();
+  return this->_map->getRoundPosition(this->_character->getY());
+}
+
+int Bomberman::IA::getRoundPosition(int i)
+{
+  return this->_map->getRoundPosition(i);
 }

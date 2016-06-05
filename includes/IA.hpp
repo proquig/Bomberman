@@ -44,6 +44,7 @@ namespace Bomberman
 
     int getX();
     int getY();
+    int getRoundPosition(int i);
 
     void putBomb();
   };

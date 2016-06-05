@@ -6,18 +6,107 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-function main()
-    while ia.dead() == false do
+function top()
+    while 1 and ia.dead() == false do
         local x = ia.get_x()
         local y = ia.get_y()
 
-        if ia.get_case_content(x - ia.get_block_size(), y) == "BOX" then
+        local object = ia.get_case_content(x, ia.get_round_position(y))
+
+        if object == "BOX" then
             ia.put_bomb()
-            while ia.get_x() ~= x + 50 do
+            local t = os.date("*t")
+
+            while ia.get_y() ~= y + 50 and os.date("*t").sec < ((t.sec) + 3) do
+                ia.move_bottom()
+            end
+            return
+        elseif object == "BRICK" then
+            return
+        else
+            ia.move_top()
+        end
+    end
+end
+
+function bottom()
+    while 1 and ia.dead() == false do
+        local x = ia.get_x()
+        local y = ia.get_y()
+
+        local object = ia.get_case_content(x, ia.get_round_position(y))
+
+        if object == "BOX" then
+            ia.put_bomb()
+            local t = os.date("*t")
+
+            while os.date("*t").sec < ((t.sec) + 3) do
+                ia.move_top()
+            end
+            return
+        elseif object == "BRICK" then
+            return
+        else
+            ia.move_bottom()
+        end
+    end
+end
+
+function left()
+    while 1 and ia.dead() == false do
+        local x = ia.get_x()
+        local y = ia.get_y()
+
+        local object = ia.get_case_content(ia.get_round_position(x - ia.get_block_size()), y)
+
+        if object == "BOX" then
+            ia.put_bomb()
+            local t = os.date("*t")
+
+            while os.date("*t").sec < ((t.sec) + 3) do
                 ia.move_right()
             end
+            return
+        elseif object == "BRICK" then
+            return
         else
             ia.move_left()
+        end
+    end
+end
+
+function right()
+    while 1 and ia.dead() == false do
+        local x = ia.get_x()
+        local y = ia.get_y()
+
+        local object = ia.get_case_content(ia.get_round_position(x + ia.get_block_size()), y)
+
+        if object == "BOX" then
+            ia.put_bomb()
+            local t = os.date("*t")
+
+            while os.date("*t").sec < ((t.sec) + 3) do
+                ia.move_left()
+            end
+            return
+        elseif object == "BRICK" then
+            return
+        else
+            ia.move_right()
+        end
+    end
+end
+
+function main()
+    local r = 0
+
+    while ia.dead() == false do
+        local r = math.random(2)
+        if r == 0 then
+            left()
+        elseif r == 1 then
+            right
         end
     end
 end
