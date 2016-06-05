@@ -15,17 +15,12 @@ namespace				Bomberman
   class					Explosion {
   public:
     Explosion(float x, float y);
-    void clear()
-    {
-      this->_ps->remove();
-    }
     ~Explosion();
-    void	getScene();
-  private:
+    void		clear();
+
+   private:
     Bomberman::Irrlicht				&_irr;
-    irr::scene::IParticleSystemSceneNode	*_ps;
-    irr::scene::IParticleEmitter		*_em;
-    irr::scene::IParticleAffector		*_paf;
+    irr::scene::ISceneNode 			*node;
     float 					_x;
     float 					_y;
   };
